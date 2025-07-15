@@ -1,12 +1,31 @@
-# Jordi Lopez Portfolio 🚧
+# Jordi Lopez Portfolio 
 
-This portfolio is currently under development!  
-I'm still finalizing the design, color scheme, and layout — and also waiting to get approved for the GitHub Student Developer Pack to unlock some cool extras.
+Welcome to the first completed version of my personal portfolio website!
 
-### What’s coming:
-- Project cards with live demos
+This site highlights who I am, what I’ve built, and where I’m headed as a Computer Science & Math student at UMass Lowell. It includes my projects, skills, background, and a contact section for internship opportunities, collaborations, or just connecting.
+
+---
+
+### Current Features:
+- Fully responsive, clean UI built with modern tech
+- Project cards with descriptions and GitHub links
+- About section with academic background and story
+- Skills & technologies overview
+- Resume download and contact form
+- Interactive particles and animations using Framer Motion
+
+---
+
+### Planned Updates:
+- Live demos for featured projects
 - Dark mode toggle
-- Animations and polish using Framer Motion
-- Resume download & contact form
+- More animations & UX polish
+- Refined color palette and design tweaks
+- Improved accessibility and performance
 
-Thanks for stopping by! Stay tuned — it’s going to be worth the wait.
+---
+
+This project is a living document of my growth, and I’ll continue updating it as I learn, build, and explore new tools.
+
+Thanks for checking it out!  
+Feel free to [connect with me on LinkedIn](https://www.linkedin.com/in/your-link) or open an issue if you have suggestions.
