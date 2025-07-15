@@ -72,7 +72,7 @@ const particlesConfig = {
       {/* Main content */}
       <div className="relative z-10 text-center px-4">
         <motion.h1 
-          className="text-5xl md:text-7xl font-bold text-gray-800 mb-6"
+          className="text-5xl md:text-7xl font-bold text-gray-900 mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -88,12 +88,16 @@ const particlesConfig = {
         >
             Aspiring Software Engineer | CS & Math Student at UMass Lowell Building smart, human-centered tech — one project at a time.        </motion.p>
         
-        <motion.button
-          className="bg-primary text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-secondary transition-colors duration-300"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+       <motion.button
+className="bg-white text-blue-950 border border-blue-950 px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-950 hover:text-white transition-all duration-300 shadow-md"          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-        >
+          onClick={() => {
+            // 1. Find the element with id="AboutSection"
+            const next = document.getElementById("AboutSection");
+            // 2. If it exists, scroll to it smoothly
+            if (next) next.scrollIntoView({ behavior: 'smooth' });
+          }}
+          >
           Discover My Work
         </motion.button>
       </div>

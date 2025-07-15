@@ -2,7 +2,7 @@ import { motion } from "framer-motion"
 
 
 const AboutSection = () => {
-  // Animation variants for the container
+  // animatiosn for the container
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -14,7 +14,7 @@ const AboutSection = () => {
     }
   }
 
-  // Animation variants for individual items
+  // animations for the items
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -27,7 +27,7 @@ const AboutSection = () => {
     }
   }
 
-  // Skills data
+  // skills
   const skills = [
     { name: 'C/C++', icon: '/cpp.svg' },
     { name: 'Python', icon: '/python logo.svg' },
@@ -38,9 +38,9 @@ const AboutSection = () => {
   ]
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-150 to-blue-300">
+    <section       id="AboutSection" className="py-20 bg-gradient-to-br from-gray-150 to-blue-300">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Section title */}
+        {/* section title */}
         <motion.h2
           className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -51,7 +51,7 @@ const AboutSection = () => {
           About Me
         </motion.h2>
 
-        {/* Main content grid */}
+        {/* main grid */}
         <motion.div
           className="grid md:grid-cols-2 gap-12 items-center mb-16"
           variants={containerVariants}
@@ -59,7 +59,7 @@ const AboutSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Photo column */}
+          {/* photo */}
           <motion.div
             className="flex justify-center"
             variants={itemVariants}
@@ -73,25 +73,26 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
-          {/* Bio column */}
+          {/* bio column */}
+           
           <motion.div
             className="space-y-6"
             variants={itemVariants}
           >
             <p className="text-lg text-gray-700 leading-relaxed">
-              I’m currently pursuing a B.S. in Computer Science with a Mathematics minor at UMass Lowell, where I’m building a strong foundation in software engineering, AI, and cybersecurity. My academic journey hasn’t been easy—I faced serious family challenges during my first year, but I bounced back with a 4.0 GPA my second semester and never looked back.
+              I'm currently pursuing a B.S. in Computer Science with a Mathematics minor at UMass Lowell, where I'm building a strong foundation in software engineering, AI, and cybersecurity. My academic journey hasn’t been easy, I faced serious family challenges during my first year, but I bounced back with a 3.9 GPA my second semester and never looked back.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
               What drives me is more than just code. I’m passionate about building tools that make life better, whether it’s through health tech wearables, real estate automation, or smart digital systems. Along the way I've learned to use technology not just to impress, but to impact.
 
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              Every project I take on is a chance to level up, learn something new, and help others in the process. Outside of tech, you’ll find me running and working out, binging tv shows, or doomscrolling.
+              Every project I take on is a chance to level up, learn something new, and help others in the process. Outside of tech, you’ll find me running and working out, binging tv shows, or playing pickleball.
             </p>
           </motion.div>
         </motion.div>
 
-        {/* Skills section */}
+        {/* skills */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

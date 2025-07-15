@@ -1,4 +1,6 @@
 import { motion } from "framer-motion"
+import { FaGithub } from 'react-icons/fa'
+
 
 const ProjectsSection = () => {
   // Animation variants for the container
@@ -12,8 +14,9 @@ const ProjectsSection = () => {
       }
     }
   }
+ 
 
-  // Animation variants for project cards
+  // animation for project cards
   const cardVariants = {
     hidden: { 
       opacity: 0, 
@@ -31,39 +34,43 @@ const ProjectsSection = () => {
     }
   }
 
-  // Project data
+  // project data
   const projects = [
     {
       id: 1,
       title: 'VITA Health',
       description: 'I’m developing a wearable health-tech platform featuring an iOS app built in Swift that streams real-time biometrics (SpO2, heart rate) from an ESP32 device via Bluetooth. I integrate Supabase for secure user data syncing and historical analytics. I lead a 6-person team, coordinating embedded sensor programming, BLE communication, UI/UX design, and cloud architecture for production readiness.',
-      status: 'In Progress',
+      status: 'Feb 2025 - In Progress',
       tech: ['Swift', 'ESP32', 'BLE', 'Supabase', 'Xcode', 'Git', 'Figma', 'Arduino IDE'],
-      image: '/project1.jpg'
+      github: 'https://github.com/jangel19/VITA.git',
+      image: '/prototype.png'
     },
     {
       id: 2,
       title: 'NightSky',
       description: 'I’m engineering a web app that renders custom star maps based on user-provided date and location using astronomical libraries. I’ve implemented a Python Flask backend to handle data processing and reduce external API calls by 40% through local caching of star coordinates. On the front end, I optimize performance with lazy-loading and minimal asset bundles to ensure a smooth experience across desktop and mobile.',
-      status: 'In Progress',
+      status: 'May 2025 - In Progress',
       tech: ['Python', 'JavaScript', 'Flask', 'AstroPy', 'Vercel', 'Git', 'HTML', 'CSS'],
-      image: '/project2.jpg'
+      github: 'https://github.com/jangel19/NightSky.git',
+      image: '/nightsky.png'
     },
     {
       id: 3,
       title: 'Mission Brute',
       description: 'I’m building a penetration testing simulation tool that performs password brute-force attack scenarios on local test environments using Python and Selenium. I incorporate secure credential handling, rate-limiting, and error detection to responsibly explore vulnerabilities. I apply ethical hacking principles to identify common password security flaws and recommend mitigation strategies.',
-      status: 'In Progress',
+      status: 'June 2025 - In Progress',
       tech: ['Python', 'Hashlib', 'Requests', 'Selenium' ],
-      image: '/project3.jpg'
+      github: 'https://github.com/jangel19/MissionBrute.git',
+      image: '/tempmissionbrute.png'
     },
     {
       id: 4,
       title: 'FutureFin',
       description: 'I’m developing a web-based tool that analyzes historical stock data and visualizes trends using yfinance and Matplotlib. I implement moving averages and standard deviation bands to highlight momentum and volatility signals for basic trading insights. The architecture is modular, designed to support future integration of regression-based price prediction models.',
-      status: 'In Progress',
+      status: 'June 2025 - In Progress',
       tech: ['Python', 'pandas', 'yfinance', 'Matplotlib'],
-      image: '/project4.jpg'
+      github: 'https://github.com/jangel19/futurefin.git',
+      image: '/tempfuturefin.png'
     }
   ]
 
@@ -111,8 +118,8 @@ const ProjectsSection = () => {
               }}
             >
               {/* Project image */}
-              <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                <div className="text-white text-6xl opacity-50">🚀</div>
+              <div className="h-48 w-full overflow-hidden">
+                <img src={project.image} alt={project.title} className="object-cover w-full h-full" />
               </div>
 
               {/* Project content */}
@@ -148,13 +155,19 @@ const ProjectsSection = () => {
 
                 {/* Action buttons */}
                 <div className="flex gap-3">
-                  <button className="flex-1 bg-primary text-white py-2 px-4 rounded-lg font-medium hover:bg-secondary transition-colors duration-300">
-                    View Details
-                  </button>
-                  <button className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300">
-                    Live Demo
-                  </button>
-                </div>
+                     <a
+                        href={project.github}
+                       target="_blank"
+                        rel="noopener noreferrer"
+                         className="flex items-center justify-center gap-2 flex-1 bg-gray-900 text-white py-2 px-4 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-300"
+                        whileHover={{ scale: 1.05 }}>
+                     <FaGithub className="w-5 h-5" />
+                       GitHub
+                       </a>
+                     <button className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300">
+                       Live Demo <span className="text-gray-500">(Coming Soon)</span>
+                      </button>
+                  </div>
               </div>
             </motion.div>
           ))}
