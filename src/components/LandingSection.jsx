@@ -98,7 +98,7 @@ className="bg-white text-blue-950 border border-blue-950 px-8 py-3 rounded-full 
             if (next) next.scrollIntoView({ behavior: 'smooth' });
           }}
           >
-          Discover My Work
+          Get to Know Me
         </motion.button>
       </div>
     </section>
