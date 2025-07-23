@@ -47,13 +47,14 @@ const ProjectsSection = () => {
     },
     {
       id: 2,
-      title: 'NightSky',
-      description: 'I’m engineering a web app that renders custom star maps based on user-provided date and location using astronomical libraries. I’ve implemented a Python Flask backend to handle data processing and reduce external API calls by 40% through local caching of star coordinates. On the front end, I optimize performance with lazy-loading and minimal asset bundles to ensure a smooth experience across desktop and mobile.',
-      status: 'May 2025 - In Progress',
-      tech: ['Python', 'JavaScript', 'Flask', 'AstroPy', 'Vercel', 'Git', 'HTML', 'CSS'],
-      github: 'https://github.com/jangel19/NightSky.git',
-      image: '/nightsky.png'
+      title: 'FutureFin',
+      description: 'I’m developing a web-based tool that analyzes historical stock data and visualizes trends using yfinance and Matplotlib. I implement moving averages and standard deviation bands to highlight momentum and volatility signals for basic trading insights. The architecture is modular, designed to support future integration of regression-based price prediction models.',
+      status: 'June 2025 - In Progress',
+      tech: ['Python', 'pandas', 'yfinance', 'Matplotlib'],
+      github: 'https://github.com/jangel19/futurefin.git',
+      image: '/tempfuturefin.png'
     },
+    
     {
       id: 3,
       title: 'Mission Brute',
@@ -65,12 +66,12 @@ const ProjectsSection = () => {
     },
     {
       id: 4,
-      title: 'FutureFin',
-      description: 'I’m developing a web-based tool that analyzes historical stock data and visualizes trends using yfinance and Matplotlib. I implement moving averages and standard deviation bands to highlight momentum and volatility signals for basic trading insights. The architecture is modular, designed to support future integration of regression-based price prediction models.',
-      status: 'June 2025 - In Progress',
-      tech: ['Python', 'pandas', 'yfinance', 'Matplotlib'],
-      github: 'https://github.com/jangel19/futurefin.git',
-      image: '/tempfuturefin.png'
+      title: 'NightSky',
+      description: 'I’m engineering a web app that renders custom star maps based on user-provided date and location using astronomical libraries. I’ve implemented a Python Flask backend to handle data processing and reduce external API calls by 40% through local caching of star coordinates. On the front end, I optimize performance with lazy-loading and minimal asset bundles to ensure a smooth experience across desktop and mobile.',
+      status: 'May 2025 - In Progress',
+      tech: ['Python', 'JavaScript', 'Flask', 'AstroPy', 'Vercel', 'Git', 'HTML', 'CSS'],
+      github: 'https://github.com/jangel19/NightSky.git',
+      image: '/nightsky.png'
     }
   ]
 
