@@ -31,3 +31,4 @@ jobs:
           publish_dir: ./build
           user_name: jangel19
           user_email: lopesjordi0@gmail.com
+          publish_branch: gh-pages
