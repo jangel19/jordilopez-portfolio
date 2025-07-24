@@ -13,6 +13,7 @@ This site highlights who I am, what I’ve built, and where I’m headed as a Co
 - Skills & technologies overview
 - Resume download and contact form
 - Interactive particles and animations using Framer Motion
+- **Visitor logging** via Supabase & Discord webhook integration (Deno backend, paused for now)
 
 ---
 
@@ -22,10 +23,10 @@ This site highlights who I am, what I’ve built, and where I’m headed as a Co
 - More animations & UX polish
 - Refined color palette and design tweaks
 - Improved accessibility and performance
+- Reactivation of backend visitor logging with Docker or Raspberry Pi hosting
 
 ---
 
 This project is a living document of my growth, and I’ll continue updating it as I learn, build, and explore new tools.
 
 Thanks for checking it out!  
-Feel free to [connect with me on LinkedIn](https://www.linkedin.com/in/your-link) or open an issue if you have suggestions.
