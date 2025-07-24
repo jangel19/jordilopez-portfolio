@@ -6,4 +6,4 @@ COPY . .
 ENV PORT=8000
 EXPOSE 8000
 
-CMD ["run", "--allow-net", "--allow-env", "index.ts"]
+CMD ["deno", "run", "--allow-all", "backend/index.ts"]
