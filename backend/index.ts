@@ -3,7 +3,18 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 serve(async (req) => {
   try {
-    const { ip, city, country_name } = await fetch("https://ipapi.co/json/").then(res => res.json());
+    let ip = "Unknown", city = "Unknown", country_name = "Unknown";
+
+    const geoRes = await fetch("https://ipapi.co/json/");
+    try {
+      const geoData = await geoRes.json();
+      ip = geoData.ip || "Unknown";
+      city = geoData.city || "Unknown";
+      country_name = geoData.country_name || "Unknown";
+    } catch (_) {
+      console.error("Geo API did not return valid JSON.");
+    }
+
     const user_agent = req.headers.get("user-agent") || "Unknown";
     const timestamp = new Date().toISOString();
 
