@@ -5,14 +5,15 @@ serve(async (req) => {
   try {
     let ip = "Unknown", city = "Unknown", country_name = "Unknown";
 
-    const geoRes = await fetch("https://ipapi.co/json/");
     try {
+      const geoRes = await fetch("https://ipapi.co/json/");
+      if (!geoRes.ok) throw new Error("Geo API request failed");
       const geoData = await geoRes.json();
       ip = geoData.ip || "Unknown";
       city = geoData.city || "Unknown";
       country_name = geoData.country_name || "Unknown";
-    } catch (_) {
-      console.error("Geo API did not return valid JSON.");
+    } catch (geoErr) {
+      console.error("Geo API error:", geoErr);
     }
 
     const user_agent = req.headers.get("user-agent") || "Unknown";
