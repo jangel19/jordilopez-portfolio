@@ -6,7 +6,8 @@ serve(async (req) => {
     let ip = "Unknown", city = "Unknown", country_name = "Unknown";
 
     try {
-      const geoRes = await fetch("https://ipapi.co/json/");
+      const clientIp = req.headers.get("x-forwarded-for") || "Unknown";
+      const geoRes = await fetch(`https://ipapi.co/${clientIp}/json/`);
       if (!geoRes.ok) throw new Error("Geo API request failed");
       const geoData = await geoRes.json();
       ip = geoData.ip || "Unknown";
