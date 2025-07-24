@@ -72,8 +72,19 @@ const ProjectsSection = () => {
       tech: ['Python', 'JavaScript', 'Flask', 'AstroPy', 'Vercel', 'Git', 'HTML', 'CSS'],
       github: 'https://github.com/jangel19/NightSky.git',
       image: '/nightsky.png'
+    },
+    {
+    id: 5,
+    title: 'Ale’s Doc Filter',
+    description: 'Built a Python automation tool for a roommate that extracts product-specific data from a master Word document and generates clean, shareable reports. Designed to streamline internal documentation workflows.',
+    status: 'July 2025 - Completed',
+    tech: ['Python', 'Docx', 'Git', 'VS Code'],
+    github: 'https://github.com/jangel19/aleslightsensor.git',
+    image: '/alesthing.png',
+    demo: 'https://www.loom.com/share/55f04ccfbb164e228b05f8a1864a7880?sid=4acb2aa4-96b5-45c7-8461-603990de4d85'
     }
   ]
+
 
   return (
     <section className="py-20 bg-gray-50">
@@ -165,9 +176,20 @@ const ProjectsSection = () => {
                      <FaGithub className="w-5 h-5" />
                        GitHub
                        </a>
+                       {project.demo ? (
+                          <a
+                          href={project.demo}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className="flex items-center justify-center gap-2 flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300"
+                             whileHover={{ scale: 1.05 }}>
+                              Live Demo
+                             </a>
+                      ) : (
                      <button className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300">
                        Live Demo <span className="text-gray-500">(Coming Soon)</span>
                       </button>
+                      )}
                   </div>
               </div>
             </motion.div>
