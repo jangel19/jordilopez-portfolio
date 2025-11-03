@@ -65,8 +65,8 @@ const AboutSection = () => {
             variants={itemVariants}
           >
             <div className="w-80 h-80 rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src="/photo.jpeg" 
+              <img
+                src="/photo.jpeg"
                 alt="Profile photo"
                 className="w-full h-full object-cover"
               />
@@ -74,20 +74,22 @@ const AboutSection = () => {
           </motion.div>
 
           {/* bio column */}
-           
+
           <motion.div
             className="space-y-6"
             variants={itemVariants}
           >
             <p className="text-lg text-gray-700 leading-relaxed">
-              I'm currently pursuing a B.S. in Computer Science with a Mathematics minor at UMass Lowell, where I'm building a strong foundation in software engineering, AI, and cybersecurity. My academic journey hasn’t been easy, I faced serious family challenges during my first year, but I bounced back with a 3.9 GPA my second semester and never looked back.
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              What drives me is more than just code. I’m passionate about building tools that make life better, whether it’s through health tech wearables, real estate automation, or smart digital systems. Along the way I've learned to use technology not just to impress, but to impact.
+              I’m pursuing a B.S. in Computer Science with a Mathematics minor at UMass Lowell, where I’m building a foundation in software engineering and machine learning. My journey hasn’t been easy, I faced serious family challenges during my first year, but came back stronger, earning a 4.0 GPA my second semester and never losing focus since.
 
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              Every project I take on is a chance to level up, learn something new, and help others in the process. Outside of tech, you’ll find me running and working out, binging tv shows, or playing pickleball.
+              What drives me is the pursuit of knowledge and the intersection of logic, data, and impact. I’m passionate about creating intelligent systems, from health-tech wearables to real estate analytics, that make technology more useful and human-centered.
+
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              Every project is a new experiment in learning, building, and applying theory to reality. Outside of tech, I’m focused on fitness (training for an Ironman), spending time with family, and staying grounded in faith and discipline.
+
             </p>
           </motion.div>
         </motion.div>

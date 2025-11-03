@@ -33,7 +33,7 @@ const ContactSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          I'm always open to discussing new opportunities, interesting projects, 
+          I'm always open to discussing new opportunities, interesting projects,
           or just having a chat about technology.
         </motion.p>
 
@@ -46,7 +46,7 @@ const ContactSection = () => {
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">Send me a message</h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -120,9 +120,9 @@ const ContactSection = () => {
             <div>
               <h3 className="text-2xl font-semibold text-gray-800 mb-6">Let's connect</h3>
               <p className="text-gray-600 mb-6">
-               I’m currently seeking Summer 2026 software engineering internships! Whether you’re a company looking to hire, a fellow developer interested in collaborating, or someone with a great idea, I’d love to connect and hear more.
+                I’m currently exploring Summer 2026 opportunities in AI, machine learning, and data-driven development. I’m passionate about solving real-world problems through intelligent systems and thoughtful engineering. Whether you’re building innovative tech, researching new models, or interested in collaboration — I’d love to connect.
               </p>
-              
+
               {/* Download resume button */}
               <a
                 href="/Jordi Lopez SWE Resume.pdf"

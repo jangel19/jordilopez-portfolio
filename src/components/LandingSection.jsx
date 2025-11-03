@@ -71,7 +71,7 @@ const particlesConfig = {
 
       {/* Main content */}
       <div className="relative z-10 text-center px-4">
-        <motion.h1 
+        <motion.h1
           className="text-5xl md:text-7xl font-bold text-gray-900 mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,15 +79,15 @@ const particlesConfig = {
         >
           Hi, I'm <span className="text-primary">Jordi!</span>
         </motion.h1>
-        
-        <motion.p 
+
+        <motion.p
           className="text-xl md:text-2xl text-black mb-8 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-            Aspiring Software Engineer | CS & Math Student at UMass Lowell Building smart, human-centered tech — one project at a time.        </motion.p>
-        
+            CS + Math Student at UMass Lowell | Exploring Machine Learning & AI Turning ideas into data-driven products that make a real impact.        </motion.p>
+
        <motion.button
 className="bg-white text-blue-950 border border-blue-950 px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-950 hover:text-white transition-all duration-300 shadow-md"          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
