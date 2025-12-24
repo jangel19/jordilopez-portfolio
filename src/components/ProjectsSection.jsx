@@ -3,6 +3,33 @@ import { FaGithub } from 'react-icons/fa'
 
 
 const ProjectsSection = () => {
+  const getStatusFromRange = (status) => {
+  const now = new Date();
+
+  const endPart = status.split("-")[1]?.trim();
+
+  if (!endPart || !/^[A-Za-z]+ \d{4}$/.test(endPart)) {
+    return {
+      label: status,
+      className: "bg-blue-100 text-blue-800"
+    };
+  }
+
+  const endDate = new Date(`${endPart} 01`);
+  endDate.setMonth(endDate.getMonth() + 1);
+
+  if (now > endDate) {
+    return {
+      label: status,
+      className: "bg-green-100 text-green-800"
+    };
+  }
+
+  return {
+    label: status,
+    className: "bg-yellow-100 text-yellow-800"
+  };
+};
   // Animation variants for the container
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -14,12 +41,12 @@ const ProjectsSection = () => {
       }
     }
   }
- 
+
 
   // animation for project cards
   const cardVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 50,
       scale: 0.95
     },
@@ -38,46 +65,82 @@ const ProjectsSection = () => {
   const projects = [
     {
       id: 1,
+      title: 'SecureDrop',
+      description: `
+        SecureDrop is a secure client–server file transfer system that enables
+        authenticated users to exchange files with confidentiality and integrity guarantees.
+        I worked as part of a team to design and implement the system, contributing to the TCP
+        networking layer, encryption and integrity verification using OpenSSL, and containerizing
+        the application with Docker to ensure consistent deployment, testing, and debugging across
+        environments.
+      `,
+      status: 'Nov. 2025 - Dec. 2025',
+      tech: ['C++', 'Python', 'OpenSSL', 'TCP Sockets', 'Linux', 'Docker'],
+      github: 'https://github.com/jangel19/SecureDrop.git',
+      image: '/securedropimg.png'
+    },
+
+    {
+      id: 2,
       title: 'VITA Health',
-      description: 'I’m developing a wearable health-tech platform featuring an iOS app built in Swift that streams real-time biometrics (SpO2, heart rate) from an ESP32 device via Bluetooth. I integrate Supabase for secure user data syncing and historical analytics. I lead a 6-person team, coordinating embedded sensor programming, BLE communication, UI/UX design, and cloud architecture for production readiness.',
-      status: 'Feb 2025 - In Progress',
-      tech: ['Swift', 'ESP32', 'BLE', 'Supabase', 'Xcode', 'Git', 'Figma', 'Arduino IDE'],
+      description: `
+        Developed a wearable health-tech prototype using an ESP32 that collected heart rate and
+        motion data to calculate steps, activity levels, and basic health metrics. Implemented
+        firmware using Arduino-based C to handle sensor sampling, data processing, and BLE
+        transmission. Designed a custom PCB integrating biometric sensors and a haptic motor
+        for notifications and alarms, and built a simple web-based interface backed by
+        Supabase to display and store collected data. Collaborated within a small team to
+        validate end-to-end hardware-to-UI data flow.
+      `,
+      status: 'Feb. 2025 - Prototype',
+      tech: ['C (Arduino', 'ESP32', 'BLE', 'Supabase', 'PCB Design', 'Git', 'Arduino IDE'],
       github: 'https://github.com/jangel19/VITA.git',
       image: '/prototype.png'
     },
+
     {
-      id: 2,
+      id: 3,
       title: 'FutureFin',
-      description: 'I’m developing a web-based tool that analyzes historical stock data and visualizes trends using yfinance and Matplotlib. I implement moving averages and standard deviation bands to highlight momentum and volatility signals for basic trading insights. The architecture is modular, designed to support future integration of regression-based price prediction models.',
+      description: `
+        I’m developing a web-based tool that analyzes historical stock data and
+        visualizes trends using yfinance and Matplotlib. I implement moving averages and standard
+        deviation bands to highlight momentum and volatility signals for basic trading insights.
+        The architecture is modular, designed to support future integration of regression-based
+        price prediction models.
+      `,
       status: 'June 2025 - In Progress',
       tech: ['Python', 'pandas', 'yfinance', 'Matplotlib'],
       github: 'https://github.com/jangel19/futurefin.git',
       image: '/tempfuturefin.png'
     },
-    
-    {
-      id: 3,
-      title: 'Mission Brute',
-      description: 'I’m building a penetration testing simulation tool that performs password brute-force attack scenarios on local test environments using Python and Selenium. I incorporate secure credential handling, rate-limiting, and error detection to responsibly explore vulnerabilities. I apply ethical hacking principles to identify common password security flaws and recommend mitigation strategies.',
-      status: 'June 2025 - In Progress',
-      tech: ['Python', 'Hashlib', 'Requests', 'Selenium' ],
-      github: 'https://github.com/jangel19/MissionBrute.git',
-      image: '/tempmissionbrute.png'
-    },
+
+
     {
       id: 4,
       title: 'NightSky',
-      description: 'I’m engineering a web app that renders custom star maps based on user-provided date and location using astronomical libraries. I’ve implemented a Python Flask backend to handle data processing and reduce external API calls by 40% through local caching of star coordinates. On the front end, I optimize performance with lazy-loading and minimal asset bundles to ensure a smooth experience across desktop and mobile.',
-      status: 'May 2025 - In Progress',
+      description: `
+        This project is a web application that generates custom star maps based on a
+        user’s selected date and location using astronomical libraries. It features a Python Flask
+        backend for efficient data processing, reducing external API calls by 40% through local
+        caching of star coordinates. The frontend is optimized for performance across desktop and
+        mobile, with future updates planned to further improve speed and accuracy.
+      `,
+      status: 'May 2025 - Aug. 2025',
       tech: ['Python', 'JavaScript', 'Flask', 'AstroPy', 'Vercel', 'Git', 'HTML', 'CSS'],
       github: 'https://github.com/jangel19/NightSky.git',
-      image: '/nightsky.png'
+      image: '/nightsky.png',
+      demo: 'https://www.loom.com/share/2f59bafd54614a869edd8bd52c957cbd?sid=0a9cc181-7916-4dd6-a836-d9e094b9eaa4'
     },
+
     {
     id: 5,
     title: 'Ale’s Doc Filter',
-    description: 'Built a Python automation tool for a roommate that extracts product-specific data from a master Word document and generates clean, shareable reports. Designed to streamline internal documentation workflows.',
-    status: 'July 2025 - Completed',
+    description:`
+      Built an automation tool for my friend that extracts product-specific
+      data from a master Word document and generates clean, shareable reports. Designed to streamline
+      internal documentation workflows.
+    `,
+    status: 'July 2025 - July 2025',
     tech: ['Python', 'Docx', 'Git', 'VS Code'],
     github: 'https://github.com/jangel19/aleslightsensor.git',
     image: '/alesthing.png',
@@ -107,7 +170,7 @@ const ProjectsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          Here are some of the projects I'm currently working on. Each one represents 
+          Here are some of the projects I'm currently working on. Each one represents
           a unique challenge and learning opportunity.
         </motion.p>
 
@@ -119,12 +182,15 @@ const ProjectsSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {projects.map(project => (
+          {projects.map(project => {
+            const { label, className } = getStatusFromRange(project.status);
+
+            return (
             <motion.div
               key={project.id}
               className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               variants={cardVariants}
-              whileHover={{ 
+              whileHover={{
                 y: -5,
                 transition: { duration: 0.3 }
               }}
@@ -136,11 +202,12 @@ const ProjectsSection = () => {
 
               {/* Project content */}
               <div className="p-6">
-                {/* Status badge */}
                 <div className="flex items-center justify-between mb-3">
-                  <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                    {project.status}
-                  </span>
+                 <span
+                  className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${className}`}
+                >
+                  {label}
+                </span>
                 </div>
 
                 {/* Project title */}
@@ -193,11 +260,12 @@ const ProjectsSection = () => {
                   </div>
               </div>
             </motion.div>
-          ))}
+          );
+        })}
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
 
 export default ProjectsSection
