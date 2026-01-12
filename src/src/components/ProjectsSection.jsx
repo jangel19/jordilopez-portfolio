@@ -137,7 +137,7 @@ const ProjectsSection = () => {
     },
 
     {
-      id: 2,
+      id: 3,
       title: 'VITA Health',
       state: 'prototype',
       description: `
@@ -156,7 +156,7 @@ const ProjectsSection = () => {
     },
 
     {
-      id: 3,
+      id: 4,
       title: 'FutureFin',
       state: 'in-progress',
       description: `
@@ -174,7 +174,7 @@ const ProjectsSection = () => {
 
 
     {
-      id: 4,
+      id: 5,
       title: 'NightSky',
       state: 'completed',
       description: `
@@ -192,7 +192,7 @@ const ProjectsSection = () => {
     },
 
     {
-    id: 5,
+    id: 6,
     title: 'Ale’s Doc Filter',
     state: 'completed',
     description:`
