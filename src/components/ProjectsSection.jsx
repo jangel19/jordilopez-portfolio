@@ -101,6 +101,25 @@ const ProjectsSection = () => {
   const projects = [
     {
       id: 1,
+      title: 'Sleepmaxxing',
+      state: 'completed',
+      description: `
+        A local recovery intelligence engine that analyzes personal health data over time to
+        generate weekly recovery summaries, a recovery score, and short-term HRV predictions.
+        The system explains why recovery is improving or declining, highlights the primary
+        physiological drivers behind those changes, and transparently reports model reliability as
+        predictions are evaluated against real outcomes. Designed to work with data from any
+        wearable, the engine runs fully offline and prioritizes explainability, user trust, and
+        incremental learning over time.
+      `,
+      status: 'December 2025 - January 2026',
+      tech: ['C++', 'mlpack', 'Systems', 'Machine Learning'],
+      github: 'https://github.com/jangel19/sleepmaxxing',
+      image: '/graph.png',
+      demo: 'https://www.loom.com/share/05b3960518ab4bc0ae42a1ede4591d17'
+    },
+    {
+      id: 2,
       title: 'SecureDrop',
       state: 'completed',
       description: `
@@ -118,7 +137,7 @@ const ProjectsSection = () => {
     },
 
     {
-      id: 2,
+      id: 3,
       title: 'VITA Health',
       state: 'prototype',
       description: `
@@ -137,7 +156,7 @@ const ProjectsSection = () => {
     },
 
     {
-      id: 3,
+      id: 4,
       title: 'FutureFin',
       state: 'in-progress',
       description: `
@@ -155,7 +174,7 @@ const ProjectsSection = () => {
 
 
     {
-      id: 4,
+      id: 5,
       title: 'NightSky',
       state: 'completed',
       description: `
@@ -173,7 +192,7 @@ const ProjectsSection = () => {
     },
 
     {
-    id: 5,
+    id: 6,
     title: 'Ale’s Doc Filter',
     state: 'completed',
     description:`
