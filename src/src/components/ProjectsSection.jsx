@@ -3,12 +3,47 @@ import { FaGithub } from 'react-icons/fa'
 
 
 const ProjectsSection = () => {
-  const getStatusFromRange = (status) => {
+  const getStatusFromRange = (status, state) => {
   const now = new Date();
 
-  const endPart = status.split("-")[1]?.trim();
+  if (state === "completed") {
+    return {
+      label: status,
+      className: "bg-green-100 text-green-800"
+    };
+  }
 
-  if (!endPart || !/^[A-Za-z]+ \d{4}$/.test(endPart)) {
+  if (state === "in-progress") {
+    return {
+      label: status,
+      className: "bg-yellow-100 text-yellow-800"
+    };
+  }
+
+  if (state === "prototype") {
+    return {
+      label: status,
+      className: "bg-blue-100 text-blue-800"
+    };
+  }
+
+  if (/present|ongoing|in progress/i.test(status)) {
+    return {
+      label: status,
+      className: "bg-yellow-100 text-yellow-800"
+    };
+  }
+
+  const parts = status.split("-");
+  if (parts.length < 2) {
+    return {
+      label: status,
+      className: "bg-blue-100 text-blue-800"
+    };
+  }
+
+  const endPart = parts[1].trim();
+  if (!/^[A-Za-z]+ \d{4}$/.test(endPart)) {
     return {
       label: status,
       className: "bg-blue-100 text-blue-800"
@@ -17,6 +52,7 @@ const ProjectsSection = () => {
 
   const endDate = new Date(`${endPart} 01`);
   endDate.setMonth(endDate.getMonth() + 1);
+  endDate.setDate(0);
 
   if (now > endDate) {
     return {
@@ -65,7 +101,27 @@ const ProjectsSection = () => {
   const projects = [
     {
       id: 1,
+      title: 'Sleepmaxxing',
+      state: 'completed',
+      description: `
+        A local recovery intelligence engine that analyzes personal health data over time to
+        generate weekly recovery summaries, a recovery score, and short-term HRV predictions.
+        The system explains why recovery is improving or declining, highlights the primary
+        physiological drivers behind those changes, and transparently reports model reliability as
+        predictions are evaluated against real outcomes. Designed to work with data from any
+        wearable, the engine runs fully offline and prioritizes explainability, user trust, and
+        incremental learning over time.
+      `,
+      status: 'December 2025 - January 2026',
+      tech: ['C++', 'mlpack', 'Systems', 'Machine Learning'],
+      github: 'https://github.com/jangel19/sleepmaxxing',
+      image: '/graph.png',
+      demo: 'https://www.loom.com/share/05b3960518ab4bc0ae42a1ede4591d17'
+    },
+    {
+      id: 2,
       title: 'SecureDrop',
+      state: 'completed',
       description: `
         SecureDrop is a secure client–server file transfer system that enables
         authenticated users to exchange files with confidentiality and integrity guarantees.
@@ -74,7 +130,7 @@ const ProjectsSection = () => {
         the application with Docker to ensure consistent deployment, testing, and debugging across
         environments.
       `,
-      status: 'Nov. 2025 - Dec. 2025',
+      status: 'November 2025 - December 2025',
       tech: ['C++', 'Python', 'OpenSSL', 'TCP Sockets', 'Linux', 'Docker'],
       github: 'https://github.com/jangel19/SecureDrop.git',
       image: '/securedropimg.png'
@@ -83,6 +139,7 @@ const ProjectsSection = () => {
     {
       id: 2,
       title: 'VITA Health',
+      state: 'prototype',
       description: `
         Developed a wearable health-tech prototype using an ESP32 that collected heart rate and
         motion data to calculate steps, activity levels, and basic health metrics. Implemented
@@ -92,8 +149,8 @@ const ProjectsSection = () => {
         Supabase to display and store collected data. Collaborated within a small team to
         validate end-to-end hardware-to-UI data flow.
       `,
-      status: 'Feb. 2025 - Prototype',
-      tech: ['C (Arduino', 'ESP32', 'BLE', 'Supabase', 'PCB Design', 'Git', 'Arduino IDE'],
+      status: 'February 2025 - Prototype',
+      tech: ['C (Arduino)', 'ESP32', 'BLE', 'Supabase', 'PCB Design', 'Git', 'Arduino IDE'],
       github: 'https://github.com/jangel19/VITA.git',
       image: '/prototype.png'
     },
@@ -101,6 +158,7 @@ const ProjectsSection = () => {
     {
       id: 3,
       title: 'FutureFin',
+      state: 'in-progress',
       description: `
         I’m developing a web-based tool that analyzes historical stock data and
         visualizes trends using yfinance and Matplotlib. I implement moving averages and standard
@@ -118,6 +176,7 @@ const ProjectsSection = () => {
     {
       id: 4,
       title: 'NightSky',
+      state: 'completed',
       description: `
         This project is a web application that generates custom star maps based on a
         user’s selected date and location using astronomical libraries. It features a Python Flask
@@ -125,7 +184,7 @@ const ProjectsSection = () => {
         caching of star coordinates. The frontend is optimized for performance across desktop and
         mobile, with future updates planned to further improve speed and accuracy.
       `,
-      status: 'May 2025 - Aug. 2025',
+      status: 'May 2025 - August 2025',
       tech: ['Python', 'JavaScript', 'Flask', 'AstroPy', 'Vercel', 'Git', 'HTML', 'CSS'],
       github: 'https://github.com/jangel19/NightSky.git',
       image: '/nightsky.png',
@@ -135,6 +194,7 @@ const ProjectsSection = () => {
     {
     id: 5,
     title: 'Ale’s Doc Filter',
+    state: 'completed',
     description:`
       Built an automation tool for my friend that extracts product-specific
       data from a master Word document and generates clean, shareable reports. Designed to streamline
@@ -183,7 +243,7 @@ const ProjectsSection = () => {
           viewport={{ once: true }}
         >
           {projects.map(project => {
-            const { label, className } = getStatusFromRange(project.status);
+            const { label, className } = getStatusFromRange(project.status, project.state);
 
             return (
             <motion.div
