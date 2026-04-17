@@ -1,8 +1,4 @@
-const DEFAULT_DISCORD_WEBHOOK_URL =
-  'https://discord.com/api/webhooks/1484213536334020629/I94qZsefLKQm3-X0P-Jvvqjt6K57nSPdHxiAUZm5h8QatJJTnq_Tz6V8X1_ESqH5EZZt';
-
-const DISCORD_WEBHOOK_URL =
-  import.meta.env.VITE_DISCORD_WEBHOOK_URL || DEFAULT_DISCORD_WEBHOOK_URL;
+const DISCORD_WEBHOOK_URL = import.meta.env.VITE_DISCORD_WEBHOOK_URL;
 
 const TRACKING_SENT_KEY = 'jordisworld:visitor-tracker:sent';
 const TRACKING_ERROR_LOG_KEY = 'jordisworld:visitor-tracker:errors';
