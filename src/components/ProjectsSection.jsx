@@ -1,331 +1,236 @@
-import { motion } from "framer-motion"
-import { FaGithub } from 'react-icons/fa'
+import { motion } from 'framer-motion';
+import { FaGithub } from 'react-icons/fa';
 
+const featuredProjects = [
+  {
+    title: 'PhysioRecovery',
+    badge: 'Production Garmin Connect IQ App',
+    image: '/recovery.png',
+    description:
+      "Recovery scoring app for Garmin wearables built with fixed-point DSP and sensor fusion under tight memory and battery constraints. Implemented in Monkey C to benchmark HRV, Body Battery, and resting heart rate trends against Garmin's proprietary recovery signals while keeping the pipeline lightweight enough for on-device execution.",
+    tech: ['Monkey C', 'Fixed-Point DSP', 'Garmin Connect IQ', 'Sensor Fusion'],
+    github: 'https://github.com/jangel19/recoveryMaxxing',
+    layout: '',
+    imageHeight: 'h-48',
+    badgeTone: 'text-[#4a9eff]',
+  },
+  {
+    title: 'VITA Health',
+    badge: 'Wearable Health Prototype',
+    image: '/prototype.png',
+    description:
+      'Wearable health prototype using ESP32 for heart rate and motion tracking. Implemented C firmware for sensor sampling and BLE transmission. Designed a custom PCB with biometric sensors and haptic feedback.',
+    tech: ['ESP32', 'BLE', 'C (Arduino)', 'PCB Design', 'Supabase', 'Git'],
+    github: 'https://github.com/jangel19/VITA.git',
+    imageHeight: 'h-48',
+    badgeTone: 'text-[#3da88a]',
+  },
+  {
+    title: 'Coal2Core',
+    badge: 'Most Innovative Idea, Tufts Datathon',
+    image: '/ml.png',
+    description:
+      'ML-first framework for ranking retiring U.S. coal plants for SMR conversion under rising AI energy demand. Built and validated a nested cross-validated RBF-SVR pipeline that achieved a 0.9652 out-of-fold R squared score, stress-tested top candidates with 1,000 Monte Carlo simulations, and identified sites capable of avoiding up to 29 million tons of CO2 annually.',
+    tech: ['Machine Learning', 'Scikit-learn', 'RBF-SVR', 'Nested Cross-Validation', 'Monte Carlo', 'Energy Modeling'],
+    github: 'https://github.com/jangel19/coal2core-ml-pipeline',
+    live: 'https://coal-to-core.vercel.app/',
+    imageHeight: 'h-48',
+    badgeTone: 'text-[#3da88a]',
+  },
+];
+
+const secondaryProjects = [
+  {
+    title: 'Sleepmaxxing',
+    description:
+      'Offline recovery intelligence engine for weekly summaries, recovery scoring, and short term HRV prediction. Designed for personal wearable data with explainable outputs and reliability tracking. Built as a local first C++ system using mlpack.',
+    tech: ['C++', 'mlpack', 'Systems', 'Machine Learning'],
+    github: 'https://github.com/jangel19/sleepmaxxing',
+    badge: 'Offline ML Engine',
+  },
+  {
+    title: 'SecureDrop',
+    description:
+      'Secure client-server file transfer with authenticated exchange, encryption, integrity verification, and containerized deployment for reproducible testing.',
+    tech: ['C++', 'OpenSSL', 'TCP Sockets', 'Docker'],
+    github: 'https://github.com/jangel19/SecureDrop.git',
+  },
+  {
+    title: 'BeforeYouGo',
+    description:
+      'iOS health companion for Apple Health data review and appointment prep, built around HealthKit sync, conversational logging, and backend summary generation.',
+    tech: ['Swift', 'HealthKit', 'Laravel', 'MySQL'],
+    github: 'https://github.com/jangel19/beforeyougo',
+    badge: '3rd Place, ViTAL Hacks 2026',
+  },
+  {
+    title: 'NightSky',
+    description:
+      'Custom star-map generator with a Flask backend, local coordinate caching, and a frontend optimized for fast rendering across screen sizes.',
+    tech: ['Python', 'Flask', 'AstroPy', 'JavaScript'],
+    github: 'https://github.com/jangel19/NightSky.git',
+  },
+];
+
+const reveal = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.55, ease: 'easeOut' },
+};
+
+const tagClassName =
+  'rounded-md border border-[rgba(74,158,255,0.16)] bg-[rgba(255,255,255,0.02)] px-2.5 py-1 font-mono text-[0.72rem] tracking-[0.08em] text-[#c6ccd7]';
+
+const ProjectCard = ({ project }) => (
+  <motion.article
+    className={`group flex h-full flex-col rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] transition-colors duration-300 hover:border-[rgba(74,158,255,0.34)] ${project.layout ?? ''}`}
+    whileHover={{ y: -4 }}
+    transition={{ duration: 0.22, ease: 'easeOut' }}
+  >
+    <div className={`overflow-hidden border-b border-[rgba(74,158,255,0.1)] ${project.imageHeight}`}>
+      <img
+        src={project.image}
+        alt={project.title}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+        loading="lazy"
+      />
+    </div>
+    <div className="flex flex-1 flex-col p-5 md:p-6">
+      <p className={`font-mono text-[0.68rem] uppercase tracking-[0.28em] ${project.badgeTone}`}>
+        {project.badge}
+      </p>
+      <h3 className="mt-4 font-mono text-2xl tracking-[0.04em] text-[#e8eaf0]">
+        {project.title}
+      </h3>
+      <p className="mt-4 font-sans text-[0.95rem] leading-7 text-[#b8c0ce]">
+        {project.description}
+      </p>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {project.tech.map((item) => (
+          <span key={item} className={tagClassName}>
+            {item}
+          </span>
+        ))}
+      </div>
+      {(project.github || project.live) && (
+        <div className="mt-auto flex items-center gap-3 pt-6">
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.1)] bg-[rgba(74,158,255,0.08)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#e8eaf0] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:bg-[rgba(74,158,255,0.14)]"
+            >
+              Live Site
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.14)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:text-[#e8eaf0]"
+            >
+              <FaGithub className="h-4 w-4" />
+              GitHub
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </motion.article>
+);
+
+const CompactProjectCard = ({ project }) => (
+  <motion.article
+    className="flex h-full flex-col rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] p-5 transition-colors duration-300 hover:border-[rgba(74,158,255,0.34)]"
+    whileHover={{ y: -3 }}
+    transition={{ duration: 0.22, ease: 'easeOut' }}
+  >
+    {project.badge && (
+      <p className="mb-3 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#3da88a]">
+        {project.badge}
+      </p>
+    )}
+    <h3 className="font-mono text-xl tracking-[0.04em] text-[#e8eaf0]">{project.title}</h3>
+    <p className="mt-4 font-sans text-[0.95rem] leading-7 text-[#b8c0ce]">{project.description}</p>
+    <div className="mt-5 flex flex-wrap gap-2">
+      {project.tech.map((item) => (
+        <span key={item} className={tagClassName}>
+          {item}
+        </span>
+      ))}
+    </div>
+    {(project.github || project.live) && (
+      <div className="mt-auto pt-6">
+        <div className="flex items-center gap-3">
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.1)] bg-[rgba(74,158,255,0.08)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#e8eaf0] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:bg-[rgba(74,158,255,0.14)]"
+            >
+              Live Site
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.14)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:text-[#e8eaf0]"
+            >
+              <FaGithub className="h-4 w-4" />
+              GitHub
+            </a>
+          )}
+        </div>
+      </div>
+    )}
+  </motion.article>
+);
 
 const ProjectsSection = () => {
-  const getStatusFromRange = (status, state) => {
-  const now = new Date();
-
-  if (state === "completed") {
-    return {
-      label: status,
-      className: "bg-green-100 text-green-800"
-    };
-  }
-
-  if (state === "in-progress") {
-    return {
-      label: status,
-      className: "bg-yellow-100 text-yellow-800"
-    };
-  }
-
-  if (state === "prototype") {
-    return {
-      label: status,
-      className: "bg-blue-100 text-blue-800"
-    };
-  }
-
-  if (/present|ongoing|in progress/i.test(status)) {
-    return {
-      label: status,
-      className: "bg-yellow-100 text-yellow-800"
-    };
-  }
-
-  const parts = status.split("-");
-  if (parts.length < 2) {
-    return {
-      label: status,
-      className: "bg-blue-100 text-blue-800"
-    };
-  }
-
-  const endPart = parts[1].trim();
-  if (!/^[A-Za-z]+ \d{4}$/.test(endPart)) {
-    return {
-      label: status,
-      className: "bg-blue-100 text-blue-800"
-    };
-  }
-
-  const endDate = new Date(`${endPart} 01`);
-  endDate.setMonth(endDate.getMonth() + 1);
-  endDate.setDate(0);
-
-  if (now > endDate) {
-    return {
-      label: status,
-      className: "bg-green-100 text-green-800"
-    };
-  }
-
-  return {
-    label: status,
-    className: "bg-yellow-100 text-yellow-800"
-  };
-};
-  // Animation variants for the container
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  }
-
-
-  // animation for project cards
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-      scale: 0.95
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut'
-      }
-    }
-  }
-
-  // project data
-  const projects = [
-    {
-      id: 1,
-      title: 'Sleepmaxxing',
-      state: 'completed',
-      description: `
-        A local recovery intelligence engine that analyzes personal health data over time to
-        generate weekly recovery summaries, a recovery score, and short-term HRV predictions.
-        The system explains why recovery is improving or declining, highlights the primary
-        physiological drivers behind those changes, and transparently reports model reliability as
-        predictions are evaluated against real outcomes. Designed to work with data from any
-        wearable, the engine runs fully offline and prioritizes explainability, user trust, and
-        incremental learning over time.
-      `,
-      status: 'December 2025 - January 2026',
-      tech: ['C++', 'mlpack', 'Systems', 'Machine Learning'],
-      github: 'https://github.com/jangel19/sleepmaxxing',
-      image: '/graph.png',
-      demo: 'https://www.loom.com/share/05b3960518ab4bc0ae42a1ede4591d17'
-    },
-    {
-      id: 2,
-      title: 'SecureDrop',
-      state: 'completed',
-      description: `
-        SecureDrop is a secure client–server file transfer system that enables
-        authenticated users to exchange files with confidentiality and integrity guarantees.
-        I worked as part of a team to design and implement the system, contributing to the TCP
-        networking layer, encryption and integrity verification using OpenSSL, and containerizing
-        the application with Docker to ensure consistent deployment, testing, and debugging across
-        environments.
-      `,
-      status: 'November 2025 - December 2025',
-      tech: ['C++', 'Python', 'OpenSSL', 'TCP Sockets', 'Linux', 'Docker'],
-      github: 'https://github.com/jangel19/SecureDrop.git',
-      image: '/securedropimg.png'
-    },
-
-    {
-      id: 3,
-      title: 'VITA Health',
-      state: 'prototype',
-      description: `
-        Developed a wearable health-tech prototype using an ESP32 that collected heart rate and
-        motion data to calculate steps, activity levels, and basic health metrics. Implemented
-        firmware using Arduino-based C to handle sensor sampling, data processing, and BLE
-        transmission. Designed a custom PCB integrating biometric sensors and a haptic motor
-        for notifications and alarms, and built a simple web-based interface backed by
-        Supabase to display and store collected data. Collaborated within a small team to
-        validate end-to-end hardware-to-UI data flow.
-      `,
-      status: 'February 2025 - Prototype',
-      tech: ['C (Arduino)', 'ESP32', 'BLE', 'Supabase', 'PCB Design', 'Git', 'Arduino IDE'],
-      github: 'https://github.com/jangel19/VITA.git',
-      image: '/prototype.png'
-    },
-
-    {
-      id: 4,
-      title: 'FutureFin',
-      state: 'in-progress',
-      description: `
-        I’m developing a web-based tool that analyzes historical stock data and
-        visualizes trends using yfinance and Matplotlib. I implement moving averages and standard
-        deviation bands to highlight momentum and volatility signals for basic trading insights.
-        The architecture is modular, designed to support future integration of regression-based
-        price prediction models.
-      `,
-      status: 'June 2025 - In Progress',
-      tech: ['Python', 'pandas', 'yfinance', 'Matplotlib'],
-      github: 'https://github.com/jangel19/futurefin.git',
-      image: '/tempfuturefin.png'
-    },
-
-
-    {
-      id: 5,
-      title: 'NightSky',
-      state: 'completed',
-      description: `
-        This project is a web application that generates custom star maps based on a
-        user’s selected date and location using astronomical libraries. It features a Python Flask
-        backend for efficient data processing, reducing external API calls by 40% through local
-        caching of star coordinates. The frontend is optimized for performance across desktop and
-        mobile, with future updates planned to further improve speed and accuracy.
-      `,
-      status: 'May 2025 - August 2025',
-      tech: ['Python', 'JavaScript', 'Flask', 'AstroPy', 'Vercel', 'Git', 'HTML', 'CSS'],
-      github: 'https://github.com/jangel19/NightSky.git',
-      image: '/nightsky.png',
-      demo: 'https://www.loom.com/share/2f59bafd54614a869edd8bd52c957cbd?sid=0a9cc181-7916-4dd6-a836-d9e094b9eaa4'
-    },
-
-    {
-    id: 6,
-    title: 'Ale’s Doc Filter',
-    state: 'completed',
-    description:`
-      Built an automation tool for my friend that extracts product-specific
-      data from a master Word document and generates clean, shareable reports. Designed to streamline
-      internal documentation workflows.
-    `,
-    status: 'July 2025 - July 2025',
-    tech: ['Python', 'Docx', 'Git', 'VS Code'],
-    github: 'https://github.com/jangel19/aleslightsensor.git',
-    image: '/alesthing.png',
-    demo: 'https://www.loom.com/share/55f04ccfbb164e228b05f8a1864a7880?sid=4acb2aa4-96b5-45c7-8461-603990de4d85'
-    }
-  ]
-
-
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Section title */}
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          My Projects
-        </motion.h2>
+    <section className="px-6 py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.div {...reveal}>
+          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
+            Selected Work
+          </p>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <h2 className="max-w-3xl font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
+              Projects weighted by technical depth, not by template symmetry.
+            </h2>
+            <p className="max-w-xl font-sans text-base leading-7 text-[#9ca3af]">
+              Embedded prototypes, wearable recovery systems, and data-intensive tools
+              presented with the same hierarchy I would use in an engineering review.
+            </p>
+          </div>
+        </motion.div>
 
-        <motion.p
-          className="text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Here are some of the projects I'm currently working on. Each one represents
-          a unique challenge and learning opportunity.
-        </motion.p>
-
-        {/* Projects grid */}
         <motion.div
-          className="grid md:grid-cols-2 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          className="mt-14 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3"
+          {...reveal}
         >
-          {projects.map(project => {
-            const { label, className } = getStatusFromRange(project.status, project.state);
+          {featuredProjects.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </motion.div>
 
-            return (
-            <motion.div
-              key={project.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              variants={cardVariants}
-              whileHover={{
-                y: -5,
-                transition: { duration: 0.3 }
-              }}
-            >
-              {/* Project image */}
-              <div className="h-48 w-full overflow-hidden">
-                <img src={project.image} alt={project.title} className="object-cover w-full h-full" />
-              </div>
-
-              {/* Project content */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                 <span
-                  className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${className}`}
-                >
-                  {label}
-                </span>
-                </div>
-
-                {/* Project title */}
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  {project.title}
-                </h3>
-
-                {/* Project description */}
-                <p className="text-gray-600 mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Tech stack */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="bg-gray-100 text-gray-700 text-xs font-medium px-2.5 py-1 rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Action buttons */}
-                <div className="flex gap-3">
-                     <a
-                        href={project.github}
-                       target="_blank"
-                        rel="noopener noreferrer"
-                         className="flex items-center justify-center gap-2 flex-1 bg-gray-900 text-white py-2 px-4 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-300"
-                        whileHover={{ scale: 1.05 }}>
-                     <FaGithub className="w-5 h-5" />
-                       GitHub
-                       </a>
-                       {project.demo ? (
-                          <a
-                          href={project.demo}
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           className="flex items-center justify-center gap-2 flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300"
-                             whileHover={{ scale: 1.05 }}>
-                              Live Demo
-                             </a>
-                      ) : (
-                     <button className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300">
-                       Live Demo <span className="text-gray-500">(Coming Soon)</span>
-                      </button>
-                      )}
-                  </div>
-              </div>
-            </motion.div>
-          );
-        })}
+        <motion.div
+          className="mt-6 grid auto-rows-fr gap-6 md:grid-cols-2 xl:grid-cols-3"
+          {...reveal}
+        >
+          {secondaryProjects.map((project) => (
+            <CompactProjectCard key={project.title} project={project} />
+          ))}
         </motion.div>
       </div>
     </section>
   );
-}
+};
 
-export default ProjectsSection
+export default ProjectsSection;

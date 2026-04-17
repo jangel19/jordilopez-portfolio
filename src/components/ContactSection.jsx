@@ -1,55 +1,49 @@
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
 import { useForm, ValidationError } from '@formspree/react';
 
+const socialLinks = [
+  { name: 'GitHub', url: 'https://github.com/jangel19' },
+  { name: 'LinkedIn', url: 'https://linkedin.com/in/jordi-lopez-cs' },
+  { name: 'Email', url: 'mailto:lopesjordi0@gmail.com' },
+];
+
+const reveal = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.25 },
+  transition: { duration: 0.55, ease: 'easeOut' },
+};
+
+const fieldClassName =
+  'w-full rounded-lg border border-[rgba(74,158,255,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-3 font-sans text-[#e8eaf0] outline-none transition-colors duration-300 placeholder:text-[#6b7280] focus:border-[rgba(74,158,255,0.4)]';
 
 const ContactSection = () => {
-  const [state, handleSubmit] = useForm("mkgzwaqz");
-
-  // Social links data
-  const socialLinks = [
-    { name: 'GitHub', url: 'https://github.com/jangel19', icon: <img src="/github-icon-1.svg" alt="GitHub" style={{ width: '40px', height: '40px' }}/> },
-    { name: 'LinkedIn', url: 'https://linkedin.com/in/jordi-lopez-cs', icon: <img src="/linkedin-icon-2.svg" alt="LinkedIn" style={{ width: '40px', height: '40px' }}/> },
-    { name: 'Email', url: 'mailto:lopesjordi0@gmail.com', icon: <img src="/gmail-icon.svg" alt="Email" style={{ width: '40px', height: '40px' }}/> },
-  ]
+  const [state, handleSubmit] = useForm('mkgzwaqz');
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4">
-        {/* Section title */}
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          Get In Touch
-        </motion.h2>
+    <section className="px-6 py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.div {...reveal}>
+          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
+            Contact
+          </p>
+          <h2 className="font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
+            Get In Touch
+          </h2>
+        </motion.div>
 
-        <motion.p
-          className="text-xl text-gray-600 text-center mb-16 max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          I'm always open to discussing new opportunities, interesting projects,
-          or just having a chat about technology.
-        </motion.p>
-
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact form */}
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            className="rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] p-6 md:p-8"
+            {...reveal}
           >
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6">Send me a message</h3>
+            <h3 className="font-mono text-lg tracking-[0.14em] text-[#e8eaf0]">
+              Send a message
+            </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="mb-2 block font-sans text-sm text-[#c6ccd7]">
                   Name *
                 </label>
                 <input
@@ -57,14 +51,14 @@ const ContactSection = () => {
                   type="text"
                   name="name"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                  className={fieldClassName}
                   placeholder="Your full name"
                 />
-                <ValidationError prefix="Name" field="name" errors={state.errors} />
+                <ValidationError prefix="Name" field="name" errors={state.errors} className="mt-2 text-sm text-[#f59e0b]" />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="mb-2 block font-sans text-sm text-[#c6ccd7]">
                   Email *
                 </label>
                 <input
@@ -72,25 +66,25 @@ const ContactSection = () => {
                   type="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                  className={fieldClassName}
                   placeholder="your.email@example.com"
                 />
-                <ValidationError prefix="Email" field="email" errors={state.errors} />
+                <ValidationError prefix="Email" field="email" errors={state.errors} className="mt-2 text-sm text-[#f59e0b]" />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="message" className="mb-2 block font-sans text-sm text-[#c6ccd7]">
                   Message *
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   required
-                  rows="5"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg resize-vertical"
-                  placeholder="Tell me about your project, opportunity, or just say hello!"
+                  rows="6"
+                  className={`${fieldClassName} resize-y`}
+                  placeholder="Tell me about your project, team, or wearable problem space."
                 />
-                <ValidationError prefix="Message" field="message" errors={state.errors} />
+                <ValidationError prefix="Message" field="message" errors={state.errors} className="mt-2 text-sm text-[#f59e0b]" />
               </div>
 
               <input type="text" name="_gotcha" style={{ display: 'none' }} />
@@ -98,69 +92,77 @@ const ContactSection = () => {
               <button
                 type="submit"
                 disabled={state.submitting}
-                className="w-full inline-block bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-300 mb-8"
+                className="inline-flex items-center justify-center rounded-md border border-[rgba(74,158,255,0.18)] bg-[rgba(74,158,255,0.1)] px-5 py-3 font-mono text-xs uppercase tracking-[0.2em] text-[#e8eaf0] transition-colors duration-300 hover:border-[rgba(74,158,255,0.38)] hover:bg-[rgba(74,158,255,0.16)] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {state.submitting ? "Sending..." : "Send Message"}
+                {state.submitting ? 'Sending...' : 'Send Message'}
               </button>
 
               {state.succeeded && (
-                <p className="text-blue-950 font-medium mt-2">Thanks! I’ll be in touch soon.</p>
+                <p className="font-sans text-sm text-[#3da88a]">
+                  Thanks. I&apos;ll follow up soon.
+                </p>
               )}
             </form>
           </motion.div>
 
-          {/* Contact info and social links */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
+          <motion.div className="flex flex-col justify-between gap-10" {...reveal}>
             <div>
-              <h3 className="text-2xl font-semibold text-gray-800 mb-6">Let's connect</h3>
-              <p className="text-gray-600 mb-6">
-                I’m currently exploring Summer 2026 opportunities in AI, machine learning, and data-driven development. I’m passionate about solving real-world problems through intelligent systems and thoughtful engineering. Whether you’re building innovative tech, researching new models, or interested in collaboration — I’d love to connect.
-              </p>
-
-              {/* Download resume button */}
-              <a
-                href="/Jordi Lopez SWE Resume.pdf"
-                download
-                className="inline-block bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-300 mb-8"
-              >
-                Download Resume
-              </a>
+              <h3 className="font-mono text-lg tracking-[0.14em] text-[#e8eaf0]">
+                Current Focus
+              </h3>
+              <div className="mt-6 space-y-6 font-sans text-base leading-8 text-[#c6ccd7]">
+                <p>
+                  I&apos;m exploring Summer 2026 opportunities in wearable health technology,
+                  embedded systems, and machine learning. I&apos;m passionate about building
+                  systems that turn raw sensor data into insights that help people make
+                  better decisions about their health.
+                </p>
+                <p>
+                  Whether you&apos;re working on wearables, medical devices, or biosignal
+                  processing, I&apos;d love to connect.
+                </p>
+              </div>
             </div>
 
-            {/* Social links */}
             <div>
-              <h4 className="text-lg font-semibold text-gray-800 mb-4">Find me online</h4>
-              <div className="grid grid-cols-2 gap-4">
-                {socialLinks.map((link, index) => (
-                  <motion.a
+              <h4 className="font-mono text-sm tracking-[0.22em] text-[#6b7280]">
+                Network
+              </h4>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {socialLinks.map((link) => (
+                  <a
                     key={link.name}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
+                    className="rounded-md border border-[rgba(74,158,255,0.14)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:text-[#e8eaf0]"
                   >
-                    <span className="text-2xl">{link.icon}</span>
-                    <span className="font-medium text-gray-700">{link.name}</span>
-                  </motion.a>
+                    {link.name}
+                  </a>
                 ))}
               </div>
             </div>
           </motion.div>
         </div>
+
+        <motion.footer
+          className="mt-16 flex flex-col gap-3 border-t border-[rgba(74,158,255,0.1)] pt-6 font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#6b7280] md:flex-row md:items-center md:justify-between"
+          {...reveal}
+        >
+          <p>© 2026 Jordi Lopez • Built with React & Tailwind CSS</p>
+          <div className="flex items-center gap-4">
+            <a
+              href="/Jordi_Lopez_Resume.pdf"
+              className="transition-colors duration-300 hover:text-[#4a9eff]"
+            >
+              Resume
+            </a>
+            <span>v2.1.0</span>
+          </div>
+        </motion.footer>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ContactSection
+export default ContactSection;

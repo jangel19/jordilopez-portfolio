@@ -1,134 +1,125 @@
-import { motion } from "framer-motion"
+import { motion } from 'framer-motion';
 
+const skillColumns = [
+  {
+    title: 'EMBEDDED SYSTEMS',
+    items: [
+      'ESP32/nRF52 firmware',
+      'I2C/SPI protocols',
+      'BLE (GATT/GAP)',
+      'Real-time constraints',
+      'Power optimization',
+    ],
+  },
+  {
+    title: 'SIGNAL PROCESSING',
+    items: [
+      'IMU calibration (BNO055)',
+      'HRV/RHR analysis',
+      'Z-score normalization',
+      'Adaptive baselines',
+      'Allan deviation',
+    ],
+  },
+  {
+    title: 'LANGUAGES & TOOLS',
+    items: [
+      'C/C++ (primary)',
+      'Python (analysis)',
+      'Monkey C (Garmin)',
+      'Git, Neovim, Debian',
+    ],
+  },
+  {
+    title: 'MATHEMATICS',
+    items: [
+      'Linear regression',
+      'Stochastic processes',
+      'Time series analysis',
+      'Statistical modeling',
+    ],
+  },
+];
+
+const reveal = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.25 },
+  transition: { duration: 0.55, ease: 'easeOut' },
+};
 
 const AboutSection = () => {
-  // animatiosn for the container
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  }
-
-  // animations for the items
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut'
-      }
-    }
-  }
-
-  // skills
-  const skills = [
-    { name: 'C/C++', icon: '/cpp.svg' },
-    { name: 'Python', icon: '/python logo.svg' },
-    { name: 'JavaScript', icon: '/JavaScript.svg' },
-    { name: 'Supabase', icon: '/Supabase-Dark.svg' },
-    { name: 'Flask', icon: '/flask.svg' },
-    { name: 'Git', icon: '/git logo.svg' }
-  ]
-
   return (
-    <section       id="AboutSection" className="py-20 bg-gradient-to-br from-gray-150 to-blue-300">
-      <div className="max-w-6xl mx-auto px-4">
-        {/* section title */}
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          About Me
-        </motion.h2>
-
-        {/* main grid */}
+    <section id="AboutSection" className="px-6 py-24">
+      <div className="mx-auto max-w-6xl">
         <motion.div
-          className="grid md:grid-cols-2 gap-12 items-center mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-start"
+          {...reveal}
         >
-          {/* photo */}
-          <motion.div
-            className="flex justify-center"
-            variants={itemVariants}
-          >
-            <div className="w-80 h-80 rounded-2xl overflow-hidden shadow-2xl">
+          <div>
+            <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
+              About
+            </p>
+            <h2 className="max-w-2xl font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
+              Embedded systems and biosignal work grounded in research.
+            </h2>
+            <div className="mt-8 space-y-6 font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
+              <p>
+                I'm a sophomore at UMass Lowell double-majoring in Computer Science
+                and Applied Mathematics & Statistics. I build embedded
+                systems for wearable health technology, from firmware on ESP32
+                microcontrollers to recovery algorithms processing biosignal data.
+              </p>
+              <p>
+                I conduct undergraduate research on IMU sensor calibration at the
+                Center for Advanced Computation and Telecommunications, focusing on
+                bias correction for motion tracking in wearable devices. I implement
+                sensor fusion and adaptive baselines based on peer-reviewed research
+                on athletic performance and overtraining syndrome.
+              </p>
+              <p>
+                My work spans embedded firmware, statistical signal processing, and
+                machine learning, building systems that turn raw sensor data into
+                actionable insights.
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:pt-14">
+            <div className="overflow-hidden rounded-lg border border-[rgba(74,158,255,0.14)] bg-[rgba(255,255,255,0.02)]">
               <img
                 src="/photo.jpeg"
-                alt="Profile photo"
-                className="w-full h-full object-cover"
+                alt="Jordi Lopez"
+                className="h-full w-full object-cover"
+                loading="eager"
               />
             </div>
-          </motion.div>
-
-          {/* bio column */}
-
-          <motion.div
-            className="space-y-6"
-            variants={itemVariants}
-          >
-            <p className="text-lg text-gray-700 leading-relaxed">
-              I’m pursuing a B.S. in Computer Science with a Mathematics minor at UMass Lowell, where I’m building a foundation in software engineering and machine learning. My journey hasn’t been easy, I faced serious family challenges during my first year, but came back stronger, earning a 4.0 GPA my second semester and never losing focus since.
-
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              What drives me is the pursuit of knowledge and the intersection of logic, data, and impact. I’m passionate about creating intelligent systems, from health-tech wearables to real estate analytics, that make technology more useful and human-centered.
-
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Every project is a new experiment in learning, building, and applying theory to reality. Outside of tech, I’m focused on fitness (training for an Ironman), spending time with family, and staying grounded in faith and discipline.
-
-            </p>
-          </motion.div>
+          </div>
         </motion.div>
 
-        {/* skills */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-20 grid gap-10 md:grid-cols-2"
+          {...reveal}
         >
-          <h3 className="text-2xl font-semibold text-center text-gray-800 mb-8">
-            Skills & Technologies
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {skills.map((skill, index) => (
-              <motion.div
-                key={skill.name}
-                className="bg-gray-200 rounded-xl p-6 text-center hover:bg-gray-400 transition-colors duration-300 cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-               <img
-                    src={skill.icon}
-                    alt={`${skill.name} logo`}
-                    className="w-10 h-10 mx-auto mb-2 object-contain"
-                />
-                <div className="text-sm font-medium text-gray-700">{skill.name}</div>
-              </motion.div>
-            ))}
-          </div>
+          {skillColumns.map((column) => (
+            <div key={column.title}>
+              <h3 className="mb-5 font-mono text-sm tracking-[0.28em] text-[#4a9eff]">
+                {column.title}
+              </h3>
+              <ul className="space-y-3 font-sans text-[0.98rem] text-[#c6ccd7]">
+                {column.items.map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="text-[#3da88a]">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default AboutSection
+export default AboutSection;
