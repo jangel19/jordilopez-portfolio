@@ -112,14 +112,7 @@ const ContactSection = () => {
               </h3>
               <div className="mt-6 space-y-6 font-sans text-base leading-8 text-[#c6ccd7]">
                 <p>
-                  I&apos;m exploring Summer 2026 opportunities in wearable health technology,
-                  embedded systems, and machine learning. I&apos;m passionate about building
-                  systems that turn raw sensor data into insights that help people make
-                  better decisions about their health.
-                </p>
-                <p>
-                  Whether you&apos;re working on wearables, medical devices, or biosignal
-                  processing, I&apos;d love to connect.
+                    This summer I'm on a Hardware Engineering co-op at Teradyne and building Owell, a precision irrigation system targeting deployment in Ecuador. I'm focused on embedded systems, ML deployment, and shipping software that works under real constraints. If you're working on wearables, sensor fusion, or applied ML, I'd love to connect.
                 </p>
               </div>
             </div>
@@ -149,7 +142,7 @@ const ContactSection = () => {
           className="mt-16 flex flex-col gap-3 border-t border-[rgba(74,158,255,0.1)] pt-6 font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#6b7280] md:flex-row md:items-center md:justify-between"
           {...reveal}
         >
-          <p>© 2026 Jordi Lopez • Built with React & Tailwind CSS</p>
+          <p>© 2026 Jordi Lopez </p>
           <div className="flex items-center gap-4">
             <a
               href="/Jordi_Lopez_Resume.pdf"

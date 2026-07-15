@@ -11,6 +11,7 @@ const skillColumns = [
       'Power optimization',
     ],
   },
+
   {
     title: 'SIGNAL PROCESSING',
     items: [
@@ -24,19 +25,10 @@ const skillColumns = [
   {
     title: 'LANGUAGES & TOOLS',
     items: [
-      'C/C++ (primary)',
-      'Python (analysis)',
+      'C/C++',
+      'Python',
       'Monkey C (Garmin)',
       'Git, Neovim, Debian',
-    ],
-  },
-  {
-    title: 'MATHEMATICS',
-    items: [
-      'Linear regression',
-      'Stochastic processes',
-      'Time series analysis',
-      'Statistical modeling',
     ],
   },
 ];
@@ -61,26 +53,21 @@ const AboutSection = () => {
               About
             </p>
             <h2 className="max-w-2xl font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
-              Embedded systems and biosignal work grounded in research.
+              ML systems and embedded software grounded in real deployment.
             </h2>
             <div className="mt-8 space-y-6 font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
               <p>
-                I'm a sophomore at UMass Lowell double-majoring in Computer Science
-                and Applied Mathematics & Statistics. I build embedded
-                systems for wearable health technology, from firmware on ESP32
-                microcontrollers to recovery algorithms processing biosignal data.
+                I'm a junior at UMass Lowell double-majoring in Computer Science
+      and Applied Mathematics & Statistics. Currently on a Hardware Engineering co-op at Teradyne.
+              </p>
+      <p>
+      Developed a graduate advising intelligence platform for UMass Lowell's Kennedy College of Sciences, risk scoring, cohort anomaly detection, and advisor behavior modeling on top of live student data.
+      </p>
+              <p>
+                Previously built bias correction pipelines and real-time TCP streaming systems for IMU sensor calibration at CACT, supporting wearable motion tracking research.
               </p>
               <p>
-                I conduct undergraduate research on IMU sensor calibration at the
-                Center for Advanced Computation and Telecommunications, focusing on
-                bias correction for motion tracking in wearable devices. I implement
-                sensor fusion and adaptive baselines based on peer-reviewed research
-                on athletic performance and overtraining syndrome.
-              </p>
-              <p>
-                My work spans embedded firmware, statistical signal processing, and
-                machine learning, building systems that turn raw sensor data into
-                actionable insights.
+                My work spans embedded firmware, ML deployment, and statistical signal processing, building systems that go from raw sensor data to production.
               </p>
             </div>
           </div>
@@ -88,7 +75,7 @@ const AboutSection = () => {
           <div className="lg:pt-14">
             <div className="overflow-hidden rounded-lg border border-[rgba(74,158,255,0.14)] bg-[rgba(255,255,255,0.02)]">
               <img
-                src="/photo.jpeg"
+                src="/newphoto.jpeg"
                 alt="Jordi Lopez"
                 className="h-full w-full object-cover"
                 loading="eager"

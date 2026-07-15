@@ -2,12 +2,35 @@ import { motion } from 'framer-motion';
 import { FaGithub } from 'react-icons/fa';
 
 const featuredProjects = [
+    {
+        title: 'Owell',
+        badge: 'AI-powered precision irrigation system — in development',
+        image: '/owell.png',
+        description: 
+        "Full-stack embedded system targeting deployment in Ecuador. ESP32-S3 firmware with offline-first schedule execution, NVS-persisted schedules, NTP sync with internal clock fallback, and per-valve duration control. Go backend on EC2 with MQTT over AWS IoT Core, Postgres device registry, and a custom scheduling endpoint. Farmer-facing iOS app for pairing, valve control, and custom schedule configuration. Engineer-facing ops dashboard for live device status and schedule monitoring across all deployed units.",
+        tech: ['ESP32', 'Go', 'MQTT', 'AWS IoT Core', 'Postgres', 'iOS', 'PlatformIO'],
+        imageHeight: 'h-48',
+        badgeTone: 'text-[#3da88a]',
+    },
+     {
+    title: 'Coal2Core',
+    badge: 'Most Innovative Idea, Tufts Datathon',
+    image: '/ml.png',
+    description:
+      'ML-first framework for ranking retiring U.S. coal plants for SMR conversion under rising AI energy demand. Built and validated a nested cross-validated RBF-SVR pipeline that achieved a 0.9652 out-of-fold R squared score, stress-tested top candidates with 1,000 Monte Carlo simulations, and identified sites capable of avoiding up to 29 million tons of CO2 annually.',
+    tech: ['Machine Learning', 'Scikit-learn', 'RBF-SVR', 'Nested Cross-Validation', 'Monte Carlo', 'Energy Modeling'],
+    github: 'https://github.com/jangel19/coal2core-ml-pipeline',
+    live: 'https://coal-to-core.vercel.app/',
+    imageHeight: 'h-48',
+    badgeTone: 'text-[#3da88a]',
+  },
+
   {
     title: 'PhysioRecovery',
     badge: 'Production Garmin Connect IQ App',
     image: '/recovery.png',
     description:
-      "Recovery scoring app for Garmin wearables built with fixed-point DSP and sensor fusion under tight memory and battery constraints. Implemented in Monkey C to benchmark HRV, Body Battery, and resting heart rate trends against Garmin's proprietary recovery signals while keeping the pipeline lightweight enough for on-device execution.",
+      "Recovery scoring app for Garmin wearables built with fixed-point DSP and sensor fusion under tight memory and battery constraints. Samples HRV, Body Battery, and resting heart rate on wake, runs a z-score normalization pipeline against adaptive baselines, and writes a recovery score directly to the device. Implemented in Monkey C to benchmark against Garmin's proprietary recovery signals while keeping the pipeline lightweight enough for on-device execution.",
     tech: ['Monkey C', 'Fixed-Point DSP', 'Garmin Connect IQ', 'Sensor Fusion'],
     github: 'https://github.com/jangel19/recoveryMaxxing',
     layout: '',
@@ -20,30 +43,18 @@ const featuredProjects = [
     image: '/prototype.png',
     description:
       'Wearable health prototype using ESP32 for heart rate and motion tracking. Implemented C firmware for sensor sampling and BLE transmission. Designed a custom PCB with biometric sensors and haptic feedback.',
-    tech: ['ESP32', 'BLE', 'C (Arduino)', 'PCB Design', 'Supabase', 'Git'],
+    tech: ['ESP32', 'BLE', 'C (Arduino)', 'PCB Design', 'Supabase'],
     github: 'https://github.com/jangel19/VITA.git',
     imageHeight: 'h-48',
     badgeTone: 'text-[#3da88a]',
   },
-  {
-    title: 'Coal2Core',
-    badge: 'Most Innovative Idea, Tufts Datathon',
-    image: '/ml.png',
-    description:
-      'ML-first framework for ranking retiring U.S. coal plants for SMR conversion under rising AI energy demand. Built and validated a nested cross-validated RBF-SVR pipeline that achieved a 0.9652 out-of-fold R squared score, stress-tested top candidates with 1,000 Monte Carlo simulations, and identified sites capable of avoiding up to 29 million tons of CO2 annually.',
-    tech: ['Machine Learning', 'Scikit-learn', 'RBF-SVR', 'Nested Cross-Validation', 'Monte Carlo', 'Energy Modeling'],
-    github: 'https://github.com/jangel19/coal2core-ml-pipeline',
-    live: 'https://coal-to-core.vercel.app/',
-    imageHeight: 'h-48',
-    badgeTone: 'text-[#3da88a]',
-  },
-];
+ ];
 
 const secondaryProjects = [
   {
     title: 'Sleepmaxxing',
     description:
-      'Offline recovery intelligence engine for weekly summaries, recovery scoring, and short term HRV prediction. Designed for personal wearable data with explainable outputs and reliability tracking. Built as a local first C++ system using mlpack.',
+      'Offline recovery intelligence engine built in C++ using mlpack. Ingests personal wearable health CSVs, trains locally to predict future recovery and HRV trends, then compares actual vs. predicted outcomes and adjusts its model accordingly. Designed for full local execution with no cloud dependency and explainable outputs.',
     tech: ['C++', 'mlpack', 'Systems', 'Machine Learning'],
     github: 'https://github.com/jangel19/sleepmaxxing',
     badge: 'Offline ML Engine',
@@ -51,9 +62,10 @@ const secondaryProjects = [
   {
     title: 'SecureDrop',
     description:
-      'Secure client-server file transfer with authenticated exchange, encryption, integrity verification, and containerized deployment for reproducible testing.',
+      'Secure file transfer system built for a Computer Security course. Owned user authentication (salted SHA-256, JSON persistence) and independently reimplemented the entire transfer layer in C++ with OpenSSL after the team had initially gone with Python/TLS approach which failed under Docker - AES-256-CBC encryption, SHA-256 integrity verification, and a custom binary protocol tested across multi-container deployments.',
     tech: ['C++', 'OpenSSL', 'TCP Sockets', 'Docker'],
     github: 'https://github.com/jangel19/SecureDrop.git',
+      
   },
   {
     title: 'BeforeYouGo',
@@ -62,13 +74,6 @@ const secondaryProjects = [
     tech: ['Swift', 'HealthKit', 'Laravel', 'MySQL'],
     github: 'https://github.com/jangel19/beforeyougo',
     badge: '3rd Place, ViTAL Hacks 2026',
-  },
-  {
-    title: 'NightSky',
-    description:
-      'Custom star-map generator with a Flask backend, local coordinate caching, and a frontend optimized for fast rendering across screen sizes.',
-    tech: ['Python', 'Flask', 'AstroPy', 'JavaScript'],
-    github: 'https://github.com/jangel19/NightSky.git',
   },
 ];
 

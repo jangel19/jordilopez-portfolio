@@ -34,23 +34,18 @@ const LandingSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: 'easeOut' }}
       >
-        <p className="mb-5 font-mono text-[0.72rem] uppercase tracking-[0.38em] text-[#6b7280]">
-          Embedded Systems Portfolio
-        </p>
         <h1 className="font-mono text-5xl tracking-[0.08em] text-[#e8eaf0] sm:text-6xl md:text-7xl">
           Jordi Lopez
         </h1>
         <p className="mt-6 max-w-3xl font-sans text-lg text-[#9ca3af] sm:text-xl">
-          Embedded Systems • Biosignal Processing • Applied Mathematics
+          Hardware Systems • AI Development • Applied Mathematics
         </p>
         <div className="mt-10 max-w-3xl space-y-5 font-sans text-base leading-8 text-[#c6ccd7] sm:text-lg">
           <p>
-            Undergraduate researcher at UMass Lowell CACT working on IMU sensor
-            calibration for motion tracking in wearable devices.
+            Hardware Engineering co-op at Teradyne. CS + Applied Math student at UMass Lowell working at the intersection of hardware systems and machine learning.
           </p>
           <p>
-            Building recovery scoring systems, sensor fusion algorithms, and
-            real-time embedded applications.
+            Developed a graduate advising intelligence platform with cohort anomaly detection, intervention effectiveness scoring, and a background risk scoring daemon. 60+ features, 30+ endpoints, 200+ tests.
           </p>
         </div>
 

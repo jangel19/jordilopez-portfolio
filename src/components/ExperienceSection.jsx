@@ -1,8 +1,32 @@
 import { motion } from 'framer-motion';
 
 const experiences = [
+    {
+        role: 'Hardware Engineer',
+        organization: 'Teradyne',
+        location: 'North Reading, MA',
+        type: 'Co-op',
+        dates: 'July 2026 - Present',
+        description: [],
+        tech: [],
+    },
+
+    {
+        role: 'App Developer',
+        organization: 'Kennedy College of Sciences, UMass Lowell',
+        location: 'UMass Lowell',
+        type: 'Internship',
+        dates: 'May 2026 - July 2026',
+        description:[
+            'Engineered a proactive risk scoring engine that automatically scores every graduate student 0–100 using weighted factors including milestone staleness, overdue count, blockers, and cohort-aware deviation against program peers',
+            'Built secure user authentication with role-based access control, giving staff and students personalized views of the system',
+            'Collaborated directly with college leadership to design and ship tools that modernize how student data is handled',
+        ],
+        tech: ['Python', 'PostgreSQL', 'JWT', 'pytest', 'SQLite'],
+    },
   {
     role: 'Vice President & Co-Founder',
+    url: 'https://aimsociety.org',
     organization: 'Artificial Intelligence Multidisciplinary Society (AIM)',
     location: 'UMass Lowell',
     type: 'Leadership',
@@ -19,12 +43,12 @@ const experiences = [
     organization: 'Center for Advanced Computation and Telecommunications',
     location: 'UMass Lowell',
     type: 'Research',
-    dates: 'Feb 2026 - Present',
+    dates: 'Feb 2026 - April 2026',
     description: [
-      'Characterizing bias offset and drift in BNO055 IMU sensors over I2C on embedded Linux for motion tracking in wearable devices',
-      'Implementing real-time rolling deque calibration in C++ and Python to compute per-axis bias coefficients and reduce position error',
-      'Decomposing sensor error into systematic and stochastic components through Allan deviation analysis and noise characterization',
-      'Building end-to-end data pipelines with TCP streaming, CSV logging, and live PyQtGraph visualization for multi-session validation',
+      'Characterized bias offset and drift in BNO055 IMU sensors over I2C on embedded Linux for motion tracking in wearable devices',
+      'Implemented real-time rolling deque calibration in C++ and Python to compute per-axis bias coefficients and reduce position error',
+      'Decomposed sensor error into systematic and stochastic components through Allan deviation analysis and noise characterization',
+      'Built end-to-end data pipelines with TCP streaming, CSV logging, and live PyQtGraph visualization for multi-session validation',
     ],
     tech: ['C++', 'Python', 'I2C', 'Embedded Linux', 'TCP Sockets', 'Allan Deviation'],
   },
@@ -35,9 +59,8 @@ const experiences = [
     type: 'Internship',
     dates: 'Aug 2025 - Nov 2025',
     description: [
-      'Developed automated testing frameworks for Python services in production environment',
-      'Implemented structured logging, data validation, and regression testing with documented protocols',
-      'Collaborated in Agile development with code reviews and version control management',
+      'Diagnosed and resolved a production race condition in a Python service causing ~5% data loss across live client workflows',
+      'Implemented structured logging and validation to surface the failure mode and verify the fix under concurrent load',
     ],
     tech: ['Python', 'AWS', 'AWS Lambda', 'Testing Frameworks'],
   },
@@ -79,8 +102,14 @@ const ExperienceSection = () => {
                 <div className="absolute left-0 top-2 h-4 w-4 rounded-full border border-[rgba(74,158,255,0.25)] bg-[#4a9eff]" />
 
                 <p className="font-mono text-2xl tracking-[0.05em] text-[#e8eaf0]">
-                  {experience.organization}
-                </p>
+  {experience.url ? (
+    <a href={experience.url} target="_blank" rel="noopener noreferrer" className="hover:text-[#4a9eff] transition-colors">
+      {experience.organization}
+    </a>
+  ) : (
+    experience.organization
+  )}
+</p>
                 <p className="mt-2 font-sans text-lg text-[#9ca3af]">{experience.role}</p>
                 <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.24em] text-[#6b7280]">
                   <span>{experience.dates}</span>
