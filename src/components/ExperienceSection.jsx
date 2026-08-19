@@ -2,6 +2,20 @@ import { motion } from 'framer-motion';
 
 const experiences = [
     {
+        role: 'Undergraduate Researcher',
+        organization: 'UMass Lowell - Electrical and Computer Engineering Department',
+        dates: 'August 2026 - Present',
+        description: [
+            'Studying layer-wise fault sensitivity of INT8 quantized neural networks on embedded platforms using MCUNet and TinyEngine',
+            'Building a reproducible single-bit fault injection framework targeting INT8 weights and activations',
+            'Characterizing how fault impact varies by layer type, bit position, and tensor type to motivate selective protection techniques',
+            'Working within MLPerf Tiny benchmarks and TFLite quantization spec as the experimental foundation',
+        ],
+        tech: [
+            'MCUNet', 'PyTorchFI', 'INT8 Quantization', 'TFLite', 'Python'
+        ],
+    },
+    {
         role: 'Hardware Engineer',
         organization: 'Teradyne',
         location: 'North Reading, MA',

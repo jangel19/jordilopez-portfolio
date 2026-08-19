@@ -45,7 +45,7 @@ const LandingSection = () => {
             Hardware Engineering co-op at Teradyne. CS + Applied Math student at UMass Lowell working at the intersection of hardware systems and machine learning.
           </p>
           <p>
-            Developed a graduate advising intelligence platform with cohort anomaly detection, intervention effectiveness scoring, and a background risk scoring daemon. 60+ features, 30+ endpoints, 200+ tests.
+            Researching fault sensitivity of quantized nueral networks on embedded platforms at UMass Lowll. Developed a graduate advising intelligence platform with cohort anomaly detection, intervention effectiveness scoring, and a background risk scoring daemon. 60+ features, 30+ endpoints, 200+ tests.
           </p>
         </div>
 
