@@ -70,6 +70,12 @@ const getNearestPad = (point, pads, threshold) => {
   return closestDistance <= threshold ? closestKey : null;
 };
 
+// Timing budget (ms). Worst case is DEADLINE + stagger for 4 wires + FINISH_DELAY < 10s.
+const IDLE_AUTOCONNECT_MS = 3500;
+const DEADLINE_MS = 6500;
+const AUTOCONNECT_STAGGER_MS = 350;
+const FINISH_DELAY_MS = 1400;
+
 const getPadLabel = (key) => (key === 'VCC' ? 'VCC / 3.3V' : key);
 
 const PCBGate = ({ onComplete }) => {
@@ -81,6 +87,14 @@ const PCBGate = ({ onComplete }) => {
   const [powered, setPowered] = useState(false);
   const feedbackTimeoutRef = useRef(null);
   const audioContextRef = useRef(null);
+  const completedRef = useRef(false);
+  const autoTimeoutsRef = useRef([]);
+  const autoConnectingRef = useRef(false);
+  const poweredRef = useRef(false);
+  const connectionsRef = useRef({});
+
+  connectionsRef.current = connections;
+  poweredRef.current = powered;
 
   const layout = isMobile ? MOBILE_LAYOUT : DESKTOP_LAYOUT;
   const connectedCount = Object.keys(connections).length;
@@ -222,7 +236,9 @@ const PCBGate = ({ onComplete }) => {
   }, [clearFeedback, connections, dragging, isMobile, layout, playSnapTone]);
 
   useEffect(() => {
+    const autoTimeouts = autoTimeoutsRef;
     return () => {
+      autoTimeouts.current.forEach((id) => window.clearTimeout(id));
       if (feedbackTimeoutRef.current) {
         window.clearTimeout(feedbackTimeoutRef.current);
       }
@@ -249,9 +265,64 @@ const PCBGate = ({ onComplete }) => {
     }
   };
 
-  const handleContinue = () => {
+  const handleContinue = useCallback(() => {
+    if (completedRef.current) {
+      return;
+    }
+    completedRef.current = true;
     onComplete();
-  };
+  }, [onComplete]);
+
+  // Connect whatever is still loose, one wire at a time, so the visitor sees it happen.
+  const autoConnect = useCallback(() => {
+    if (autoConnectingRef.current || poweredRef.current) {
+      return;
+    }
+    autoConnectingRef.current = true;
+    setDragging(null);
+
+    WIRES.filter((wire) => !connectionsRef.current[wire.id]).forEach((wire, index) => {
+      autoTimeoutsRef.current.push(
+        window.setTimeout(() => {
+          playSnapTone(560);
+          setConnections((current) => ({ ...current, [wire.id]: wire.target }));
+        }, index * AUTOCONNECT_STAGGER_MS)
+      );
+    });
+  }, [playSnapTone]);
+
+  // Idle timer (reset by interaction) plus a hard deadline keep the intro short.
+  useEffect(() => {
+    const deadline = window.setTimeout(autoConnect, DEADLINE_MS);
+    return () => window.clearTimeout(deadline);
+  }, [autoConnect]);
+
+  useEffect(() => {
+    if (powered) {
+      return undefined;
+    }
+    const idle = window.setTimeout(autoConnect, IDLE_AUTOCONNECT_MS);
+    return () => window.clearTimeout(idle);
+  }, [autoConnect, powered, connections, dragging]);
+
+  // Once the sensor is live, move on without needing a click.
+  useEffect(() => {
+    if (!powered) {
+      return undefined;
+    }
+    const finish = window.setTimeout(handleContinue, FINISH_DELAY_MS);
+    return () => window.clearTimeout(finish);
+  }, [powered, handleContinue]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        handleContinue();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleContinue]);
 
   return (
     <motion.section
@@ -275,9 +346,9 @@ const PCBGate = ({ onComplete }) => {
               <button
                 type="button"
                 onClick={handleContinue}
-                className="rounded-md border border-[rgba(74,158,255,0.16)] px-4 py-2 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#9ca3af] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:text-[#e8eaf0]"
+                className="rounded-md border-2 border-[#e8eaf0] bg-[rgba(232,234,240,0.12)] px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[#ffffff] transition-colors duration-300 hover:bg-[#e8eaf0] hover:text-[#0a0e27] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4a9eff]"
               >
-                Skip Intro
+                Skip intro (Esc)
               </button>
             </motion.div>
 
@@ -722,12 +793,12 @@ const PCBGate = ({ onComplete }) => {
             )}
 
             <motion.p
-              className="mt-6 max-w-2xl text-center font-sans text-xs leading-6 text-[#9ab0bf] md:text-sm"
+              className="mt-6 max-w-2xl text-center font-sans text-xs leading-6 text-[#b4c6d3] md:text-sm"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.14 }}
             >
-              Match each lead to its labeled MAX30102 pad. Correct connections snap in place, incorrect ones release, and clicking a connected lead returns it to the harness.
+              Match each lead to its labeled MAX30102 pad. Correct connections snap in place and incorrect ones release. Or sit back: the leads connect themselves in a few seconds.
             </motion.p>
           </div>
     </motion.section>
