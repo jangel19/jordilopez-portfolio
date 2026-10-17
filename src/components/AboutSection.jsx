@@ -65,6 +65,10 @@ const AboutSection = () => {
             </h2>
             <div className="mt-8 space-y-6 font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
               <p>
+                I'm co-founding Owell and testing the field device, backend, and app that
+                make it up. Building it ties together everything else I work on.
+              </p>
+              <p>
                 I'm a junior at UMass Lowell double-majoring in Computer Science
       and Applied Mathematics & Statistics. Currently on a hardware engineering co-op while researching fault sensitivity of quantized neural networks on embedded platforms. Studying how single-bit flips in INT8 models propagate through the MCU-class hardware.
               </p>

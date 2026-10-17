@@ -84,11 +84,11 @@ const OwellPage = () => {
         <div className="space-y-5 font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
           <p>
             Crews walk the fields, read the conditions, decide what needs attention, and then go
-            do it. Most of that loop is attention, not skill.
+            do it. Much of that loop is watching and reacting.
           </p>
           <p>
-            We take over the watching, the deciding, and the doing, so one farm can run on a
-            fraction of the effort.
+            We&apos;re testing sensors and automation to take over the routine watching,
+            deciding, and doing.
           </p>
         </div>
       </motion.div>
@@ -112,8 +112,8 @@ const OwellPage = () => {
           </div>
           <p className="font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
             Farming is one of the biggest sources of work in the country, and bananas, cocoa,
-            and flowers are among its leading exports. We have a vendor lined up for our first units, so we get to prove Owell
-            where the need is real and the demand is already there.
+            and flowers are among its leading exports. We have a vendor lined up for our first units, which gives us a path to put
+            Owell in front of real farms.
           </p>
         </div>
       </motion.div>
@@ -141,28 +141,20 @@ const OwellPage = () => {
       </motion.div>
     </section>
 
-    <section className="px-6 py-16 md:py-24">
-      <motion.div className="mx-auto max-w-5xl" {...reveal}>
-        <Eyebrow>05 / Demo</Eyebrow>
-        {DEMO_VIDEO_SRC ? (
+    {/* Hidden until there is a real video: set DEMO_VIDEO_SRC above to show it. */}
+    {DEMO_VIDEO_SRC && (
+      <section className="px-6 py-16 md:py-24">
+        <motion.div className="mx-auto max-w-5xl" {...reveal}>
+          <Eyebrow>05 / Demo</Eyebrow>
           <video
             className="aspect-video w-full rounded-lg border border-[rgba(74,158,255,0.2)] bg-black"
             src={DEMO_VIDEO_SRC}
             controls
             preload="metadata"
           />
-        ) : (
-          <div className="relative flex aspect-video w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-xl border border-dashed border-[rgba(95,208,176,0.35)] bg-[rgba(255,255,255,0.02)] p-6 text-center">
-            <span className="ping-ring absolute h-72 w-72 rounded-full border border-[#3da88a]/40" aria-hidden="true" />
-            <span className="ping-ring absolute h-72 w-72 rounded-full border border-[#3da88a]/40" style={{ animationDelay: '2.7s' }} aria-hidden="true" />
-            <Badge label="Demo coming" tone="amber" />
-            <p className="relative max-w-md font-sans text-sm leading-6 text-[#9ca3af]">
-              A video of Owell in action will live here.
-            </p>
-          </div>
-        )}
-      </motion.div>
-    </section>
+        </motion.div>
+      </section>
+    )}
 
     <ContactSection />
   </>
