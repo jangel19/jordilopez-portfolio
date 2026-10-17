@@ -51,14 +51,11 @@ export const builds = [
   {
     id: 'coop',
     name: 'Hardware engineering co-op',
-    // First sentence of the IP-cleared co-op copy, verbatim.
     pitch:
-      'I work on test engineering and internal tooling, building software that removes manual steps from hardware work.',
+      'I work on test engineering and internal tooling, building software that removes manual steps from hardware work. I also build hardware.',
     role: 'Hardware Engineer (co-op), Teradyne',
     dates: 'Jul 2026 – Present',
     status: 'ongoing',
     stack: ['C#', '.NET', 'ASP.NET', 'SQLite', 'xUnit', 'Python', 'FastAPI', 'React', 'openpyxl'],
-    href: '#co-op',
-    internal: true,
   },
 ];

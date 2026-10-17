@@ -25,7 +25,7 @@ const ContactSection = () => {
       <div className="mx-auto max-w-6xl">
         <motion.div {...reveal}>
           <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
-            06 / Contact
+            05 / Contact
           </p>
           <h2 className="max-w-3xl font-mono text-3xl tracking-[0.04em] text-[#e8eaf0] md:text-4xl">
             Tell me who you are, what you&apos;re building, and what you need.

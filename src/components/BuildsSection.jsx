@@ -38,19 +38,21 @@ const BuildCard = ({ build }) => {
           </span>
         ))}
       </div>
+      {build.href && (
       <div className="mt-auto pt-6">
-        <a
-          href={build.href}
-          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          className="inline-flex items-center rounded-md border border-[rgba(74,158,255,0.2)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.5)] hover:text-[#e8eaf0]"
-        >
-          {build.id === 'owell'
-            ? 'Owell page →'
-            : build.id === 'coop'
-              ? 'What I build →'
-              : `${build.linkLabel ?? 'Visit'} ↗`}
-        </a>
-      </div>
+          <a
+            href={build.href}
+            {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            className="inline-flex items-center rounded-md border border-[rgba(74,158,255,0.2)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.5)] hover:text-[#e8eaf0]"
+          >
+            {build.id === 'owell'
+              ? 'Owell page →'
+              : build.id === 'coop'
+                ? 'What I build →'
+                : `${build.linkLabel ?? 'Visit'} ↗`}
+          </a>
+        </div>
+      )}
     </Spotlight>
   );
 };

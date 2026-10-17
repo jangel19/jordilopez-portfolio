@@ -42,8 +42,8 @@ const LandingSection = () => {
           .
         </h1>
         <p className="mt-8 max-w-2xl font-sans text-base leading-8 text-[#c6ccd7] sm:text-lg">
-          CS and Applied Math at UMass Lowell, focused on embedded systems, sensor fusion, and
-          applied math.
+          A builder first: hardware, firmware, and software. CS and Applied Math at UMass Lowell,
+          focused on embedded systems, sensor fusion, and applied math.
         </p>
 
         <div className="mt-10 flex flex-wrap gap-3">

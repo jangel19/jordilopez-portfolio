@@ -8,8 +8,8 @@ import { reveal, tagClassName } from './uiStyles';
 const DEMO_VIDEO_SRC = null;
 
 const stages = [
-  { title: 'Built, in testing', tone: 'text-[#5fd0b0]', line: 'Our field device and the backend behind it are built. We are testing them now.' },
-  { title: 'Next', tone: 'text-[#fbbf5a]', line: 'The farmer-facing iOS app.' },
+  { title: 'Built', tone: 'text-[#5fd0b0]', line: 'The field device, the backend, and the app are built.' },
+  { title: 'Now', tone: 'text-[#fbbf5a]', line: 'Testing everything end to end.' },
   { title: 'Later', tone: 'text-[#7db8ff]', line: 'Our first deployment, in Ecuador.' },
 ];
 
@@ -121,7 +121,7 @@ const OwellPage = () => (
       <motion.div className="mx-auto max-w-5xl" {...reveal}>
         <Eyebrow>04 / Status</Eyebrow>
         <h2 className="font-mono text-2xl tracking-[0.04em] text-[#e8eaf0] md:text-3xl">
-          Early, and moving. Here&apos;s the honest picture.
+          Built, and now in testing.
         </h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {stages.map((stage, index) => (

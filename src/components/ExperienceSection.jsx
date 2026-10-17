@@ -21,7 +21,10 @@ const experiences = [
         location: 'North Reading, MA',
         type: 'Co-op',
         dates: 'July 2026 - Present',
-        description: [],
+        description: [
+            'Test engineering and internal tooling: building software that removes manual steps from hardware work',
+            'I also build hardware',
+        ],
         tech: [],
     },
 
@@ -96,7 +99,7 @@ const ExperienceSection = () => {
       <div className="mx-auto max-w-4xl">
         <motion.div {...reveal}>
           <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
-            05 / Experience
+            04 / Experience
           </p>
           <h2 className="font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
             Research, leadership, and industry work.

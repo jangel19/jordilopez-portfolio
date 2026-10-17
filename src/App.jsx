@@ -3,7 +3,6 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import LandingSection from './components/LandingSection'
 import OwellFeature from './components/OwellFeature'
 import BuildsSection from './components/BuildsSection'
-import CoopSection from './components/CoopSection'
 import AboutSection from './components/AboutSection'
 import ProjectsSection from './components/ProjectsSection'
 import ExperienceSection from './components/ExperienceSection'
@@ -86,7 +85,6 @@ function App() {
                   <LandingSection />
                   <OwellFeature />
                   <BuildsSection />
-                  <CoopSection />
                   <ProjectsSection />
                   <AboutSection />
                   <ExperienceSection />

@@ -193,7 +193,7 @@ const ProjectsSection = () => {
       <div className="mx-auto max-w-6xl">
         <motion.div {...reveal}>
           <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
-            03 / More Work
+            02 / More Work
           </p>
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <h2 className="max-w-3xl font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
