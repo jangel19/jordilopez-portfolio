@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
 import { builds } from '../data/builds';
+import Spotlight from './Spotlight';
 import { Badge, MaybeTodo, SectionHeading } from './ui';
 import { reveal, tagClassName } from './uiStyles';
 
 const BuildCard = ({ build }) => {
   const external = !build.internal;
   return (
-    <motion.article
-      className="flex h-full flex-col rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] p-5 transition-colors duration-300 focus-within:border-[rgba(74,158,255,0.5)] hover:border-[rgba(74,158,255,0.34)] md:p-6"
+    <Spotlight
+      className="h-full rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] p-5 transition-colors duration-300 focus-within:border-[rgba(74,158,255,0.5)] hover:border-[rgba(74,158,255,0.34)] md:p-6"
+      whileHover={{ y: -4 }}
       {...reveal}
     >
       <div>
@@ -49,7 +51,7 @@ const BuildCard = ({ build }) => {
               : `${build.linkLabel ?? 'Visit'} ↗`}
         </a>
       </div>
-    </motion.article>
+    </Spotlight>
   );
 };
 
@@ -57,7 +59,7 @@ const BuildsSection = () => (
   <section id="builds" className="scroll-mt-4 px-6 py-16 md:py-24">
     <div className="mx-auto max-w-6xl">
       <motion.div {...reveal}>
-        <SectionHeading eyebrow="Builds" title="Things in motion.">
+        <SectionHeading eyebrow="01 / Builds" title="Things in motion.">
           <p className="max-w-xl font-sans text-base leading-7 text-[#9ca3af]">
             What I&apos;m building, researching, or running right now, with an honest status on each.
           </p>

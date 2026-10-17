@@ -7,196 +7,137 @@ import { reveal, tagClassName } from './uiStyles';
 // Swap in a video file path (e.g. '/owell-demo.mp4') to replace the placeholder.
 const DEMO_VIDEO_SRC = null;
 
-const architecture = [
-  {
-    name: 'Device',
-    detail: 'ESP32-S3 firmware. Runs schedules offline and drives the valves.',
-    built: true,
-  },
-  { name: 'MQTT', detail: 'AWS IoT Core carries messages both ways.', built: true, link: true },
-  {
-    name: 'Backend',
-    detail: 'Go service on EC2 with a Postgres device registry and a scheduling endpoint.',
-    built: true,
-  },
-  { name: 'App', detail: 'iOS app for pairing, valve control, and schedules.', built: false },
+const stages = [
+  { title: 'Built', tone: 'text-[#5fd0b0]', line: 'Our field device and the backend behind it.' },
+  { title: 'Next', tone: 'text-[#fbbf5a]', line: 'The farmer-facing iOS app.' },
+  { title: 'Later', tone: 'text-[#7db8ff]', line: 'Our first deployment, in Ecuador.' },
 ];
-
-const roadmap = [
-  {
-    title: "What's built",
-    tone: 'text-[#5fd0b0]',
-    items: [
-      'ESP32-S3 firmware with offline-first schedule execution',
-      'NVS-persisted schedules, NTP sync with internal clock fallback',
-      'Per-valve duration control',
-      'Go backend on EC2 with MQTT over AWS IoT Core',
-      'Postgres device registry and a custom scheduling endpoint',
-      TODO('confirm this list matches what is actually working today'),
-    ],
-  },
-  {
-    title: 'Next',
-    tone: 'text-[#fbbf5a]',
-    items: [
-      'iOS app: pairing, valve control, custom schedules',
-      TODO('engineer-facing ops dashboard: confirm status (next / later)'),
-      TODO('other near-term milestones'),
-    ],
-  },
-  {
-    title: 'Later',
-    tone: 'text-[#7db8ff]',
-    items: [
-      'Deployment in Ecuador (current target)',
-      TODO('sensing and automation beyond scheduled irrigation'),
-    ],
-  },
-];
-
-const Arrow = ({ label }) => (
-  <div
-    className="flex flex-none items-center justify-center py-1 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#7db8ff] md:px-1 md:py-0"
-    aria-hidden="true"
-  >
-    <span className="rotate-90 text-xl md:rotate-0">{label ?? '→'}</span>
-  </div>
-);
-
-const Architecture = () => (
-  <ol
-    className="mt-8 flex flex-col items-stretch md:flex-row"
-    aria-label="Architecture: device to MQTT to backend to app"
-  >
-    {architecture.map((node, index) => (
-      <li key={node.name} className="contents">
-        {index > 0 && <Arrow />}
-        <div
-          className={`flex-1 rounded-lg border p-4 ${
-            node.built
-              ? 'border-[rgba(74,158,255,0.35)] bg-[rgba(74,158,255,0.06)]'
-              : 'border-dashed border-[rgba(251,191,90,0.5)] bg-[rgba(255,255,255,0.02)]'
-          }`}
-        >
-          <p className="font-mono text-lg tracking-[0.06em] text-[#e8eaf0]">{node.name}</p>
-          <p className="mt-2 font-sans text-sm leading-6 text-[#b8c0ce]">{node.detail}</p>
-          <p
-            className={`mt-3 font-mono text-[0.65rem] uppercase tracking-[0.22em] ${
-              node.built ? 'text-[#5fd0b0]' : 'text-[#fbbf5a]'
-            }`}
-          >
-            {node.built ? 'Built' : 'Next'}
-          </p>
-        </div>
-      </li>
-    ))}
-  </ol>
-);
 
 const Eyebrow = ({ children }) => (
-  <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
+  <p className="mb-5 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#5fd0b0]">
     {children}
   </p>
 );
 
 const OwellPage = () => (
   <>
-    <header className="px-6 pb-12 pt-8 md:pb-20">
-      <div className="mx-auto max-w-4xl">
+    <header className="relative overflow-hidden px-6 pb-20 pt-8 md:pb-32">
+      <img
+        src="/owell.webp"
+        alt=""
+        width="612"
+        height="408"
+        className="absolute inset-0 h-full w-full object-cover opacity-40"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,14,39,0.55)_0%,#0a0e27_100%)]" />
+      <div className="relative mx-auto max-w-5xl">
         <a
           href="#builds"
-          className="font-mono text-xs uppercase tracking-[0.2em] text-[#9ca3af] transition-colors hover:text-[#e8eaf0]"
+          className="font-mono text-xs uppercase tracking-[0.2em] text-[#c6ccd7] transition-colors hover:text-white"
         >
           ← All builds
         </a>
-        <div className="mt-14">
+        <div className="mt-20 md:mt-28">
           <Badge status={owell.status} />
         </div>
-        <h1 className="mt-6 font-mono text-4xl leading-tight tracking-[0.03em] text-[#e8eaf0] md:text-6xl">
-          {owell.headline}
+        <h1 className="mt-6 font-mono text-5xl leading-[1.02] tracking-[0.02em] text-[#f5f7fa] md:text-8xl">
+          Owell.
+          <br />
+          <span className="text-sheen">Farms that just run.</span>
         </h1>
-        <p className="mt-6 max-w-2xl font-sans text-lg leading-8 text-[#c6ccd7] md:text-xl">
+        <p className="mt-8 max-w-2xl font-sans text-xl leading-9 text-[#d5dae3] md:text-2xl">
           {owell.pitch}
         </p>
-        <div className="mt-8 flex flex-wrap gap-2">
+        <div className="mt-10 flex flex-wrap items-center gap-3">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#c6ccd7]">
+            {owell.role} · Founded {owell.dates.replace(' – Present', '')}
+          </span>
           {owell.stack.map((item) => (
-            <span key={item} className={tagClassName}>
+            <span key={item} className={`${tagClassName} bg-[rgba(10,14,39,0.6)]`}>
               {item}
             </span>
           ))}
         </div>
-        <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-[#9ca3af]">
-          <MaybeTodo>{owell.role}</MaybeTodo> · <MaybeTodo>{owell.dates}</MaybeTodo>
-        </p>
       </div>
     </header>
 
-    <section className="px-6 py-12 md:py-16">
-      <motion.div className="mx-auto max-w-4xl" {...reveal}>
-        <Eyebrow>The problem</Eyebrow>
-        <h2 className="font-mono text-2xl tracking-[0.04em] text-[#e8eaf0] md:text-3xl">
-          Running a farm takes a lot of people, and much of it is watching and reacting.
-        </h2>
-        <p className="mt-6 max-w-3xl font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
-          A crew walks the fields, checks conditions, decides what needs water, and then goes and
-          does it. Most of that loop is attention, not skill. Owell moves the watching, the
-          deciding, and the doing onto devices so people can spend their time on the work that
-          needs them.
-        </p>
-        <p className="mt-4 font-sans text-sm leading-7 text-[#9ca3af]">
-          <MaybeTodo>
-            {TODO('add a sourced figure for how many people it takes to run a farm, or leave it out')}
-          </MaybeTodo>
+    <section className="px-6 py-16 md:py-24">
+      <motion.div className="mx-auto max-w-5xl" {...reveal}>
+        <Eyebrow>01 / The company</Eyebrow>
+        <p className="font-mono text-3xl leading-snug tracking-[0.01em] text-[#f5f7fa] md:text-5xl md:leading-tight">
+          Owell is building the farm that runs itself, so the people on it can focus on the work
+          only people can do.
         </p>
       </motion.div>
     </section>
 
-    <section className="px-6 py-12 md:py-16">
-      <motion.div className="mx-auto max-w-5xl" {...reveal}>
-        <Eyebrow>How it works</Eyebrow>
-        <h2 className="font-mono text-2xl tracking-[0.04em] text-[#e8eaf0] md:text-3xl">
-          Device → MQTT → backend → app
-        </h2>
-        <Architecture />
-      </motion.div>
-    </section>
-
-    <section className="px-6 py-12 md:py-16">
-      <motion.div className="mx-auto max-w-5xl" {...reveal}>
-        <Eyebrow>Status</Eyebrow>
-        <h2 className="font-mono text-2xl tracking-[0.04em] text-[#e8eaf0] md:text-3xl">
-          Built, next, later.
-        </h2>
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {roadmap.map((column) => (
-            <div
-              key={column.title}
-              className="rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] p-5"
-            >
-              <h3 className={`font-mono text-sm uppercase tracking-[0.24em] ${column.tone}`}>
-                {column.title}
-              </h3>
-              <ul className="mt-4 space-y-3 font-sans text-[0.95rem] leading-6 text-[#b8c0ce]">
-                {column.items.map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span className={column.tone} aria-hidden="true">
-                      •
-                    </span>
-                    <span>
-                      <MaybeTodo>{item}</MaybeTodo>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    <section className="px-6 py-16 md:py-24">
+      <motion.div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-[1fr_1.1fr]" {...reveal}>
+        <div>
+          <Eyebrow>02 / The problem</Eyebrow>
+          <h2 className="font-mono text-2xl leading-snug tracking-[0.03em] text-[#e8eaf0] md:text-3xl">
+            A farm is a lot of people, and most of them are watching and reacting.
+          </h2>
+        </div>
+        <div className="space-y-5 font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
+          <p>
+            Crews walk the fields, read the conditions, decide what needs attention, and then go
+            do it. Most of that loop is attention, not skill.
+          </p>
+          <p>
+            We take over the watching, the deciding, and the doing, so one farm can run on a
+            fraction of the effort.
+          </p>
+          <p className="text-sm text-[#9ca3af]">
+            <MaybeTodo>{TODO('add a sourced figure for how many people it takes to run a farm, or delete')}</MaybeTodo>
+          </p>
         </div>
       </motion.div>
     </section>
 
-    <section className="px-6 py-12 md:py-16">
+    <section className="px-6 py-16 md:py-24">
+      <motion.div
+        className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-[rgba(95,208,176,0.25)] bg-[rgba(61,168,138,0.05)] p-8 md:p-14"
+        {...reveal}
+      >
+        <Eyebrow>03 / Where we&apos;re headed</Eyebrow>
+        <h2 className="font-mono text-3xl leading-tight tracking-[0.02em] text-[#f5f7fa] md:text-5xl">
+          Our first deployment target is <span className="text-sheen">Ecuador</span>.
+        </h2>
+        <p className="mt-5 max-w-2xl font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
+          <MaybeTodo>{TODO('one or two sentences on why Ecuador (your real reason)')}</MaybeTodo>
+        </p>
+      </motion.div>
+    </section>
+
+    <section className="px-6 py-16 md:py-24">
       <motion.div className="mx-auto max-w-5xl" {...reveal}>
-        <Eyebrow>Demo</Eyebrow>
+        <Eyebrow>04 / Status</Eyebrow>
+        <h2 className="font-mono text-2xl tracking-[0.04em] text-[#e8eaf0] md:text-3xl">
+          Early, and moving. Here&apos;s the honest picture.
+        </h2>
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          {stages.map((stage, index) => (
+            <div
+              key={stage.title}
+              className="rounded-lg border border-[rgba(74,158,255,0.12)] bg-[rgba(255,255,255,0.02)] p-6"
+            >
+              <p className={`font-mono text-sm uppercase tracking-[0.24em] ${stage.tone}`}>
+                0{index + 1} · {stage.title}
+              </p>
+              <p className="mt-4 font-sans text-lg leading-7 text-[#d5dae3]">{stage.line}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-sm text-[#9ca3af]">
+          <MaybeTodo>{TODO('confirm "Built" is accurate today')}</MaybeTodo>
+        </p>
+      </motion.div>
+    </section>
+
+    <section className="px-6 py-16 md:py-24">
+      <motion.div className="mx-auto max-w-5xl" {...reveal}>
+        <Eyebrow>05 / Demo</Eyebrow>
         {DEMO_VIDEO_SRC ? (
           <video
             className="aspect-video w-full rounded-lg border border-[rgba(74,158,255,0.2)] bg-black"
@@ -205,10 +146,12 @@ const OwellPage = () => (
             preload="metadata"
           />
         ) : (
-          <div className="flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-[rgba(74,158,255,0.3)] bg-[rgba(255,255,255,0.02)] p-6 text-center">
+          <div className="relative flex aspect-video w-full flex-col items-center justify-center gap-4 overflow-hidden rounded-xl border border-dashed border-[rgba(95,208,176,0.35)] bg-[rgba(255,255,255,0.02)] p-6 text-center">
+            <span className="ping-ring absolute h-72 w-72 rounded-full border border-[#3da88a]/40" aria-hidden="true" />
+            <span className="ping-ring absolute h-72 w-72 rounded-full border border-[#3da88a]/40" style={{ animationDelay: '2.7s' }} aria-hidden="true" />
             <Badge label="Demo coming" tone="amber" />
-            <p className="max-w-md font-sans text-sm leading-6 text-[#9ca3af]">
-              A walkthrough video of the device and backend will live here.
+            <p className="relative max-w-md font-sans text-sm leading-6 text-[#9ca3af]">
+              A video of Owell in action will live here.
             </p>
           </div>
         )}

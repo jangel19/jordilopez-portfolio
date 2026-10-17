@@ -6,36 +6,33 @@ const linkClassName =
 const LandingSection = () => {
   return (
     <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 py-24">
-      <div className="pointer-events-none absolute inset-0 opacity-40">
-        <div className="absolute left-0 top-[18%] h-px w-full bg-[linear-gradient(90deg,transparent,rgba(74,158,255,0.22),transparent)]" />
-        <div className="absolute inset-x-[18%] top-[26%] h-28 rounded-full bg-[radial-gradient(circle,rgba(61,168,138,0.1),transparent_72%)] blur-3xl" />
-        <svg
-          className="absolute right-[8%] top-[14%] h-28 w-72 text-[#4a9eff]/10 md:h-36 md:w-[26rem]"
-          viewBox="0 0 420 120"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M0 69C20 69 26 46 40 46C56 46 62 91 79 91C92 91 95 58 110 58C126 58 130 74 148 74C170 74 170 23 196 23C220 23 222 89 245 89C267 89 265 44 286 44C309 44 303 67 325 67C347 67 350 38 369 38C388 38 397 61 420 61"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
+      <div
+        className="pointer-events-none absolute right-[-12rem] top-1/2 h-[44rem] w-[44rem] -translate-y-1/2 md:right-[-4rem]"
+        aria-hidden="true"
+      >
+        {[0, 1, 2, 3].map((i) => (
+          <span
+            key={i}
+            className="ping-ring absolute inset-0 rounded-full border border-[#3da88a]/40"
+            style={{ animationDelay: `${i * 1.35}s` }}
           />
-        </svg>
+        ))}
+        <span className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5fd0b0] shadow-[0_0_24px_6px_rgba(95,208,176,0.5)]" />
       </div>
 
       <motion.div
-        className="relative mx-auto flex w-full max-w-4xl flex-col items-start text-left"
+        className="relative mx-auto flex w-full max-w-5xl flex-col items-start text-left"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: 'easeOut' }}
       >
-        <p className="font-mono text-xs uppercase tracking-[0.32em] text-[#9ca3af]">
-          Jordi Lopez
+        <p className="inline-flex flex-wrap items-center gap-3 rounded-full border border-[rgba(95,208,176,0.3)] bg-[rgba(61,168,138,0.08)] px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#c6ccd7]">
+          <span className="live-dot h-2 w-2 rounded-full bg-[#5fd0b0]" aria-hidden="true" />
+          Jordi Lopez · Co-founder, Owell · In development
         </p>
-        <h1 className="mt-6 font-mono text-3xl leading-snug tracking-[0.02em] text-[#e8eaf0] sm:text-4xl md:text-5xl md:leading-tight">
+        <h1 className="mt-6 font-mono text-3xl leading-snug tracking-[0.02em] text-[#e8eaf0] sm:text-4xl md:text-6xl md:leading-[1.1]">
           I build embedded systems that sense, decide, and act. Right now that&apos;s{' '}
-          <a href="#/owell" className={linkClassName}>
+          <a href="#/owell" className={`${linkClassName} text-sheen`}>
             Owell
           </a>
           , automation for farms, plus{' '}

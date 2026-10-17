@@ -16,8 +16,8 @@ export const owell = {
   headline: 'Owell. Farms that just run.',
   pitch:
     'Sensors and automation that take over the watching, deciding, and doing a big field crew handles today.',
-  role: TODO('your role on Owell, e.g. founder / firmware + backend'),
-  dates: TODO('start date – Present'),
+  role: 'Co-founder',
+  dates: 'Jun 2026 – Present',
   status: 'in-development',
   stack: ['ESP32 firmware', 'Go backend', 'iOS app'],
   href: '#/owell',

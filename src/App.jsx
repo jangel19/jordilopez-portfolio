@@ -10,6 +10,7 @@ import ExperienceSection from './components/ExperienceSection'
 import ContactSection from './components/ContactSection'
 import OwellPage from './components/OwellPage'
 import PCBGate from './components/PCBGate';
+import Topography from './components/Topography';
 
 const GATE_ENABLED = true;
 const GATE_KEY = 'pcbGateCompleted';
@@ -64,7 +65,8 @@ function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="App min-h-screen bg-[#0a0e27] text-[#e8eaf0]">
+      <div className="App relative min-h-screen bg-[#0a0e27] text-[#e8eaf0]">
+        {!showGate && <Topography />}
         <AnimatePresence mode="wait">
           {showGate ? (
             <PCBGate key="gate" onComplete={() => setShowGate(false)} />
@@ -75,7 +77,7 @@ function App() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative"
+              className="relative z-10"
             >
               {route === 'owell' ? (
                 <OwellPage />

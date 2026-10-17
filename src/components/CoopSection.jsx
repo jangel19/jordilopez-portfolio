@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Spotlight from './Spotlight';
 import { SectionHeading } from './ui';
 import { reveal, tagClassName } from './uiStyles';
 
@@ -33,16 +34,17 @@ const CoopSection = () => (
   <section id="co-op" className="scroll-mt-4 px-6 py-16 md:py-24">
     <div className="mx-auto max-w-6xl">
       <motion.div {...reveal}>
-        <SectionHeading eyebrow="Co-op" title="Hardware engineering co-op" />
+        <SectionHeading eyebrow="02 / Co-op" title="Hardware engineering co-op" />
         <p className="mt-6 max-w-3xl font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
           {COOP_INTRO}
         </p>
       </motion.div>
       <ul className="mt-12 grid auto-rows-fr gap-6 md:grid-cols-2">
         {coopProjects.map((project) => (
-          <motion.li
-            key={project.name}
-            className="flex flex-col rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] p-5 md:p-6"
+          <li key={project.name}>
+          <Spotlight
+            className="h-full rounded-lg border border-[rgba(74,158,255,0.1)] bg-[rgba(255,255,255,0.02)] p-5 transition-colors hover:border-[rgba(74,158,255,0.34)] md:p-6"
+            whileHover={{ y: -4 }}
             {...reveal}
           >
             <h3 className="font-mono text-xl tracking-[0.04em] text-[#e8eaf0]">{project.name}</h3>
@@ -54,7 +56,8 @@ const CoopSection = () => (
                 </span>
               ))}
             </div>
-          </motion.li>
+          </Spotlight>
+          </li>
         ))}
       </ul>
     </div>
