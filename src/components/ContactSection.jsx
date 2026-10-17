@@ -24,12 +24,15 @@ const ContactSection = () => {
     <section className="px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <motion.div {...reveal}>
-          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
+          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
             Contact
           </p>
-          <h2 className="font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
-            Get In Touch
+          <h2 className="max-w-3xl font-mono text-3xl tracking-[0.04em] text-[#e8eaf0] md:text-4xl">
+            Tell me who you are, what you&apos;re building, and what you need.
           </h2>
+          <p className="mt-5 max-w-2xl font-sans text-base leading-7 text-[#c6ccd7]">
+            Short is fine. I read everything and reply fast.
+          </p>
         </motion.div>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
@@ -38,7 +41,7 @@ const ContactSection = () => {
             {...reveal}
           >
             <h3 className="font-mono text-lg tracking-[0.14em] text-[#e8eaf0]">
-              Send a message
+              Say hello
             </h3>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
@@ -82,7 +85,7 @@ const ContactSection = () => {
                   required
                   rows="6"
                   className={`${fieldClassName} resize-y`}
-                  placeholder="Tell me about your project, team, or wearable problem space."
+                  placeholder="Who you are, what you're building, what you need."
                 />
                 <ValidationError prefix="Message" field="message" errors={state.errors} className="mt-2 text-sm text-[#f59e0b]" />
               </div>
@@ -108,17 +111,15 @@ const ContactSection = () => {
           <motion.div className="flex flex-col justify-between gap-10" {...reveal}>
             <div>
               <h3 className="font-mono text-lg tracking-[0.14em] text-[#e8eaf0]">
-                Current Focus
+                Or reach me directly
               </h3>
-              <div className="mt-6 space-y-6 font-sans text-base leading-8 text-[#c6ccd7]">
-                <p>
-                    This summer I'm on a Hardware Engineering co-op at Teradyne and building Owell, a precision irrigation system targeting deployment in Ecuador. I'm focused on embedded systems, ML deployment, and shipping software that works under real constraints. If you're working on wearables, sensor fusion, or applied ML, I'd love to connect.
-                </p>
-              </div>
+              <p className="mt-4 font-sans text-base leading-8 text-[#c6ccd7]">
+                Building embedded systems, sensing, or farm automation? Pitch me.
+              </p>
             </div>
 
             <div>
-              <h4 className="font-mono text-sm tracking-[0.22em] text-[#6b7280]">
+              <h4 className="font-mono text-sm tracking-[0.22em] text-[#9ca3af]">
                 Network
               </h4>
               <div className="mt-4 flex flex-wrap gap-3">
