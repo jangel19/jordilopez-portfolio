@@ -27,25 +27,6 @@ const DESKTOP_LAYOUT = {
   },
 };
 
-const MOBILE_LAYOUT = {
-  width: 420,
-  height: 760,
-  chip: { x: 210, y: 238, w: 92, h: 92 },
-  led: { x: 312, y: 184, r: 5 },
-  pads: {
-    VCC: { x: 210, y: 136 },
-    GND: { x: 210, y: 340 },
-    SDA: { x: 92, y: 238 },
-    SCL: { x: 328, y: 238 },
-  },
-  homes: {
-    red: { x: 92, y: 566 },
-    black: { x: 176, y: 566 },
-    blue: { x: 260, y: 566 },
-    yellow: { x: 344, y: 566 },
-  },
-};
-
 const getWirePath = (start, end) => {
   const deltaX = end.x - start.x;
   const controlOffset = Math.max(Math.abs(deltaX) * 0.38, 56);
@@ -79,7 +60,6 @@ const FINISH_DELAY_MS = 1400;
 const getPadLabel = (key) => (key === 'VCC' ? 'VCC / 3.3V' : key);
 
 const PCBGate = ({ onComplete }) => {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
   const [connections, setConnections] = useState({});
   const [dragging, setDragging] = useState(null);
   const [feedbackPad, setFeedbackPad] = useState(null);
@@ -96,7 +76,7 @@ const PCBGate = ({ onComplete }) => {
   connectionsRef.current = connections;
   poweredRef.current = powered;
 
-  const layout = isMobile ? MOBILE_LAYOUT : DESKTOP_LAYOUT;
+  const layout = DESKTOP_LAYOUT;
   const connectedCount = Object.keys(connections).length;
 
   const wireEndpoints = useMemo(() => {
@@ -141,11 +121,6 @@ const PCBGate = ({ onComplete }) => {
     setFeedbackTone(null);
   }, []);
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     if (connectedCount !== WIRES.length || powered) {
@@ -175,55 +150,30 @@ const PCBGate = ({ onComplete }) => {
 
       setDragging((previous) => previous ? { ...previous, point } : previous);
 
-      const nearest = getNearestPad(point, layout.pads, isMobile ? 34 : 42);
+      const nearest = getNearestPad(point, layout.pads, 42);
       setFeedbackPad(nearest);
       setFeedbackTone(nearest ? 'hover' : null);
     };
 
     const handlePointerUp = () => {
-      setDragging((previous) => {
-        if (!previous) {
-          return previous;
-        }
+      const nearest = getNearestPad(dragging.point, layout.pads, 42);
+      const wire = WIRES.find((item) => item.id === dragging.wireId);
+      clearFeedback();
+      setDragging(null);
+      if (!nearest || !wire) return;
 
-        const nearest = getNearestPad(previous.point, layout.pads, isMobile ? 34 : 42);
-        clearFeedback();
-
-        if (!nearest) {
-          return null;
-        }
-
-        const wire = WIRES.find((item) => item.id === previous.wireId);
-        if (!wire) {
-          return null;
-        }
-
-        const padTaken = Object.entries(connections).find(
-          ([wireId, pad]) => wireId !== wire.id && pad === nearest
-        );
-
-        if (padTaken || wire.target !== nearest) {
-          setFeedbackPad(nearest);
-          setFeedbackTone('wrong');
-          playSnapTone(210);
-          feedbackTimeoutRef.current = window.setTimeout(() => {
-            setFeedbackPad(null);
-            setFeedbackTone(null);
-          }, 320);
-          return null;
-        }
-
-        setConnections((current) => ({ ...current, [wire.id]: nearest }));
-        setFeedbackPad(nearest);
-        setFeedbackTone('correct');
-        playSnapTone(560);
-        feedbackTimeoutRef.current = window.setTimeout(() => {
-          setFeedbackPad(null);
-          setFeedbackTone(null);
-        }, 320);
-
-        return null;
-      });
+      const padTaken = Object.entries(connections).some(
+        ([wireId, pad]) => wireId !== wire.id && pad === nearest
+      );
+      const correct = !padTaken && wire.target === nearest;
+      if (correct) setConnections((current) => ({ ...current, [wire.id]: nearest }));
+      setFeedbackPad(nearest);
+      setFeedbackTone(correct ? 'correct' : 'wrong');
+      playSnapTone(correct ? 560 : 210);
+      feedbackTimeoutRef.current = window.setTimeout(() => {
+        setFeedbackPad(null);
+        setFeedbackTone(null);
+      }, 320);
     };
 
     window.addEventListener('pointermove', handlePointerMove);
@@ -233,17 +183,20 @@ const PCBGate = ({ onComplete }) => {
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
     };
-  }, [clearFeedback, connections, dragging, isMobile, layout, playSnapTone]);
+  }, [clearFeedback, connections, dragging, layout, playSnapTone]);
 
   useEffect(() => {
     const autoTimeouts = autoTimeoutsRef;
     return () => {
       autoTimeouts.current.forEach((id) => window.clearTimeout(id));
+      autoTimeouts.current = [];
+      autoConnectingRef.current = false;
       if (feedbackTimeoutRef.current) {
         window.clearTimeout(feedbackTimeoutRef.current);
       }
       if (audioContextRef.current) {
         audioContextRef.current.close().catch(() => {});
+        audioContextRef.current = null;
       }
     };
   }, []);
@@ -272,6 +225,22 @@ const PCBGate = ({ onComplete }) => {
     completedRef.current = true;
     onComplete();
   }, [onComplete]);
+
+  // A final completion deadline also covers continued dragging or disconnections.
+  useEffect(() => {
+    const deadline = window.setTimeout(handleContinue, 9000);
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const checkEligibility = () => {
+      if (window.innerWidth < 768 || media.matches) handleContinue();
+    };
+    window.addEventListener('resize', checkEligibility);
+    media.addEventListener('change', checkEligibility);
+    return () => {
+      window.clearTimeout(deadline);
+      window.removeEventListener('resize', checkEligibility);
+      media.removeEventListener('change', checkEligibility);
+    };
+  }, [handleContinue]);
 
   // Connect whatever is still loose, one wire at a time, so the visitor sees it happen.
   const autoConnect = useCallback(() => {
@@ -327,8 +296,9 @@ const PCBGate = ({ onComplete }) => {
   return (
     <motion.section
       key="pcb-gate"
+      aria-label="Interactive sensor intro"
       className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,rgba(74,158,255,0.08),transparent_34%),linear-gradient(180deg,#071326_0%,#05131f_100%)] px-4 py-6"
-      initial={{ opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1, filter: 'blur(0px)' }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -339,12 +309,13 @@ const PCBGate = ({ onComplete }) => {
           <div className="relative mx-auto flex min-h-[calc(100vh-3rem)] max-w-6xl flex-col items-center justify-center">
             <motion.div
               className="mb-6 flex w-full max-w-[600px] justify-end"
-              initial={{ opacity: 0, y: -8 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
             >
               <button
                 type="button"
+                autoFocus
                 onClick={handleContinue}
                 className="rounded-md border-2 border-[#e8eaf0] bg-[rgba(232,234,240,0.12)] px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[#ffffff] transition-colors duration-300 hover:bg-[#e8eaf0] hover:text-[#0a0e27] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4a9eff]"
               >
@@ -599,22 +570,22 @@ const PCBGate = ({ onComplete }) => {
                     filter="url(#chipShadow)"
                   />
                   {Array.from({ length: 6 }).map((_, index) => {
-                    const pinOffset = index * (isMobile ? 13 : 15);
+                    const pinOffset = index * 15;
                     return (
                       <g key={`pins-${index}`}>
                         <rect
                           x={layout.chip.x - layout.chip.w / 2 - 7}
-                          y={layout.chip.y - (isMobile ? 39 : 46) + pinOffset}
+                          y={layout.chip.y - 46 + pinOffset}
                           width="7"
-                          height={isMobile ? 8 : 9}
+                          height={9}
                           rx="1.4"
                           fill="url(#padGradient)"
                         />
                         <rect
                           x={layout.chip.x + layout.chip.w / 2}
-                          y={layout.chip.y - (isMobile ? 39 : 46) + pinOffset}
+                          y={layout.chip.y - 46 + pinOffset}
                           width="7"
-                          height={isMobile ? 8 : 9}
+                          height={9}
                           rx="1.4"
                           fill="url(#padGradient)"
                         />
@@ -725,6 +696,19 @@ const PCBGate = ({ onComplete }) => {
                         fill="#1a2027"
                         stroke="rgba(255,255,255,0.22)"
                         className="cursor-pointer"
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`${isConnected ? 'Disconnect' : 'Connect'} ${wire.label} lead ${isConnected ? 'from' : 'to'} ${getPadLabel(wire.target)}`}
+                        aria-pressed={isConnected}
+                        onKeyDown={(event) => {
+                          if (event.key !== 'Enter' && event.key !== ' ') return;
+                          event.preventDefault();
+                          if (isConnected) disconnectWire(wire.id);
+                          else {
+                            setConnections((current) => ({ ...current, [wire.id]: wire.target }));
+                            playSnapTone(560);
+                          }
+                        }}
                         onPointerDown={(event) => {
                           event.preventDefault();
                           if (isConnected) {
@@ -735,7 +719,7 @@ const PCBGate = ({ onComplete }) => {
                       />
                       <text
                         x={start.x}
-                        y={start.y + (isMobile ? 36 : -28)}
+                        y={start.y - 28}
                         textAnchor="middle"
                         className="fill-[#f3f5f7] font-mono text-[11px] tracking-[0.18em]"
                       >
@@ -746,17 +730,17 @@ const PCBGate = ({ onComplete }) => {
                 })}
 
                 <text
-                  x={isMobile ? 210 : 744}
-                  y={isMobile ? 492 : 110}
+                  x={744}
+                  y={110}
                   textAnchor="middle"
                   className="fill-[#eef3f6] font-mono text-[13px] tracking-[0.28em]"
                 >
                   JUMPER LEADS
                 </text>
-                <text x={isMobile ? 52 : 88} y={isMobile ? 82 : 96} className="fill-[#f0f0f0] font-mono text-[9px] tracking-[0.16em]" opacity="0.82">
+                <text x={88} y={96} className="fill-[#f0f0f0] font-mono text-[9px] tracking-[0.16em]" opacity="0.82">
                   MAX30102 BREAKOUT
                 </text>
-                <text x={isMobile ? 52 : 88} y={isMobile ? 96 : 112} className="fill-[#f0f0f0] font-mono text-[8px] tracking-[0.12em]" opacity="0.62">
+                <text x={88} y={112} className="fill-[#f0f0f0] font-mono text-[8px] tracking-[0.12em]" opacity="0.62">
                   REV 1.0
                 </text>
                 <text x={layout.led.x + 22} y={layout.led.y + 5} className="fill-[#f0f0f0] font-mono text-[9px] tracking-[0.14em]" opacity="0.82">
@@ -765,8 +749,8 @@ const PCBGate = ({ onComplete }) => {
 
                 {powered && (
                   <motion.text
-                    x={isMobile ? 210 : 450}
-                    y={isMobile ? 444 : 500}
+                    x={450}
+                    y={500}
                     textAnchor="middle"
                     className="fill-[#d8ffe7] font-mono text-[14px] tracking-[0.32em]"
                     initial={{ opacity: 0 }}
@@ -798,7 +782,7 @@ const PCBGate = ({ onComplete }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.14 }}
             >
-              Match each lead to its labeled MAX30102 pad. Correct connections snap in place and incorrect ones release. Or sit back: the leads connect themselves in a few seconds.
+              Drag each lead to its labeled MAX30102 pad, or focus a lead and press Enter or Space to connect it. Correct connections snap in place and incorrect ones release. Or sit back: the leads connect themselves in a few seconds.
             </motion.p>
           </div>
     </motion.section>
