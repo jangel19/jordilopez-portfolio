@@ -1,5 +1,9 @@
 # Portfolio review — October 17, 2026
 
+## Follow-up: webhook restored at Jordi’s request
+
+Browser visitor notifications and the build-time `VITE_DISCORD_WEBHOOK_URL` configuration have been restored. The existing local `.env` remains unchanged. Storage helpers also guard access to storage itself, preserving behavior when storage getters throw. The removal and bundle-scan findings below describe the earlier review snapshot, before this requested restoration.
+
 ## Changes made
 
 - **Routing and focus:** track the complete hash, match `#/owell` exactly, handle same-view anchors as well as page changes, and move focus to the destination after it mounts. In-page deep links bypass the intro so they reach their requested section. Owell's return link, browser back/forward, malformed-route fallback, and the route-preserving skip link work without a router dependency.
