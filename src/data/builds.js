@@ -4,7 +4,7 @@
 export const TODO = (what) => `TODO: ${what}`;
 
 export const STATUS = {
-  'in-development': { label: 'In development', tone: 'amber' },
+  'in-testing': { label: 'In testing', tone: 'amber' },
   active: { label: 'Active', tone: 'green' },
   research: { label: 'Research in progress', tone: 'blue' },
   ongoing: { label: 'Ongoing', tone: 'green' },
@@ -18,7 +18,7 @@ export const owell = {
     'Sensors and automation that take over the watching, deciding, and doing a big field crew handles today.',
   role: 'Co-founder',
   dates: 'Jun 2026 – Present',
-  status: 'in-development',
+  status: 'in-testing',
   stack: ['ESP32 firmware', 'Go backend', 'iOS app'],
   href: '#/owell',
 };

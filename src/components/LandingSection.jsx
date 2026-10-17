@@ -28,7 +28,7 @@ const LandingSection = () => {
       >
         <p className="inline-flex flex-wrap items-center gap-3 rounded-full border border-[rgba(95,208,176,0.3)] bg-[rgba(61,168,138,0.08)] px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#c6ccd7]">
           <span className="live-dot h-2 w-2 rounded-full bg-[#5fd0b0]" aria-hidden="true" />
-          Jordi Lopez · Co-founder, Owell · In development
+          Jordi Lopez · Co-founder, Owell · In testing
         </p>
         <h1 className="mt-6 font-mono text-3xl leading-snug tracking-[0.02em] text-[#e8eaf0] sm:text-4xl md:text-6xl md:leading-[1.1]">
           I build embedded systems that sense, decide, and act. Right now that&apos;s{' '}
