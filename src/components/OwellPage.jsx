@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
-import { owell, TODO } from '../data/builds';
+import { owell } from '../data/builds';
 import ContactSection from './ContactSection';
-import { Badge, MaybeTodo } from './ui';
+import { Badge } from './ui';
 import { reveal, tagClassName } from './uiStyles';
 
 // Swap in a video file path (e.g. '/owell-demo.mp4') to replace the placeholder.
 const DEMO_VIDEO_SRC = null;
 
 const stages = [
-  { title: 'Built', tone: 'text-[#5fd0b0]', line: 'Our field device and the backend behind it.' },
+  { title: 'Built, in testing', tone: 'text-[#5fd0b0]', line: 'Our field device and the backend behind it are built. We are testing them now.' },
   { title: 'Next', tone: 'text-[#fbbf5a]', line: 'The farmer-facing iOS app.' },
   { title: 'Later', tone: 'text-[#7db8ff]', line: 'Our first deployment, in Ecuador.' },
 ];
@@ -88,9 +88,6 @@ const OwellPage = () => (
             We take over the watching, the deciding, and the doing, so one farm can run on a
             fraction of the effort.
           </p>
-          <p className="text-sm text-[#9ca3af]">
-            <MaybeTodo>{TODO('add a sourced figure for how many people it takes to run a farm, or delete')}</MaybeTodo>
-          </p>
         </div>
       </motion.div>
     </section>
@@ -104,9 +101,19 @@ const OwellPage = () => (
         <h2 className="font-mono text-3xl leading-tight tracking-[0.02em] text-[#f5f7fa] md:text-5xl">
           Our first deployment target is <span className="text-sheen">Ecuador</span>.
         </h2>
-        <p className="mt-5 max-w-2xl font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
-          <MaybeTodo>{TODO('one or two sentences on why Ecuador (your real reason)')}</MaybeTodo>
-        </p>
+        <div className="mt-8 grid gap-8 md:grid-cols-[auto_1fr] md:items-center">
+          <div>
+            <p className="font-mono text-6xl tracking-[0.02em] text-[#5fd0b0] md:text-7xl">~3 in 10</p>
+            <p className="mt-2 max-w-[16rem] font-sans text-sm leading-6 text-[#9ca3af]">
+              Ecuadorian workers are employed in agriculture (about 30%, World Bank data, 2023).
+            </p>
+          </div>
+          <p className="font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
+            Farming is one of the biggest sources of work in the country, and bananas, cocoa,
+            and flowers are among its leading exports. We have a vendor lined up for our first units, so we get to prove Owell
+            where the need is real and the first customer is already waiting.
+          </p>
+        </div>
       </motion.div>
     </section>
 
@@ -129,9 +136,6 @@ const OwellPage = () => (
             </div>
           ))}
         </div>
-        <p className="mt-4 text-sm text-[#9ca3af]">
-          <MaybeTodo>{TODO('confirm "Built" is accurate today')}</MaybeTodo>
-        </p>
       </motion.div>
     </section>
 

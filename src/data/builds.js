@@ -29,11 +29,11 @@ export const builds = [
     id: 'aim',
     name: 'A.I.M. Society',
     pitch:
-      'Artificial Intelligence Multidisciplinary Society: a student org connecting CS, business, health sciences, and engineering around real AI applications.',
+      'Artificial Intelligence Multidisciplinary Society: a student-led org turning students into builders and opening doors they will not find outside the club, including meeting industry builders in person.',
     role: 'VP and co-founder',
     dates: 'Mar 2026 – Present',
     status: 'active',
-    stack: [TODO('focus areas / tools, e.g. course advisor tool stack')],
+    stack: ['Builder community', 'Industry access', 'Student-led'],
     href: 'https://aimsociety.org',
   },
   {
