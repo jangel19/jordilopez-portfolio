@@ -1,3 +1,4 @@
+import { useReveal } from './uiStyles';
 import { motion } from 'framer-motion';
 import { FaGithub } from 'react-icons/fa';
 
@@ -5,7 +6,10 @@ const featuredProjects = [
      {
     title: 'Coal2Core',
     badge: 'Most Innovative Idea, Tufts Datathon',
-    image: '/ml.png',
+    image: '/ml.webp',
+    imageWidth: 670,
+    imageHeightPx: 382,
+    imageAlt: 'Coal2Core model visualization',
     description:
       'ML-first framework for ranking retiring U.S. coal plants for SMR conversion under rising AI energy demand. Built and validated a nested cross-validated RBF-SVR pipeline that achieved a 0.9652 out-of-fold R squared score, stress-tested top candidates with 1,000 Monte Carlo simulations, and identified sites capable of avoiding up to 29 million tons of CO2 annually.',
     tech: ['Machine Learning', 'Scikit-learn', 'RBF-SVR', 'Nested Cross-Validation', 'Monte Carlo', 'Energy Modeling'],
@@ -18,7 +22,10 @@ const featuredProjects = [
   {
     title: 'PhysioRecovery',
     badge: 'Production Garmin Connect IQ App',
-    image: '/recovery.png',
+    image: '/recovery.webp',
+    imageWidth: 800,
+    imageHeightPx: 986,
+    imageAlt: 'PhysioRecovery score on a Garmin watch',
     description:
       "Recovery scoring app for Garmin wearables built with fixed-point DSP and sensor fusion under tight memory and battery constraints. Samples HRV, Body Battery, and resting heart rate on wake, runs a z-score normalization pipeline against adaptive baselines, and writes a recovery score directly to the device. Implemented in Monkey C to benchmark against Garmin's proprietary recovery signals while keeping the pipeline lightweight enough for on-device execution.",
     tech: ['Monkey C', 'Fixed-Point DSP', 'Garmin Connect IQ', 'Sensor Fusion'],
@@ -30,7 +37,10 @@ const featuredProjects = [
   {
     title: 'VITA Health',
     badge: 'Wearable Health Prototype',
-    image: '/prototype.png',
+    image: '/prototype.webp',
+    imageWidth: 960,
+    imageHeightPx: 701,
+    imageAlt: 'VITA sensor prototype assembled on a breadboard',
     description:
       'Wearable health prototype using ESP32 for heart rate and motion tracking. Implemented C firmware for sensor sampling and BLE transmission. Designed a custom PCB with biometric sensors and haptic feedback.',
     tech: ['ESP32', 'BLE', 'C (Arduino)', 'PCB Design', 'Supabase'],
@@ -67,13 +77,6 @@ const secondaryProjects = [
   },
 ];
 
-const reveal = {
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.55, ease: 'easeOut' },
-};
-
 const tagClassName =
   'rounded-md border border-[rgba(74,158,255,0.16)] bg-[rgba(255,255,255,0.02)] px-2.5 py-1 font-mono text-[0.72rem] tracking-[0.08em] text-[#c6ccd7]';
 
@@ -86,7 +89,10 @@ const ProjectCard = ({ project }) => (
     <div className={`overflow-hidden border-b border-[rgba(74,158,255,0.1)] ${project.imageHeight}`}>
       <img
         src={project.image}
-        alt={project.title}
+        alt={project.imageAlt}
+        width={project.imageWidth}
+        height={project.imageHeightPx}
+        decoding="async"
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
         loading="lazy"
       />
@@ -113,6 +119,7 @@ const ProjectCard = ({ project }) => (
           {project.live && (
             <a
               href={project.live}
+              aria-label={`Visit ${project.title} live site`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.1)] bg-[rgba(74,158,255,0.08)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#e8eaf0] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:bg-[rgba(74,158,255,0.14)]"
@@ -123,6 +130,7 @@ const ProjectCard = ({ project }) => (
           {project.github && (
             <a
               href={project.github}
+              aria-label={`View ${project.title} on GitHub`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.14)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:text-[#e8eaf0]"
@@ -163,6 +171,7 @@ const CompactProjectCard = ({ project }) => (
           {project.live && (
             <a
               href={project.live}
+              aria-label={`Visit ${project.title} live site`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.1)] bg-[rgba(74,158,255,0.08)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#e8eaf0] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:bg-[rgba(74,158,255,0.14)]"
@@ -173,6 +182,7 @@ const CompactProjectCard = ({ project }) => (
           {project.github && (
             <a
               href={project.github}
+              aria-label={`View ${project.title} on GitHub`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-[rgba(74,158,255,0.14)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.35)] hover:text-[#e8eaf0]"
@@ -188,8 +198,9 @@ const CompactProjectCard = ({ project }) => (
 );
 
 const ProjectsSection = () => {
+  const reveal = useReveal();
   return (
-    <section className="px-6 py-24">
+    <section id="work" className="px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <motion.div {...reveal}>
           <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">

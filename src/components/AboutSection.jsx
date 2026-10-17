@@ -1,3 +1,4 @@
+import { useReveal } from './uiStyles';
 import { motion } from 'framer-motion';
 
 const skillColumns = [
@@ -46,14 +47,8 @@ const skillColumns = [
   },
 ];
 
-const reveal = {
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.25 },
-  transition: { duration: 0.55, ease: 'easeOut' },
-};
-
 const AboutSection = () => {
+  const reveal = useReveal();
   return (
     <section id="AboutSection" className="px-6 py-24">
       <div className="mx-auto max-w-6xl">
@@ -62,7 +57,7 @@ const AboutSection = () => {
           {...reveal}
         >
           <div>
-            <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
+            <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
               03 / About
             </p>
             <h2 className="max-w-2xl font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
@@ -91,7 +86,10 @@ const AboutSection = () => {
                 src="/newphoto.jpeg"
                 alt="Jordi Lopez"
                 className="h-full w-full object-cover"
-                loading="eager"
+                width="1039"
+                height="1013"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
