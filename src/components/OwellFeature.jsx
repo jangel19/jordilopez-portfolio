@@ -27,7 +27,7 @@ const OwellFeature = () => (
             </p>
             <Badge status={owell.status} />
           </div>
-          <h2 className="mt-6 max-w-2xl font-mono text-4xl leading-[1.05] tracking-[0.02em] text-[#f5f7fa] md:text-7xl">
+          <h2 className="mt-6 max-w-3xl font-mono text-4xl leading-[1.05] tracking-[0.02em] text-[#f5f7fa] md:text-6xl">
             Owell.
             <br />
             <span className="text-sheen">Farms that just run.</span>

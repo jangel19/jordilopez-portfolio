@@ -40,7 +40,7 @@ const OwellPage = () => (
         <div className="mt-20 md:mt-28">
           <Badge status={owell.status} />
         </div>
-        <h1 className="mt-6 font-mono text-5xl leading-[1.02] tracking-[0.02em] text-[#f5f7fa] md:text-8xl">
+        <h1 className="mt-6 font-mono text-5xl leading-[1.02] tracking-[0.02em] text-[#f5f7fa] md:text-7xl">
           Owell.
           <br />
           <span className="text-sheen">Farms that just run.</span>
