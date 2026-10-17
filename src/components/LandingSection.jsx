@@ -1,15 +1,11 @@
 import { motion } from 'framer-motion';
 
-const LandingSection = () => {
-  const scrollToAbout = () => {
-    const next = document.getElementById('AboutSection');
-    if (next) {
-      next.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+const linkClassName =
+  'underline decoration-[#4a9eff]/60 decoration-2 underline-offset-4 transition-colors duration-300 hover:text-[#4a9eff] hover:decoration-[#4a9eff]';
 
+const LandingSection = () => {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24">
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 py-24">
       <div className="pointer-events-none absolute inset-0 opacity-40">
         <div className="absolute left-0 top-[18%] h-px w-full bg-[linear-gradient(90deg,transparent,rgba(74,158,255,0.22),transparent)]" />
         <div className="absolute inset-x-[18%] top-[26%] h-28 rounded-full bg-[radial-gradient(circle,rgba(61,168,138,0.1),transparent_72%)] blur-3xl" />
@@ -29,35 +25,44 @@ const LandingSection = () => {
       </div>
 
       <motion.div
-        className="relative mx-auto flex w-full max-w-4xl flex-col items-center text-center"
+        className="relative mx-auto flex w-full max-w-4xl flex-col items-start text-left"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: 'easeOut' }}
       >
-        <h1 className="font-mono text-5xl tracking-[0.08em] text-[#e8eaf0] sm:text-6xl md:text-7xl">
+        <p className="font-mono text-xs uppercase tracking-[0.32em] text-[#9ca3af]">
           Jordi Lopez
-        </h1>
-        <p className="mt-6 max-w-3xl font-sans text-lg text-[#9ca3af] sm:text-xl">
-          Hardware Systems • AI Development • Applied Mathematics
         </p>
-        <div className="mt-10 max-w-3xl space-y-5 font-sans text-base leading-8 text-[#c6ccd7] sm:text-lg">
-          <p>
-            Hardware Engineering co-op at Teradyne. CS + Applied Math student at UMass Lowell working at the intersection of hardware systems and machine learning.
-          </p>
-          <p>
-            Researching fault sensitivity of quantized nueral networks on embedded platforms at UMass Lowll. Developed a graduate advising intelligence platform with cohort anomaly detection, intervention effectiveness scoring, and a background risk scoring daemon. 60+ features, 30+ endpoints, 200+ tests.
-          </p>
-        </div>
+        <h1 className="mt-6 font-mono text-3xl leading-snug tracking-[0.02em] text-[#e8eaf0] sm:text-4xl md:text-5xl md:leading-tight">
+          I build embedded systems that sense, decide, and act. Right now that&apos;s{' '}
+          <a href="#/owell" className={linkClassName}>
+            Owell
+          </a>
+          , automation for farms, plus{' '}
+          <a href="#builds" className={linkClassName}>
+            everything else I&apos;m building
+          </a>
+          .
+        </h1>
+        <p className="mt-8 max-w-2xl font-sans text-base leading-8 text-[#c6ccd7] sm:text-lg">
+          CS and Applied Math at UMass Lowell, focused on embedded systems, sensor fusion, and
+          applied math.
+        </p>
 
-        <button
-          type="button"
-          onClick={scrollToAbout}
-          className="mt-16 inline-flex flex-col items-center gap-3 font-mono text-xs uppercase tracking-[0.32em] text-[#6b7280] transition-colors duration-300 hover:text-[#4a9eff]"
-          aria-label="Scroll to about section"
-        >
-          <span>Scroll</span>
-          <span className="text-xl leading-none">↓</span>
-        </button>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <a
+            href="#/owell"
+            className="inline-flex items-center rounded-md border border-[rgba(74,158,255,0.4)] bg-[rgba(74,158,255,0.14)] px-5 py-3 font-mono text-xs uppercase tracking-[0.2em] text-[#e8eaf0] transition-colors duration-300 hover:bg-[rgba(74,158,255,0.24)]"
+          >
+            See Owell →
+          </a>
+          <a
+            href="#builds"
+            className="inline-flex items-center rounded-md border border-[rgba(74,158,255,0.25)] px-5 py-3 font-mono text-xs uppercase tracking-[0.2em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.5)] hover:text-[#e8eaf0]"
+          >
+            All builds ↓
+          </a>
+        </div>
       </motion.div>
     </section>
   );
