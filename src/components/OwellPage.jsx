@@ -111,7 +111,7 @@ const OwellPage = () => (
           <p className="font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
             Farming is one of the biggest sources of work in the country, and bananas, cocoa,
             and flowers are among its leading exports. We have a vendor lined up for our first units, so we get to prove Owell
-            where the need is real and the first customer is already waiting.
+            where the need is real and the demand is already there.
           </p>
         </div>
       </motion.div>
