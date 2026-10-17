@@ -71,7 +71,7 @@ const AboutSection = () => {
             <div className="mt-8 space-y-6 font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
               <p>
                 I'm a junior at UMass Lowell double-majoring in Computer Science
-      and Applied Mathematics & Statistics. Currently on a Hardware Engineering co-op at Teradyne whileresearching fault sensitivity of quantized neural networks on embedded platforms. Studying how single-bit flips in INT8 models propagate through the MCU-class hardware.
+      and Applied Mathematics & Statistics. Currently on a hardware engineering co-op while researching fault sensitivity of quantized neural networks on embedded platforms. Studying how single-bit flips in INT8 models propagate through the MCU-class hardware.
               </p>
       <p>
       Developed a graduate advising intelligence platform for UMass Lowell's Kennedy College of Sciences, risk scoring, cohort anomaly detection, and advisor behavior modeling on top of live student data.

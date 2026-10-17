@@ -2,16 +2,6 @@ import { motion } from 'framer-motion';
 import { FaGithub } from 'react-icons/fa';
 
 const featuredProjects = [
-    {
-        title: 'Owell',
-        badge: 'AI-powered precision irrigation system — in development',
-        image: '/owell.png',
-        description: 
-        "Full-stack embedded system targeting deployment in Ecuador. ESP32-S3 firmware with offline-first schedule execution, NVS-persisted schedules, NTP sync with internal clock fallback, and per-valve duration control. Go backend on EC2 with MQTT over AWS IoT Core, Postgres device registry, and a custom scheduling endpoint. Farmer-facing iOS app for pairing, valve control, and custom schedule configuration. Engineer-facing ops dashboard for live device status and schedule monitoring across all deployed units.",
-        tech: ['ESP32', 'Go', 'MQTT', 'AWS IoT Core', 'Postgres', 'iOS', 'PlatformIO'],
-        imageHeight: 'h-48',
-        badgeTone: 'text-[#3da88a]',
-    },
      {
     title: 'Coal2Core',
     badge: 'Most Innovative Idea, Tufts Datathon',
@@ -202,16 +192,15 @@ const ProjectsSection = () => {
     <section className="px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <motion.div {...reveal}>
-          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
-            Selected Work
+          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
+            More Work
           </p>
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <h2 className="max-w-3xl font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
-              Projects weighted by technical depth, not by template symmetry.
+              Earlier builds and hackathon projects.
             </h2>
             <p className="max-w-xl font-sans text-base leading-7 text-[#9ca3af]">
-              Embedded prototypes, wearable recovery systems, and data-intensive tools
-              presented with the same hierarchy I would use in an engineering review.
+              Embedded prototypes, wearable recovery systems, and data-intensive tools.
             </p>
           </div>
         </motion.div>
