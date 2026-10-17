@@ -1,3 +1,5 @@
+import { useReducedMotion } from 'framer-motion';
+
 export const tagClassName =
   'rounded-md border border-[rgba(74,158,255,0.16)] bg-[rgba(255,255,255,0.02)] px-2.5 py-1 font-mono text-[0.72rem] tracking-[0.08em] text-[#c6ccd7]';
 
@@ -7,3 +9,6 @@ export const reveal = {
   viewport: { once: true, amount: 0.2 },
   transition: { duration: 0.55, ease: 'easeOut' },
 };
+
+// Suppress reveal fades as well as transforms when motion is reduced.
+export const useReveal = () => useReducedMotion() ? { initial: false } : reveal;

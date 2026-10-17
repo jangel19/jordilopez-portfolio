@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { owell } from '../data/builds';
 import { Badge, MaybeTodo } from './ui';
-import { reveal, tagClassName } from './uiStyles';
+import { useReveal, tagClassName } from './uiStyles';
 
-const OwellFeature = () => (
+const OwellFeature = () => {
+  const reveal = useReveal();
+  return (
   <section id="owell" className="px-6 py-16 md:py-28">
     <div className="mx-auto max-w-6xl">
       <motion.a
@@ -52,6 +54,7 @@ const OwellFeature = () => (
       </motion.a>
     </div>
   </section>
-);
+  );
+};
 
 export default OwellFeature;

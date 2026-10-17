@@ -1,3 +1,4 @@
+import { useReveal } from './uiStyles';
 import { motion } from 'framer-motion';
 
 const experiences = [
@@ -83,22 +84,16 @@ const experiences = [
   },
 ];
 
-const reveal = {
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.55, ease: 'easeOut' },
-};
-
 const tagClassName =
   'rounded-md border border-[rgba(74,158,255,0.16)] bg-[rgba(255,255,255,0.02)] px-2.5 py-1 font-mono text-[0.72rem] tracking-[0.08em] text-[#c6ccd7]';
 
 const ExperienceSection = () => {
+  const reveal = useReveal();
   return (
-    <section className="px-6 py-24">
+    <section id="experience" className="px-6 py-24">
       <div className="mx-auto max-w-4xl">
         <motion.div {...reveal}>
-          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#6b7280]">
+          <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
             04 / Experience
           </p>
           <h2 className="font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
@@ -118,22 +113,20 @@ const ExperienceSection = () => {
               >
                 <div className="absolute left-0 top-2 h-4 w-4 rounded-full border border-[rgba(74,158,255,0.25)] bg-[#4a9eff]" />
 
-                <p className="font-mono text-2xl tracking-[0.05em] text-[#e8eaf0]">
-  {experience.url ? (
-    <a href={experience.url} target="_blank" rel="noopener noreferrer" className="hover:text-[#4a9eff] transition-colors">
-      {experience.organization}
-    </a>
-  ) : (
-    experience.organization
-  )}
-</p>
+                <h3 className="font-mono text-2xl tracking-[0.05em] text-[#e8eaf0]">
+                  {experience.url ? (
+                    <a href={experience.url} target="_blank" rel="noopener noreferrer" className="hover:text-[#4a9eff] transition-colors">
+                      {experience.organization}
+                    </a>
+                  ) : (
+                    experience.organization
+                  )}
+                </h3>
                 <p className="mt-2 font-sans text-lg text-[#9ca3af]">{experience.role}</p>
-                <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.24em] text-[#6b7280]">
+                <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.24em] text-[#9ca3af]">
                   <span>{experience.dates}</span>
-                  <span>•</span>
-                  <span>{experience.type}</span>
-                  <span>•</span>
-                  <span>{experience.location}</span>
+                  {experience.type && <><span aria-hidden="true">•</span><span>{experience.type}</span></>}
+                  {experience.location && <><span aria-hidden="true">•</span><span>{experience.location}</span></>}
                 </div>
 
                 <ul className="mt-6 space-y-3 font-sans text-base leading-relaxed text-[#b8c0ce]">

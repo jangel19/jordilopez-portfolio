@@ -2,9 +2,10 @@ import { motion } from 'framer-motion';
 import { builds } from '../data/builds';
 import Spotlight from './Spotlight';
 import { Badge, MaybeTodo, SectionHeading } from './ui';
-import { reveal, tagClassName } from './uiStyles';
+import { useReveal, tagClassName } from './uiStyles';
 
 const BuildCard = ({ build }) => {
+  const reveal = useReveal();
   const external = !build.internal;
   return (
     <Spotlight
@@ -42,6 +43,7 @@ const BuildCard = ({ build }) => {
       <div className="mt-auto pt-6">
           <a
             href={build.href}
+            aria-label={`View ${build.name}${build.linkLabel ? ` on ${build.linkLabel}` : ''}`}
             {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             className="inline-flex items-center rounded-md border border-[rgba(74,158,255,0.2)] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.5)] hover:text-[#e8eaf0]"
           >
@@ -57,7 +59,9 @@ const BuildCard = ({ build }) => {
   );
 };
 
-const BuildsSection = () => (
+const BuildsSection = () => {
+  const reveal = useReveal();
+  return (
   <section id="builds" className="scroll-mt-4 px-6 py-16 md:py-24">
     <div className="mx-auto max-w-6xl">
       <motion.div {...reveal}>
@@ -74,6 +78,7 @@ const BuildsSection = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default BuildsSection;

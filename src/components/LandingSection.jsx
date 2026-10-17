@@ -1,9 +1,10 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const linkClassName =
   'underline decoration-[#4a9eff]/60 decoration-2 underline-offset-4 transition-colors duration-300 hover:text-[#4a9eff] hover:decoration-[#4a9eff]';
 
 const LandingSection = () => {
+  const reducedMotion = useReducedMotion();
   return (
     <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 py-24">
       <div
@@ -22,7 +23,7 @@ const LandingSection = () => {
 
       <motion.div
         className="relative mx-auto flex w-full max-w-5xl flex-col items-start text-left"
-        initial={{ opacity: 0, y: 18 }}
+        initial={reducedMotion ? false : { opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: 'easeOut' }}
       >

@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /* Box sizing */
@@ -6,33 +5,37 @@
   box-sizing: border-box;
 }
 
-/* Enable scroll, hide scrollbar */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden;   /* no sideways scroll */
-  overflow-y: scroll;   /* scrolling works */
   background: #0a0e27;
   color: #e8eaf0;
   font-family: 'Inter', sans-serif;
 }
 
-/* Hide scrollbar — Chrome, Safari, Edge */
-::-webkit-scrollbar {
-  display: none;
+html { scroll-behavior: smooth; }
+
+/* Allow long labels to wrap at the narrowest phone widths. */
+main { overflow-wrap: anywhere; }
+
+:focus-visible {
+  outline: 2px solid #7db8ff;
+  outline-offset: 5px;
 }
 
-/* Hide scrollbar — Firefox */
-html {
-  scrollbar-width: none;
-  scroll-behavior: smooth;
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 50;
+  padding: 0.75rem 1rem;
+  border-radius: 0.4rem;
+  background: #e8eaf0;
+  color: #0a0e27;
+  transform: translateY(-200%);
 }
-
-/* Hide scrollbar — IE / old Edge */
-body {
-  -ms-overflow-style: none;
-}
+.skip-link:focus { transform: translateY(0); }
 
 #root {
   width: 100%;
@@ -96,4 +99,17 @@ img {
 @media (prefers-reduced-motion: reduce) {
   .topo-line, .ping-ring, .live-dot, .text-sheen { animation: none; }
   html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .spotlight { display: none; }
+  .topography svg { transform: none !important; }
+}
+
+/* Static contours and no large blur layers on small screens. */
+@media (max-width: 767px) {
+  .topo-line { animation: none; }
+  .topography > div { display: none; }
+  .topography svg { transform: none !important; }
 }

@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 const W = 1600;
 const H = 900;
@@ -20,15 +20,16 @@ const paths = Array.from({ length: LINES }, (_, i) => {
 });
 
 const Topography = () => {
+  const reducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -160]);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div className="topography pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
       <div className="absolute -left-40 top-[10%] h-[34rem] w-[34rem] rounded-full bg-[#3da88a]/10 blur-[120px]" />
       <div className="absolute -right-40 top-[40%] h-[36rem] w-[36rem] rounded-full bg-[#4a9eff]/10 blur-[130px]" />
       <motion.svg
-        style={{ y }}
+        style={{ y: reducedMotion ? 0 : y }}
         className="absolute inset-x-0 -top-10 h-[120%] w-full"
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="xMidYMid slice"

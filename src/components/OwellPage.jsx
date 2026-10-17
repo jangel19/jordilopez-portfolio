@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { owell } from '../data/builds';
 import ContactSection from './ContactSection';
 import { Badge } from './ui';
-import { reveal, tagClassName } from './uiStyles';
+import { useReveal, tagClassName } from './uiStyles';
 
 // Swap in a video file path (e.g. '/owell-demo.mp4') to replace the placeholder.
 const DEMO_VIDEO_SRC = null;
@@ -19,7 +19,9 @@ const Eyebrow = ({ children }) => (
   </p>
 );
 
-const OwellPage = () => (
+const OwellPage = () => {
+  const reveal = useReveal();
+  return (
   <>
     <header className="relative overflow-hidden px-6 pb-20 pt-8 md:pb-32">
       <img
@@ -64,10 +66,10 @@ const OwellPage = () => (
     <section className="px-6 py-16 md:py-24">
       <motion.div className="mx-auto max-w-5xl" {...reveal}>
         <Eyebrow>01 / The company</Eyebrow>
-        <p className="font-mono text-3xl leading-snug tracking-[0.01em] text-[#f5f7fa] md:text-5xl md:leading-tight">
+        <h2 className="font-mono text-3xl leading-snug tracking-[0.01em] text-[#f5f7fa] md:text-5xl md:leading-tight">
           Owell is building the farm that runs itself, so the people on it can focus on the work
           only people can do.
-        </p>
+        </h2>
       </motion.div>
     </section>
 
@@ -162,10 +164,9 @@ const OwellPage = () => (
       </motion.div>
     </section>
 
-    <div id="contact">
-      <ContactSection />
-    </div>
+    <ContactSection />
   </>
-);
+  );
+};
 
 export default OwellPage;

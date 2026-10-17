@@ -1,3 +1,4 @@
+import { useReveal } from './uiStyles';
 import { motion } from 'framer-motion';
 import { useForm, ValidationError } from '@formspree/react';
 
@@ -7,21 +8,15 @@ const socialLinks = [
   { name: 'Email', url: 'mailto:lopesjordi0@gmail.com' },
 ];
 
-const reveal = {
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.25 },
-  transition: { duration: 0.55, ease: 'easeOut' },
-};
-
 const fieldClassName =
-  'w-full rounded-lg border border-[rgba(74,158,255,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-3 font-sans text-[#e8eaf0] outline-none transition-colors duration-300 placeholder:text-[#6b7280] focus:border-[rgba(74,158,255,0.4)]';
+  'w-full rounded-lg border border-[rgba(74,158,255,0.12)] bg-[rgba(255,255,255,0.02)] px-4 py-3 font-sans text-[#e8eaf0] outline-none transition-colors duration-300 placeholder:text-[#9ca3af] focus:border-[rgba(74,158,255,0.4)]';
 
 const ContactSection = () => {
+  const reveal = useReveal();
   const [state, handleSubmit] = useForm('mkgzwaqz');
 
   return (
-    <section className="px-6 py-24">
+    <section id="contact" className="px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <motion.div {...reveal}>
           <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
@@ -50,6 +45,7 @@ const ContactSection = () => {
                   Name *
                 </label>
                 <input
+                  autoComplete="name"
                   id="name"
                   type="text"
                   name="name"
@@ -65,6 +61,7 @@ const ContactSection = () => {
                   Email *
                 </label>
                 <input
+                  autoComplete="email"
                   id="email"
                   type="email"
                   name="email"
@@ -100,8 +97,10 @@ const ContactSection = () => {
                 {state.submitting ? 'Sending...' : 'Send Message'}
               </button>
 
+              <ValidationError errors={state.errors} className="text-sm text-[#fbbf5a]" />
+
               {state.succeeded && (
-                <p className="font-sans text-sm text-[#3da88a]">
+                <p role="status" className="font-sans text-sm text-[#5fd0b0]">
                   Thanks. I&apos;ll follow up soon.
                 </p>
               )}
@@ -140,7 +139,7 @@ const ContactSection = () => {
         </div>
 
         <motion.footer
-          className="mt-16 flex flex-col gap-3 border-t border-[rgba(74,158,255,0.1)] pt-6 font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#6b7280] md:flex-row md:items-center md:justify-between"
+          className="mt-16 flex flex-col gap-3 border-t border-[rgba(74,158,255,0.1)] pt-6 font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#9ca3af] md:flex-row md:items-center md:justify-between"
           {...reveal}
         >
           <p>© 2026 Jordi Lopez </p>
