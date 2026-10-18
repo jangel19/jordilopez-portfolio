@@ -2,7 +2,7 @@ const DISCORD_WEBHOOK_URL = import.meta.env.VITE_DISCORD_WEBHOOK_URL;
 
 const TRACKING_SENT_KEY = 'jordisworld:visitor-tracker:sent';
 const TRACKING_ERROR_LOG_KEY = 'jordisworld:visitor-tracker:errors';
-const TRACKING_DEBUG_KEY = '__JORDISWORLD_VISITOR_TRACKER__';
+const TRACKING_DEBUG_KEY = import.meta.env.DEV ? '__JORDISWORLD_VISITOR_TRACKER__' : null;
 const MAX_ERROR_HISTORY = 10;
 const MAX_FIELD_LENGTH = 480;
 const MAX_MESSAGE_LENGTH = 1900;
@@ -46,6 +46,7 @@ const safeStorageRemove = (storage, key) => {
 };
 
 const setDebugState = (state) => {
+  if (!import.meta.env.DEV) return;
   window[TRACKING_DEBUG_KEY] = {
     ...state,
     updatedAt: new Date().toISOString(),

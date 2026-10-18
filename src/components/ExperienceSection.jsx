@@ -24,7 +24,6 @@ const experiences = [
         dates: 'July 2026 - Present',
         description: [
             'Test engineering and internal tooling: building software that removes manual steps from hardware work',
-            'I also build hardware',
         ],
         tech: [],
     },
@@ -36,9 +35,9 @@ const experiences = [
         type: 'Internship',
         dates: 'May 2026 - July 2026',
         description:[
-            'Engineered a proactive risk scoring engine that automatically scores every graduate student 0–100 using weighted factors including milestone staleness, overdue count, blockers, and cohort-aware deviation against program peers',
+            'Built risk modeling and cohort anomaly detection for a graduate advising platform',
             'Built secure user authentication with role-based access control, giving staff and students personalized views of the system',
-            'Collaborated directly with college leadership to design and ship tools that modernize how student data is handled',
+            'Collaborated with college leadership on advising workflow tools',
         ],
         tech: ['Python', 'PostgreSQL', 'JWT', 'pytest', 'SQLite'],
     },
@@ -108,6 +107,7 @@ const ExperienceSection = () => {
             {experiences.map((experience) => (
               <motion.article
                 key={`${experience.organization}-${experience.role}`}
+                id={experience.organization === 'Center for Advanced Computation and Telecommunications' ? 'cact' : undefined}
                 className="relative pl-10"
                 {...reveal}
               >

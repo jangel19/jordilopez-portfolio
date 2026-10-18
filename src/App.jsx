@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { MotionConfig, motion, useReducedMotion } from 'framer-motion';
 import LandingSection from './components/LandingSection'
 import OwellFeature from './components/OwellFeature'
+import WearablesSection from './components/WearablesSection'
 import BuildsSection from './components/BuildsSection'
 import AboutSection from './components/AboutSection'
 import ProjectsSection from './components/ProjectsSection'
@@ -111,6 +112,7 @@ function App() {
                 <>
                   <LandingSection />
                   <OwellFeature />
+                  <WearablesSection />
                   <BuildsSection />
                   <ProjectsSection />
                   <AboutSection />

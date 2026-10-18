@@ -29,22 +29,14 @@ const LandingSection = () => {
       >
         <p className="inline-flex flex-wrap items-center gap-3 rounded-full border border-[rgba(95,208,176,0.3)] bg-[rgba(61,168,138,0.08)] px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#c6ccd7]">
           <span className="live-dot h-2 w-2 rounded-full bg-[#5fd0b0]" aria-hidden="true" />
-          Jordi Lopez · Co-founder, Owell · In testing
+          Jordi Lopez · Embedded & algorithms engineer
         </p>
         <h1 className="mt-6 font-mono text-3xl leading-snug tracking-[0.02em] text-[#e8eaf0] sm:text-4xl md:text-6xl md:leading-[1.1]">
-          I build embedded systems that sense, decide, and act. Right now that&apos;s{' '}
-          <a href="#/owell" className={`${linkClassName} text-sheen`}>
-            Owell
-          </a>
-          , automation for farms, plus{' '}
-          <a href="#builds" className={linkClassName}>
-            everything else I&apos;m building
-          </a>
-          .
+          I build embedded systems that sense, decide, and act.
         </h1>
         <p className="mt-8 max-w-2xl font-sans text-base leading-8 text-[#c6ccd7] sm:text-lg">
-          A builder first: hardware, firmware, and software. CS and Applied Math at UMass Lowell,
-          focused on embedded systems, sensor fusion, and applied math.
+          Algorithms and sensor fusion for wearable biosignals and field sensing.
+          I co-founded <a href="#/owell" className={linkClassName}>Owell</a> and build recovery tools I run on my own watch.
         </p>
 
         <div className="mt-10 flex flex-wrap gap-3">
@@ -55,10 +47,10 @@ const LandingSection = () => {
             See Owell →
           </a>
           <a
-            href="#builds"
+            href="#wearables"
             className="inline-flex items-center rounded-md border border-[rgba(74,158,255,0.25)] px-5 py-3 font-mono text-xs uppercase tracking-[0.2em] text-[#c6ccd7] transition-colors duration-300 hover:border-[rgba(74,158,255,0.5)] hover:text-[#e8eaf0]"
           >
-            All builds ↓
+            Wearables & biosignals ↓
           </a>
         </div>
       </motion.div>

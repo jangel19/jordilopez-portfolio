@@ -3,6 +3,18 @@ import { motion } from 'framer-motion';
 
 const skillColumns = [
   {
+    title: 'ALGORITHMS & SIGNAL PROCESSING',
+    items: [
+      'Sensor fusion',
+      'IMU calibration (BNO055)',
+      'HRV/RHR analysis',
+      'Z-score normalization',
+      'Adaptive baselines',
+      'Allan deviation',
+    ],
+  },
+
+  {
     title: 'EMBEDDED SYSTEMS',
     items: [
       'ESP32/nRF52 firmware',
@@ -24,16 +36,6 @@ const skillColumns = [
         ],
     },
 
-  {
-    title: 'SIGNAL PROCESSING',
-    items: [
-      'IMU calibration (BNO055)',
-      'HRV/RHR analysis',
-      'Z-score normalization',
-      'Adaptive baselines',
-      'Allan deviation',
-    ],
-  },
   {
     title: 'LANGUAGES & TOOLS',
     items: [
@@ -61,25 +63,28 @@ const AboutSection = () => {
               03 / About
             </p>
             <h2 className="max-w-2xl font-mono text-3xl tracking-[0.06em] text-[#e8eaf0] md:text-4xl">
-              ML systems and embedded software grounded in real deployment.
+              Wearable algorithms and sensor fusion.
             </h2>
             <div className="mt-8 space-y-6 font-sans text-base leading-8 text-[#c6ccd7] md:text-lg">
               <p>
-                I'm co-founding Owell and testing the field device, backend, and app that
-                make it up. Building it ties together everything else I work on.
+                I'm most interested in wearable physiology: algorithm development, sensor fusion, and recovery and HRV analysis.
+              </p>
+              <p>
+                I co-founded Owell with Alejandro Granda. Our field device monitors pH during feeding and delivers water. pH does not control delivery.
+                Nutrient and crop-treatment delivery are planned. We’re starting with flowers.
               </p>
               <p>
                 I'm a junior at UMass Lowell double-majoring in Computer Science
       and Applied Mathematics & Statistics. Currently on a hardware engineering co-op while researching fault sensitivity of quantized neural networks on embedded platforms. Studying how single-bit flips in INT8 models propagate through the MCU-class hardware.
               </p>
       <p>
-      Developed a graduate advising intelligence platform for UMass Lowell's Kennedy College of Sciences, risk scoring, cohort anomaly detection, and advisor behavior modeling on top of live student data.
+      Developed a graduate advising platform for UMass Lowell's Kennedy College of Sciences with role-based access control, anomaly detection, and risk modeling.
       </p>
               <p>
                 Previously built bias correction pipelines and real-time TCP streaming systems for IMU sensor calibration at CACT, supporting wearable motion tracking research.
               </p>
               <p>
-                My work spans embedded firmware, ML deployment, and statistical signal processing, building systems that go from raw sensor data to production.
+                I develop wearable algorithms and sensor fusion, build embedded firmware, and research fault sensitivity in quantized models.
               </p>
             </div>
           </div>

@@ -62,6 +62,9 @@ const getPadLabel = (key) => (key === 'VCC' ? 'VCC / 3.3V' : key);
 const PCBGate = ({ onComplete }) => {
   const [connections, setConnections] = useState({});
   const [dragging, setDragging] = useState(null);
+  const [leadFocused, setLeadFocused] = useState(false);
+  const draggingRef = useRef(false);
+  const leadFocusedRef = useRef(false);
   const [feedbackPad, setFeedbackPad] = useState(null);
   const [feedbackTone, setFeedbackTone] = useState(null);
   const [powered, setPowered] = useState(false);
@@ -86,7 +89,7 @@ const PCBGate = ({ onComplete }) => {
       } else if (connections[wire.id]) {
         accumulator[wire.id] = layout.pads[connections[wire.id]];
       } else {
-        accumulator[wire.id] = layout.homes[wire.id];
+        accumulator[wire.id] = { x: layout.homes[wire.id].x - 48, y: layout.homes[wire.id].y + 24 };
       }
       return accumulator;
     }, {});
@@ -143,10 +146,9 @@ const PCBGate = ({ onComplete }) => {
         return;
       }
 
-      const rect = svg.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * layout.width;
-      const y = ((event.clientY - rect.top) / rect.height) * layout.height;
-      const point = { x, y };
+      const matrix = svg.getScreenCTM();
+      if (!matrix) return;
+      const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
 
       setDragging((previous) => previous ? { ...previous, point } : previous);
 
@@ -159,6 +161,7 @@ const PCBGate = ({ onComplete }) => {
       const nearest = getNearestPad(dragging.point, layout.pads, 42);
       const wire = WIRES.find((item) => item.id === dragging.wireId);
       clearFeedback();
+      draggingRef.current = false;
       setDragging(null);
       if (!nearest || !wire) return;
 
@@ -177,11 +180,14 @@ const PCBGate = ({ onComplete }) => {
     };
 
     window.addEventListener('pointermove', handlePointerMove);
+    const cancelDrag = () => { draggingRef.current = false; setDragging(null); clearFeedback(); };
     window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', cancelDrag);
 
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', cancelDrag);
     };
   }, [clearFeedback, connections, dragging, layout, playSnapTone]);
 
@@ -201,7 +207,15 @@ const PCBGate = ({ onComplete }) => {
     };
   }, []);
 
+  const pauseAutoConnect = () => {
+    autoTimeoutsRef.current.forEach((id) => window.clearTimeout(id));
+    autoTimeoutsRef.current = [];
+    autoConnectingRef.current = false;
+  };
+
   const startDrag = (wireId) => {
+    pauseAutoConnect();
+    draggingRef.current = true;
     const startPoint = wireEndpoints[wireId];
     setDragging({ wireId, point: startPoint });
     clearFeedback();
@@ -244,15 +258,15 @@ const PCBGate = ({ onComplete }) => {
 
   // Connect whatever is still loose, one wire at a time, so the visitor sees it happen.
   const autoConnect = useCallback(() => {
-    if (autoConnectingRef.current || poweredRef.current) {
+    if (autoConnectingRef.current || poweredRef.current || draggingRef.current || leadFocusedRef.current) {
       return;
     }
     autoConnectingRef.current = true;
-    setDragging(null);
 
     WIRES.filter((wire) => !connectionsRef.current[wire.id]).forEach((wire, index) => {
       autoTimeoutsRef.current.push(
         window.setTimeout(() => {
+          if (draggingRef.current || leadFocusedRef.current) return;
           playSnapTone(560);
           setConnections((current) => ({ ...current, [wire.id]: wire.target }));
         }, index * AUTOCONNECT_STAGGER_MS)
@@ -260,19 +274,19 @@ const PCBGate = ({ onComplete }) => {
     });
   }, [playSnapTone]);
 
-  // Idle timer (reset by interaction) plus a hard deadline keep the intro short.
+  // Timed assistance respects active pointer and keyboard interaction.
   useEffect(() => {
     const deadline = window.setTimeout(autoConnect, DEADLINE_MS);
     return () => window.clearTimeout(deadline);
   }, [autoConnect]);
 
   useEffect(() => {
-    if (powered) {
+    if (powered || dragging || leadFocused) {
       return undefined;
     }
     const idle = window.setTimeout(autoConnect, IDLE_AUTOCONNECT_MS);
     return () => window.clearTimeout(idle);
-  }, [autoConnect, powered, connections, dragging]);
+  }, [autoConnect, powered, connections, dragging, leadFocused]);
 
   // Once the sensor is live, move on without needing a click.
   useEffect(() => {
@@ -308,7 +322,7 @@ const PCBGate = ({ onComplete }) => {
 
           <div className="relative mx-auto flex min-h-[calc(100vh-3rem)] max-w-6xl flex-col items-center justify-center">
             <motion.div
-              className="mb-6 flex w-full max-w-[600px] justify-end"
+              className="mb-6 flex w-full max-w-[760px] justify-end"
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
@@ -333,12 +347,12 @@ const PCBGate = ({ onComplete }) => {
                 Biosignal Sensor Initialization
               </p>
               <h1 className="font-sans text-2xl text-[#f5f7fa] md:text-4xl">
-                Connect the heart rate sensor to enable the portfolio
+                Wire up the sensor. See what I build.
               </h1>
             </motion.div>
 
             <motion.div
-              className="w-full max-w-[600px] rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-3 shadow-[0_30px_90px_rgba(0,0,0,0.35)] backdrop-blur-sm md:p-4"
+              className="w-full max-w-[760px] rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-3 shadow-[0_30px_90px_rgba(0,0,0,0.35)] backdrop-blur-sm md:p-4"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.08 }}
@@ -349,10 +363,20 @@ const PCBGate = ({ onComplete }) => {
                 className="h-auto w-full touch-none"
               >
                 <defs>
+                  <linearGradient id="boardSheen" x1="0" y1="0" x2="0.8" y2="1">
+                    <stop offset="0" stopColor="#e2ffe9" stopOpacity="0.16" />
+                    <stop offset="0.36" stopColor="#e2ffe9" stopOpacity="0.025" />
+                    <stop offset="1" stopColor="#000" stopOpacity="0.22" />
+                  </linearGradient>
+                  <linearGradient id="packageBevel" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stopColor="#54585b" />
+                    <stop offset="0.12" stopColor="#25292c" />
+                    <stop offset="1" stopColor="#0b0e11" />
+                  </linearGradient>
                   <linearGradient id="boardGradient" x1="0" x2="1" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#31573c" />
-                    <stop offset="52%" stopColor="#2a5234" />
-                    <stop offset="100%" stopColor="#1f3f29" />
+                    <stop offset="0%" stopColor="#174e3d" />
+                    <stop offset="52%" stopColor="#103c2e" />
+                    <stop offset="100%" stopColor="#082b24" />
                   </linearGradient>
                   <linearGradient id="boardEdgeGradient" x1="0" x2="1" y1="0" y2="0">
                     <stop offset="0%" stopColor="#5f6d3d" />
@@ -401,44 +425,18 @@ const PCBGate = ({ onComplete }) => {
                     <path d="M 0 13 H 26 M 13 0 V 26" stroke="rgba(255,255,255,0.015)" strokeWidth="0.8" />
                     <path d="M 0 0 L 26 26 M 26 0 L 0 26" stroke="rgba(0,0,0,0.02)" strokeWidth="0.5" />
                   </pattern>
-                  <pattern id="groundPour" width="18" height="18" patternUnits="userSpaceOnUse">
-                    <circle cx="4" cy="4" r="0.8" fill="rgba(255,255,255,0.028)" />
-                    <circle cx="13" cy="9" r="0.7" fill="rgba(255,255,255,0.02)" />
-                    <circle cx="7" cy="14" r="0.75" fill="rgba(0,0,0,0.03)" />
-                  </pattern>
-                  <pattern id="pcbTraces" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-                    <path d="M10 20 H90" stroke="#a89968" strokeWidth="1.5" opacity="0.4" fill="none" />
-                    <circle cx="90" cy="20" r="2" fill="#a89968" opacity="0.4" />
-                    <path d="M10 20 V80" stroke="#a89968" strokeWidth="1.5" opacity="0.4" fill="none" />
-                    <circle cx="10" cy="80" r="2" fill="#a89968" opacity="0.4" />
-                    <path d="M30 10 V50 H70" stroke="#a89968" strokeWidth="1.2" opacity="0.3" fill="none" />
-                    <circle cx="70" cy="50" r="1.5" fill="#a89968" opacity="0.3" />
-                    <path d="M18 62 H58 V90" stroke="#b8941f" strokeWidth="1.3" opacity="0.28" fill="none" />
-                    <circle cx="58" cy="90" r="1.7" fill="#b8941f" opacity="0.28" />
-                    <path d="M82 8 V38 H48" stroke="#a89968" strokeWidth="1.1" opacity="0.32" fill="none" />
-                    <circle cx="48" cy="38" r="1.6" fill="#a89968" opacity="0.32" />
-                    <path d="M6 46 H24 C28 46 30 48 30 52 V74" stroke="#a89968" strokeWidth="1.2" opacity="0.24" fill="none" />
-                    <circle cx="30" cy="74" r="1.4" fill="#a89968" opacity="0.24" />
-                    <path d="M52 14 H72 V30 H94" stroke="#b8941f" strokeWidth="1.6" opacity="0.26" fill="none" />
-                    <circle cx="52" cy="14" r="1.7" fill="#b8941f" opacity="0.26" />
-                    <path d="M44 64 H76 V82 H90" stroke="#a89968" strokeWidth="1.4" opacity="0.29" fill="none" />
-                    <circle cx="76" cy="82" r="1.5" fill="#a89968" opacity="0.29" />
-                    <path d="M14 94 H40 V70 H62" stroke="#a89968" strokeWidth="1.1" opacity="0.22" fill="none" />
-                    <circle cx="40" cy="70" r="1.4" fill="#a89968" opacity="0.22" />
-                    <path d="M66 56 C72 56 76 52 76 46 V24" stroke="#b8941f" strokeWidth="1.2" opacity="0.25" fill="none" />
-                    <circle cx="76" cy="24" r="1.6" fill="#b8941f" opacity="0.25" />
-                    <path d="M2 8 H20 V30 H38" stroke="#a89968" strokeWidth="1" opacity="0.2" fill="none" />
-                    <path d="M84 54 V68 H98" stroke="#a89968" strokeWidth="1.2" opacity="0.24" fill="none" />
+                  <pattern id="groundPour" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M-5 5 L5 -5 M0 10 L10 0 M5 15 L15 5" stroke="#8fc99c" strokeOpacity="0.14" strokeWidth="0.6" />
                   </pattern>
                   <clipPath id="boardClip">
-                    <rect x="30" y="30" width={layout.width - 60} height={layout.height - 60} rx="14" />
+                    <rect x="30" y="30" width={644} height={layout.height - 60} rx="14" />
                   </clipPath>
                 </defs>
 
                 <rect
                   x="24"
                   y="24"
-                  width={layout.width - 48}
+                  width={656}
                   height={layout.height - 48}
                   rx="18"
                   fill="url(#boardEdgeGradient)"
@@ -447,7 +445,7 @@ const PCBGate = ({ onComplete }) => {
                 <rect
                   x="30"
                   y="30"
-                  width={layout.width - 60}
+                  width={644}
                   height={layout.height - 60}
                   rx="14"
                   fill="url(#boardGradient)"
@@ -456,16 +454,7 @@ const PCBGate = ({ onComplete }) => {
                 <rect
                   x="30"
                   y="30"
-                  width={layout.width - 60}
-                  height={layout.height - 60}
-                  rx="14"
-                  fill="url(#pcbTraces)"
-                  opacity="0.45"
-                />
-                <rect
-                  x="30"
-                  y="30"
-                  width={layout.width - 60}
+                  width={644}
                   height={layout.height - 60}
                   rx="14"
                   fill="url(#solderMaskNoise)"
@@ -474,7 +463,7 @@ const PCBGate = ({ onComplete }) => {
                 <rect
                   x="30"
                   y="30"
-                  width={layout.width - 60}
+                  width={644}
                   height={layout.height - 60}
                   rx="14"
                   fill="url(#fiberglassWeave)"
@@ -483,33 +472,56 @@ const PCBGate = ({ onComplete }) => {
                 <rect
                   x="30"
                   y="30"
-                  width={layout.width - 60}
+                  width={644}
                   height={layout.height - 60}
                   rx="14"
                   fill="url(#groundPour)"
                   opacity="0.22"
                 />
 
-                <g opacity="0.92" clipPath="url(#boardClip)">
-                  <path d={`M ${layout.pads.VCC.x} ${layout.pads.VCC.y} L ${layout.chip.x - 12} ${layout.chip.y - layout.chip.h / 2}`} stroke="#1e4029" strokeWidth="3" fill="none" opacity="0.6" />
-                  <path d={`M ${layout.pads.GND.x} ${layout.pads.GND.y} L ${layout.chip.x + 12} ${layout.chip.y + layout.chip.h / 2}`} stroke="#1e4029" strokeWidth="3" fill="none" opacity="0.6" />
-                  <path d={`M ${layout.pads.SDA.x} ${layout.pads.SDA.y} L ${layout.chip.x - layout.chip.w / 2} ${layout.chip.y - 12}`} stroke="#1e4029" strokeWidth="3" fill="none" opacity="0.6" />
-                  <path d={`M ${layout.pads.SCL.x} ${layout.pads.SCL.y} L ${layout.chip.x + layout.chip.w / 2} ${layout.chip.y + 12}`} stroke="#1e4029" strokeWidth="3" fill="none" opacity="0.6" />
-                  <circle cx={layout.chip.x - 128} cy={layout.chip.y - 116} r="5.2" fill="url(#viaGradient)" />
-                  <circle cx={layout.chip.x + 144} cy={layout.chip.y + 102} r="5.2" fill="url(#viaGradient)" />
-                  <circle cx={layout.chip.x + 122} cy={layout.chip.y - 108} r="4.6" fill="url(#viaGradient)" />
+                <rect x="30" y="30" width="644" height="540" rx="14" fill="url(#boardSheen)" />
+                <g clipPath="url(#boardClip)" fill="none" strokeLinejoin="round">
+                  {Object.entries({
+                    VCC: 'M452 164 H424 L364 224 V240.5 H393',
+                    SDA: 'M294 282 H330 L341.5 270.5 H393',
+                    SCL: 'M610 282 H574 L555.5 300.5 H511',
+                    GND: 'M452 420 H520 L555 385 V315.5 H511',
+                  }).map(([pad, path]) => (
+                    <g key={pad}>
+                      <path d={path} stroke="#082c21" strokeWidth="13" />
+                      <path d={path} stroke="#468c65" strokeWidth="6" />
+                      <path d={path} stroke="#a7c884" strokeOpacity="0.35" strokeWidth="1.4" />
+                      {Object.values(connections).includes(pad) && (
+                        <motion.path d={path} stroke="#b8ffe1" strokeWidth="5"
+                          initial={{ pathLength: 0, opacity: 1 }} animate={{ pathLength: 1, opacity: 0 }}
+                          transition={{ duration: 0.65 }} />
+                      )}
+                    </g>
+                  ))}
+                  <path d="M364 224 V186 L342 164 H326 M555 385 H592 L612 405 V446" stroke="#468c65" strokeWidth="4" />
                 </g>
+                {[{x:326,y:164},{x:612,y:446}].map(({x,y}) => (
+                  <g key={x}><circle cx={x} cy={y} r="5" fill="url(#viaGradient)" /><circle cx={x} cy={y} r="2.3" fill="#041c17" /></g>
+                ))}
+                {[{x:342,y:194,ref:'C1',body:'#b4a17b'}, {x:538,y:353,ref:'R1',body:'#252a30'}, {x:308,y:348,ref:'R2',body:'#252a30'}].map(({x,y,ref,body}) => (
+                  <g key={ref} filter="url(#chipShadow)">
+                    <rect x={x-19} y={y-9} width="38" height="18" rx="3" fill="#bec4bb" />
+                    <rect x={x-11} y={y-9} width="22" height="18" rx="2" fill={body} />
+                    <path d={`M${x-10} ${y-6} h20`} stroke="#fff" strokeOpacity="0.25" />
+                    <text x={x} y={y+28} textAnchor="middle" fill="#eef3f6" fontSize="10" fontFamily="monospace">{ref}</text>
+                  </g>
+                ))}
 
                 <g opacity="0.9">
                   {[
                     { x: 66, y: 66 },
-                    { x: layout.width - 66, y: 66 },
+                    { x: 638, y: 66 },
                     { x: 66, y: layout.height - 66 },
-                    { x: layout.width - 66, y: layout.height - 66 },
+                    { x: 638, y: layout.height - 66 },
                   ].map((hole, index) => (
                     <g key={`mount-${index}`}>
                       <circle cx={hole.x} cy={hole.y} r="11" fill="url(#padGradient)" />
-                      <circle cx={hole.x} cy={hole.y} r="5.5" fill="#26302b" />
+                      <circle cx={hole.x} cy={hole.y} r="5.5" fill="#05131f" stroke="#584b2a" strokeWidth="1.5" />
                     </g>
                   ))}
                 </g>
@@ -565,7 +577,7 @@ const PCBGate = ({ onComplete }) => {
                     width={layout.chip.w}
                     height={layout.chip.h}
                     rx="8"
-                    fill="#1a1a1a"
+                    fill="url(#packageBevel)"
                     stroke="rgba(255,255,255,0.1)"
                     filter="url(#chipShadow)"
                   />
@@ -603,9 +615,9 @@ const PCBGate = ({ onComplete }) => {
                   </text>
                   <text
                     x={layout.chip.x}
-                    y={layout.chip.y - 6}
+                    y={layout.chip.y - 37}
                     textAnchor="middle"
-                    className="fill-[#f0f0f0] font-mono text-[14px] tracking-[0.16em]"
+                    className="fill-[#f0f0f0] font-mono text-[12px] tracking-[0.06em]"
                   >
                     MAX30102
                   </text>
@@ -613,12 +625,17 @@ const PCBGate = ({ onComplete }) => {
                     x={layout.chip.x}
                     y={layout.chip.y + 22}
                     textAnchor="middle"
-                    className="fill-[#a9b1b9] font-mono text-[8px] tracking-[0.14em]"
+                    className="fill-[#a9b1b9] font-mono text-[9px] tracking-[0.04em]"
                   >
-                    PPG HEART RATE / SPO2 SENSOR
+                    HR / SpO2
                   </text>
                 </g>
 
+                <circle cx="409" cy="239" r="3" fill="#e3e6dd" />
+                <rect x="421" y="250" width="62" height="24" rx="4" fill="#080d10" stroke="#545d60" />
+                <rect x="426" y="254" width="19" height="16" rx="3" fill={powered ? '#ac1930' : '#451a26'} />
+                <rect x="451" y="254" width="26" height="16" rx="3" fill="#132631" />
+                <text x="581" y="246" fill="#eef3f6" fontSize="10">+</text>
                 {Object.entries(layout.pads).map(([key, pad]) => {
                   const tone =
                     feedbackPad === key && feedbackTone === 'wrong'
@@ -654,9 +671,9 @@ const PCBGate = ({ onComplete }) => {
                       />
                       <text
                         x={pad.x}
-                        y={key === 'VCC' ? pad.y - 26 : key === 'GND' ? pad.y + 38 : pad.y + 5}
-                        dx={key === 'SDA' ? -42 : key === 'SCL' ? 42 : 0}
-                        textAnchor={key === 'SDA' ? 'end' : key === 'SCL' ? 'start' : 'middle'}
+                        y={key === 'VCC' ? pad.y - 26 : pad.y + 38}
+                        dx={0}
+                        textAnchor="middle"
                         className="fill-[#eef3f6] font-mono text-[14px] tracking-[0.18em]"
                       >
                         {getPadLabel(key)}
@@ -672,7 +689,7 @@ const PCBGate = ({ onComplete }) => {
                   const isActive = dragging?.wireId === wire.id;
 
                   return (
-                    <g key={wire.id}>
+                    <motion.g key={wire.id} initial={{ x: 35, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.15 + WIRES.indexOf(wire) * 0.07, duration: 0.4 }}>
                       <path
                         d={getWirePath(start, end)}
                         fill="none"
@@ -700,7 +717,17 @@ const PCBGate = ({ onComplete }) => {
                         tabIndex={0}
                         aria-label={`${isConnected ? 'Disconnect' : 'Connect'} ${wire.label} lead ${isConnected ? 'from' : 'to'} ${getPadLabel(wire.target)}`}
                         aria-pressed={isConnected}
+                        onFocus={() => {
+                          leadFocusedRef.current = true;
+                          setLeadFocused(true);
+                          pauseAutoConnect();
+                        }}
+                        onBlur={() => {
+                          leadFocusedRef.current = false;
+                          setLeadFocused(false);
+                        }}
                         onKeyDown={(event) => {
+                          pauseAutoConnect();
                           if (event.key !== 'Enter' && event.key !== ' ') return;
                           event.preventDefault();
                           if (isConnected) disconnectWire(wire.id);
@@ -711,8 +738,10 @@ const PCBGate = ({ onComplete }) => {
                         }}
                         onPointerDown={(event) => {
                           event.preventDefault();
+                          pauseAutoConnect();
                           if (isConnected) {
                             disconnectWire(wire.id);
+                            return;
                           }
                           startDrag(wire.id);
                         }}
@@ -725,7 +754,7 @@ const PCBGate = ({ onComplete }) => {
                       >
                         {wire.label}
                       </text>
-                    </g>
+                    </motion.g>
                   );
                 })}
 
@@ -747,10 +776,12 @@ const PCBGate = ({ onComplete }) => {
                   D1
                 </text>
 
+                {powered && <motion.path d="M155 476 H190 L198 471 L206 476 H220 L231 469 L240 445 L250 428 L260 455 L270 470 L285 476 H320 L328 471 L336 476 H350 L361 469 L370 445 L380 428 L390 455 L400 470 L415 476 H450"
+                  fill="none" stroke="#aaffda" strokeWidth="2.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.1 }} />}
                 {powered && (
                   <motion.text
-                    x={450}
-                    y={500}
+                    x={350}
+                    y={516}
                     textAnchor="middle"
                     className="fill-[#d8ffe7] font-mono text-[14px] tracking-[0.32em]"
                     initial={{ opacity: 0 }}
@@ -763,6 +794,7 @@ const PCBGate = ({ onComplete }) => {
               </svg>
             </motion.div>
 
+            <p role="status" aria-live="polite" className="sr-only">{powered ? 'Sensor ready. Opening portfolio.' : `${connectedCount} of 4 leads connected. Skip intro at any time.`}</p>
             {powered && (
               <motion.button
                 type="button"

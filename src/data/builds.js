@@ -1,10 +1,8 @@
 // Single source of truth for the builds section and the Owell featured card.
-// Anything marked TODO is a placeholder that needs real details.
-
-export const TODO = (what) => `TODO: ${what}`;
 
 export const STATUS = {
   'in-testing': { label: 'In testing', tone: 'amber' },
+  'personal-use': { label: 'In personal use', tone: 'blue' },
   active: { label: 'Active', tone: 'green' },
   research: { label: 'Research in progress', tone: 'blue' },
   ongoing: { label: 'Ongoing', tone: 'green' },
@@ -13,23 +11,40 @@ export const STATUS = {
 export const owell = {
   id: 'owell',
   name: 'Owell',
-  headline: 'Owell. Farms that just run.',
+  headline: 'Farms that just run.',
   pitch:
-    'Sensors and automation that take over the watching, deciding, and doing a big field crew handles today.',
+    'A field device for pH sensing and water flow delivery, with nutrient and crop-treatment delivery planned.',
   role: 'Co-founder',
   dates: 'Jun 2026 – Present',
   status: 'in-testing',
-  stack: ['ESP32 firmware', 'Go backend', 'iOS app'],
+  stack: ['Embedded firmware', 'Backend', 'iOS app'],
   href: '#/owell',
+  image: '/owell.webp',
+  imageAlt: 'Agricultural landscape',
+  imageWidth: 612,
+  imageHeight: 408,
+};
+
+export const physioRecovery = {
+  id: 'physiorecovery',
+  name: 'PhysioRecovery',
+  pitch: 'A recovery scoring tool using HRV, Body Battery, and resting heart rate. I run it on my own watch and use it daily.',
+  role: 'Developer',
+  status: 'personal-use',
+  stack: ['Monkey C', 'Fixed-point DSP', 'Sensor fusion', 'Garmin Connect IQ'],
+  href: '#physiorecovery',
+  image: '/recovery.webp',
+  imageAlt: 'PhysioRecovery score on a Garmin watch',
+  imageWidth: 800,
+  imageHeight: 986,
 };
 
 export const builds = [
-  { ...owell, internal: true },
   {
     id: 'aim',
     name: 'A.I.M. Society',
     pitch:
-      'Artificial Intelligence Multidisciplinary Society: a student-led org turning students into builders and opening doors they will not find outside the club, including meeting industry builders in person.',
+      'A student-led AI organization with builder projects and opportunities to meet industry professionals.',
     role: 'VP and co-founder',
     dates: 'Mar 2026 – Present',
     status: 'active',
@@ -52,7 +67,7 @@ export const builds = [
     id: 'coop',
     name: 'Hardware engineering co-op',
     pitch:
-      'I work on test engineering and internal tooling, building software that removes manual steps from hardware work. I also build hardware.',
+      'I work on test engineering and internal tooling, building software that removes manual steps from hardware work.',
     role: 'Hardware Engineer (co-op), Teradyne',
     dates: 'Jul 2026 – Present',
     status: 'ongoing',

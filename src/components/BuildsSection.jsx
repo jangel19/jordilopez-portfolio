@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { builds } from '../data/builds';
 import Spotlight from './Spotlight';
-import { Badge, MaybeTodo, SectionHeading } from './ui';
+import { Badge, SectionHeading } from './ui';
 import { useReveal, tagClassName } from './uiStyles';
 
 const BuildCard = ({ build }) => {
@@ -22,20 +22,20 @@ const BuildCard = ({ build }) => {
         <div className="flex gap-2">
           <dt className="sr-only">Role</dt>
           <dd>
-            <MaybeTodo>{build.role}</MaybeTodo>
+            {build.role}
           </dd>
         </div>
         <div className="flex gap-2">
           <dt className="sr-only">Dates</dt>
           <dd>
-            <MaybeTodo>{build.dates}</MaybeTodo>
+            {build.dates}
           </dd>
         </div>
       </dl>
       <div className="mt-5 flex flex-wrap gap-2">
         {build.stack.map((item) => (
           <span key={item} className={tagClassName}>
-            <MaybeTodo>{item}</MaybeTodo>
+            {item}
           </span>
         ))}
       </div>

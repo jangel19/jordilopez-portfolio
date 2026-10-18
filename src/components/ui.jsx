@@ -19,16 +19,6 @@ export const Badge = ({ status, label, tone }) => {
   );
 };
 
-// Renders text; strings starting with "TODO" get a visible placeholder style.
-export const MaybeTodo = ({ children }) =>
-  typeof children === 'string' && children.startsWith('TODO') ? (
-    <span className="rounded border border-dashed border-[#f59e0b]/60 px-1.5 text-[#fbbf5a]">
-      {children}
-    </span>
-  ) : (
-    children
-  );
-
 export const SectionHeading = ({ eyebrow, title, children }) => (
   <>
     <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">

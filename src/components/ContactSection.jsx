@@ -20,13 +20,13 @@ const ContactSection = () => {
       <div className="mx-auto max-w-6xl">
         <motion.div {...reveal}>
           <p className="mb-4 font-mono text-[0.72rem] uppercase tracking-[0.34em] text-[#9ca3af]">
-            05 / Contact
+            Contact
           </p>
           <h2 className="max-w-3xl font-mono text-3xl tracking-[0.04em] text-[#e8eaf0] md:text-4xl">
-            Tell me who you are, what you&apos;re building, and what you need.
+            Have a system you want to build? Let’s talk.
           </h2>
           <p className="mt-5 max-w-2xl font-sans text-base leading-7 text-[#c6ccd7]">
-            Short is fine. I read everything and reply fast.
+            Send me a note about the project or role. I’m interested in embedded systems and sensing.
           </p>
         </motion.div>
 
@@ -82,7 +82,7 @@ const ContactSection = () => {
                   required
                   rows="6"
                   className={`${fieldClassName} resize-y`}
-                  placeholder="Who you are, what you're building, what you need."
+                  placeholder="A project, a role, or a technical question."
                 />
                 <ValidationError prefix="Message" field="message" errors={state.errors} className="mt-2 text-sm text-[#f59e0b]" />
               </div>
@@ -143,6 +143,7 @@ const ContactSection = () => {
           {...reveal}
         >
           <p>© 2026 Jordi Lopez </p>
+          <p>Visits to this site are logged.</p>
           <div className="flex items-center gap-4">
             <a
               href="/Jordi_Lopez_Resume.pdf"
